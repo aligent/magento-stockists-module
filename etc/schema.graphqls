@@ -1,0 +1,55 @@
+type Query {
+    stockists (
+        location: LocationRequest @doc(description: ""),
+        pageSize: Int = 20 @doc(description: ""),
+        currentPage: Int = 1 @doc(description: "")
+    ): Stockists
+    @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "")
+}
+
+interface StockistInterface @doc(description: "") {
+    id: Int,
+    external_identifier: String,
+    location: LocationInterface,
+    distance: Decimal,
+    name: String,
+    address: Address,
+    trading_hours: Hours,
+    units: DistanceUnitsEnum
+}
+
+type Address @doc(description: "") {
+    street: [String],
+    city: String,
+    postcode: String,
+    region: String,
+    country_code: String
+    phone: String
+}
+
+type Hours @doc(description: "") {
+    monday: String,
+    tuesday: String,
+    wednesday: String,
+    thursday: String,
+    friday: String,
+    saturday: String,
+    sunday: String
+}
+
+enum DistanceUnitsEnum @doc(description: "") {
+    KM
+    MILES
+}
+
+type Stockists @doc(description: "") {
+    locations: [StockistInterface] @doc(description: ""),
+    page_info: SearchResultPageInfo @doc(description: ""),
+    total_count: Int @doc(description: "")
+}
+
+type LocationRequest @doc(description: "") {
+    lat: Decimal @doc(description: ""),
+    lng: Decimal @doc(description: ""),
+    radius: Int = 25 @doc(description: "")
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="stockist" resource="default" comment="Stockist locations">
+        <column name="stockist_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column name="identifier" xsi:type="varchar" nullable="true" comment="External identifier" />
+        <column name="lat" xsi:type="decimal" scale="4" precision="20" nullable="true" comment="Latitude" />
+        <column name="lng" xsi:type="decimal" scale="4" precision="20" nullable="true" comment="Longitude" />
+        <column name="name" xsi:type="varchar" comment="Name" />
+        <column name="street" xsi:type="varchar" comment="Street" />
+        <column name="city" xsi:type="varchar" comment="City" />
+        <column name="postcode" xsi:type="varchar" comment="Postcode" />
+        <column name="region" xsi:type="varchar" comment="Region" />
+        <column name="country" xsi:type="varchar" comment="Country Code" />
+        <column name="phone" xsi:type="varchar" comment="Phone" />
+        <column name="store_ids" xsi:type="varchar" comment="Associated store views" />
+        <column name="hours" xsi:type="text" comment="Store Opening Hours" />
+    </table>
+</schema>
