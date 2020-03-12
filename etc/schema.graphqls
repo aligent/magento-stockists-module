@@ -51,5 +51,7 @@ type Stockists @doc(description: "") {
 type LocationRequest @doc(description: "") {
     lat: Decimal @doc(description: ""),
     lng: Decimal @doc(description: ""),
-    radius: Int = 25 @doc(description: "")
+    radius(
+        unit: DistanceUnitsEnum = KM
+    ): Int = 25 @doc(description: "")
 }

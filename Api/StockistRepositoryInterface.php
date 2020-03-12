@@ -2,15 +2,15 @@
 
 namespace Aligent\Stockists\Api;
 
+use Magento\Framework\Api\SearchResultsInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
-use \Magento\Framework\Api\SearchResultsInterface;
-use Magento\Framework\Api\SearchCriteriaInterface;
+use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
 
 interface StockistRepositoryInterface
 {
     public function get($id): StockistInterface;
 
-    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface;
+    public function getList(GeoSearchCriteriaInterface $searchCriteria): SearchResultsInterface;
 
     public function save(StockistInterface $formSubmission): StockistInterface;
 }
