@@ -17,6 +17,11 @@ class Collection extends AbstractCollection
         $this->_init(StockistModel::class, StockistResource::class);
     }
 
+    /**
+     * Replaces getSize to also consider any geo-filtering that was applied to the search
+     * @param GeoSearchCriteriaInterface $searchCriteria
+     * @return int
+     */
     public function getSizeFromGeoSearch(GeoSearchCriteriaInterface $searchCriteria) : int
     {
         if ($this->_totalRecords === null) {

@@ -1,24 +1,28 @@
 type Query {
     stockists (
-        location: LocationRequest @doc(description: ""),
-        pageSize: Int = 20 @doc(description: ""),
-        currentPage: Int = 1 @doc(description: "")
-    ): Stockists
-    @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "")
+        location: LocationRequest @doc(description: "Search request"),
+        pageSize: Int = 20 @doc(description: "Number per page"),
+        currentPage: Int = 1 @doc(description: "Current page")
+    ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retreive Stockists")
 }
 
-interface StockistInterface @doc(description: "") {
+type Stockist @doc(description: "A stockist location entity") {
     id: Int,
     external_identifier: String,
-    location: LocationInterface,
-    distance: Decimal,
+    location: Location,
     name: String,
     address: Address,
     trading_hours: Hours,
+    distance: Float,
     units: DistanceUnitsEnum
 }
 
-type Address @doc(description: "") {
+type Location @doc(description: "Geo-location coordinates") {
+    lat: Float,
+    lng: Float
+}
+
+type Address @doc(description: "Street address of location") {
     street: [String],
     city: String,
     postcode: String,
@@ -27,7 +31,7 @@ type Address @doc(description: "") {
     phone: String
 }
 
-type Hours @doc(description: "") {
+type Hours @doc(description: "Opening hours") {
     monday: String,
     tuesday: String,
     wednesday: String,
@@ -37,21 +41,20 @@ type Hours @doc(description: "") {
     sunday: String
 }
 
-enum DistanceUnitsEnum @doc(description: "") {
+enum DistanceUnitsEnum @doc(description: "Distance unit (MILES or KM)") {
     KM
     MILES
 }
 
-type Stockists @doc(description: "") {
-    locations: [StockistInterface] @doc(description: ""),
-    page_info: SearchResultPageInfo @doc(description: ""),
-    total_count: Int @doc(description: "")
+type Stockists @doc(description: "Result of a stockist search query") {
+    locations: [Stockist] @doc(description: "List of stockists"),
+    page_info: SearchResultPageInfo @doc(description: "Page information"),
+    total_count: Int @doc(description: "Total matching locations")
 }
 
-type LocationRequest @doc(description: "") {
-    lat: Decimal @doc(description: ""),
-    lng: Decimal @doc(description: ""),
-    radius(
-        unit: DistanceUnitsEnum = KM
-    ): Int = 25 @doc(description: "")
+input LocationRequest @doc(description: "Request location (origin point and search radius)") {
+    lat: Float @doc(description: "Latitude"),
+    lng: Float @doc(description: "Longitude"),
+    radius: Float @doc(description: "Search radius"),
+    unit: DistanceUnitsEnum @doc(description: "Units of search radius")
 }

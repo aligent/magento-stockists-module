@@ -6,13 +6,21 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 
 class GeoSearchCriteriaBuilder extends SearchCriteriaBuilder
 {
+    /**
+     * @return \Aligent\Stockists\Api\GeoSearchCriteriaInterface
+     */
     public function create()
     {
+        // Hold on to these values since the parent create will clear the data array.
+        $searchOrigin = $this->data['origin'] ?? [];
+        $searchRadius = $this->data['radius'] ?? 0;
+
         /** @var \Aligent\Stockists\Api\GeoSearchCriteriaInterface $searchCriteria */
         $searchCriteria = parent::create();
-        $searchCriteria->setSearchOrigin($this->data['origin'] ?? null);
-        $searchCriteria->setSearchRadius($this->data['radius'] ?? null);
-        $this->data = [];
+
+        $searchCriteria->setSearchOrigin($searchOrigin);
+        $searchCriteria->setSearchRadius($searchRadius);
+
         return $searchCriteria;
     }
 

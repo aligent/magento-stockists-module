@@ -81,6 +81,10 @@ class StockistRepository implements StockistRepositoryInterface
         return $stockist;
     }
 
+    /**
+     * @param GeoSearchCriteriaInterface $searchCriteria
+     * @return SearchResultsInterface
+     */
     public function getList(GeoSearchCriteriaInterface $searchCriteria): SearchResultsInterface
     {
         /** @var \Aligent\Stockists\Model\ResourceModel\Stockist\Collection $collection */
@@ -97,6 +101,11 @@ class StockistRepository implements StockistRepositoryInterface
         return $searchResults;
     }
 
+    /**
+     * @param StockistInterface $formSubmission
+     * @return StockistInterface
+     * @throws \Magento\Framework\Exception\AlreadyExistsException
+     */
     public function save(StockistInterface $formSubmission): StockistInterface
     {
         $this->stockistResource->save($formSubmission);
