@@ -2,7 +2,9 @@
 
 namespace Aligent\Stockists\Api;
 
-interface GeoSearchCriteriaInterface extends \Magento\Framework\Api\SearchCriteriaInterface
+use Magento\Framework\Api\SearchCriteriaInterface;
+
+interface GeoSearchCriteriaInterface extends SearchCriteriaInterface
 {
     /**
      * @return array
@@ -21,7 +23,7 @@ interface GeoSearchCriteriaInterface extends \Magento\Framework\Api\SearchCriter
     public function setSearchOrigin(array $origin) : GeoSearchCriteriaInterface;
 
     /**
-     * @param float $radius In KMs
+     * @param float $radius - in kilometers
      * @return GeoSearchCriteriaInterface
      */
     public function setSearchRadius(float $radius) : GeoSearchCriteriaInterface;

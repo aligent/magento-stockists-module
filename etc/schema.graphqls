@@ -9,10 +9,10 @@ type Query {
 type Stockist @doc(description: "A stockist location entity") {
     id: Int,
     external_identifier: String,
-    location: Location,
+    location: Location @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistLocation"),
     name: String,
-    address: Address,
-    trading_hours: Hours,
+    address: Address @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistAddress"),
+    trading_hours: Hours @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistHours"),
     distance: Float,
     units: DistanceUnitsEnum
 }
@@ -20,6 +20,7 @@ type Stockist @doc(description: "A stockist location entity") {
 type Location @doc(description: "Geo-location coordinates") {
     lat: Float,
     lng: Float
+    distance: Float
 }
 
 type Address @doc(description: "Street address of location") {
@@ -41,9 +42,9 @@ type Hours @doc(description: "Opening hours") {
     sunday: String
 }
 
-enum DistanceUnitsEnum @doc(description: "Distance unit (MILES or KM)") {
+enum DistanceUnitsEnum @doc(description: "Distance unit") {
     KM
-    MILES
+    MI
 }
 
 type Stockists @doc(description: "Result of a stockist search query") {

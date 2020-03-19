@@ -9,6 +9,7 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Aligent\Stockists\Api\StockistRepositoryInterface;
 use Aligent\Stockists\Model\GeoSearchCriteriaBuilder;
+use Aligent\Stockists\Helper\Data as StockistHelper;
 
 class Stockists implements ResolverInterface
 {
@@ -35,12 +36,26 @@ class Stockists implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        // TODO: Implement resolve() method.
         $searchCriteria = $this->createSearchCriteria($args);
         $results = $this->stockistRepository->getList($searchCriteria);
 
+        $locations = array_map(function($location) use ($args) {
+            /** @var \Aligent\Stockists\Model\Stockist $location */
+            $locationData = $location->getData();
+
+            /** Attach the model to the value so nested resolvers can use it to populate complex sub-fields */
+            $locationData['model'] = $location;
+
+            // Convert distance back to miles if requested
+            if (isset($args['location']['unit']) && $args['location']['unit'] === StockistHelper::DISTANCE_UNITS_MILES) {
+                $locationData['distance'] = (float)$locationData['distance'] / StockistHelper::RATIO_MILES_TO_KM;
+            }
+            return $locationData;
+        }, $results->getItems());
+
         return [
-            'total_count' => $results->getTotalCount()
+            'total_count' => $results->getTotalCount(),
+            'locations' => $locations
         ];
     }
 
@@ -51,11 +66,11 @@ class Stockists implements ResolverInterface
     private function createSearchCriteria($args)
     {
         $radius = (float)$args['location']['radius'];
-        $units = $args['location']['unit'] ?? 'KM';
+        $units = $args['location']['unit'] ?? StockistHelper::DISTANCE_UNITS_KM;
 
-        // Normalize if necessary - the API supports KM (default) and MILES.
-        if ($units !== 'KM') {
-            $radius *= 1.609;
+        // Normalize to KM to match the computed distance
+        if ($units === StockistHelper::DISTANCE_UNITS_MILES) {
+            $radius *= StockistHelper::RATIO_MILES_TO_KM;
         }
 
         $searchCriteria = $this->searchCriteriaBuilder->setSearchRadius($radius)->setSearchOrigin([

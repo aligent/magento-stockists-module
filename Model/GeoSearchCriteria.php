@@ -3,7 +3,6 @@
 namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
-use Magento\Framework\Api\SearchCriteriaInterface;
 use \Magento\Framework\Api\SearchCriteria;
 
 class GeoSearchCriteria extends SearchCriteria implements GeoSearchCriteriaInterface
