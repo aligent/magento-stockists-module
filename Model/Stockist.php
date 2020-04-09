@@ -67,7 +67,7 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     /**
      * @return float
      */
-    public function getLat(): float
+    public function getLat(): ?float
     {
         return $this->getData('lat');
     }
@@ -85,7 +85,7 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     /**
      * @return float
      */
-    public function getLng(): float
+    public function getLng(): ?float
     {
         return $this->getData('lng');
     }
@@ -103,7 +103,7 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->getData('name');
     }
@@ -119,27 +119,27 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @return array
+     * @return string|null
      */
-    public function getStreet(): array
+    public function getStreet(): ?string
     {
         return $this->getData('street');
     }
 
     /**
-     * @param array $street
+     * @param string $street
      * @return $this
      */
-    public function setStreet(array $street): StockistInterface
+    public function setStreet(string $street): StockistInterface
     {
         $this->setData('street', $street);
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->getData('city');
     }
@@ -155,9 +155,9 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPostcode(): string
+    public function getPostcode(): ?string
     {
         return $this->getData('postcode');
     }
@@ -173,9 +173,9 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRegion(): string
+    public function getRegion(): ?string
     {
         return $this->getData('region');
     }
@@ -191,9 +191,9 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->getData('country');
     }
@@ -209,9 +209,9 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->getData('phone');
     }
@@ -227,7 +227,7 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getStoreIds(): array
     {
@@ -235,7 +235,7 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @param array $storeIds
+     * @param int[] $storeIds
      * @return $this
      */
     public function setStoreIds(array $storeIds): StockistInterface
@@ -245,18 +245,18 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
     }
 
     /**
-     * @return array
+     * @return \Aligent\Stockists\Api\Data\TradingHoursInterface
      */
-    public function getHours(): array
+    public function getHours(): ?\Aligent\Stockists\Api\Data\TradingHoursInterface
     {
         return $this->getData('hours');
     }
 
     /**
-     * @param array $hours
+     * @param \Aligent\Stockists\Api\Data\TradingHoursInterface $hours
      * @return $this
      */
-    public function setHours(array $hours): StockistInterface
+    public function setHours(\Aligent\Stockists\Api\Data\TradingHoursInterface $hours): StockistInterface
     {
         $this->setData('hours', $hours);
         return $this;

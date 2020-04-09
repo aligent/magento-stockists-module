@@ -8,4 +8,6 @@
                 type="Aligent\Stockists\Model\Stockist" />
     <preference for="Aligent\Stockists\Api\GeoSearchCriteriaInterface"
                 type="Aligent\Stockists\Model\GeoSearchCriteria" />
+    <preference for="Aligent\Stockists\Api\Data\TradingHoursInterface"
+                type="Aligent\Stockists\Model\TradingHours" />
 </config>

@@ -24,7 +24,7 @@ type Location @doc(description: "Geo-location coordinates") {
 }
 
 type Address @doc(description: "Street address of location") {
-    street: [String],
+    street: String,
     city: String,
     postcode: String,
     region: String,

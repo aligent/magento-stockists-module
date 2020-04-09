@@ -76,7 +76,9 @@ class Collection extends AbstractCollection
         /** @var \Aligent\Stockists\Model\Stockist $item */
         foreach ($this->_items as &$item) {
             if ($item->getData('hours')) {
-                $item->setData('hours', $this->json->unserialize($item->getData('hours')));
+                $item->setData('hours', new \Aligent\Stockists\Model\TradingHours(
+                    $this->json->unserialize($item->getData('hours'))
+                ));
             }
         }
 

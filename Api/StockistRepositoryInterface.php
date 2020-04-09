@@ -9,10 +9,16 @@ use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
 interface StockistRepositoryInterface
 {
     /**
-     * @param $id
+     * @param string $identifier
      * @return StockistInterface
      */
-    public function get($id): StockistInterface;
+    public function get(string $identifier): StockistInterface;
+
+    /**
+     * @param int $id
+     * @return StockistInterface
+     */
+    public function getById(int $id): StockistInterface;
 
     /**
      * @param \Aligent\Stockists\Api\GeoSearchCriteriaInterface $searchCriteria
@@ -21,8 +27,20 @@ interface StockistRepositoryInterface
     public function getList(GeoSearchCriteriaInterface $searchCriteria): SearchResultsInterface;
 
     /**
-     * @param StockistInterface $formSubmission
+     * @param StockistInterface $stockist
      * @return StockistInterface
      */
-    public function save(StockistInterface $formSubmission): StockistInterface;
+    public function save(StockistInterface $stockist): StockistInterface;
+
+    /**
+     * @param StockistInterface $stockist
+     * @return bool
+     */
+    public function delete(StockistInterface $stockist): bool;
+
+    /**
+     * @param string $identifier
+     * @return bool
+     */
+    public function deleteByIdentifier(string $identifier): bool;
 }

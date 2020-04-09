@@ -22,7 +22,7 @@ class StockistAddress implements ResolverInterface
         $stockist = $value['model'];
 
         return [
-            'street' => explode('\n', $stockist->getStreet()), //TODO; figure out encoding/decoding multi-line streets.
+            'street' => $stockist->getStreet(),
             'city' => $stockist->getCity(),
             'postcode' => $stockist->getPostcode(),
             'region' => $stockist->getRegion(),

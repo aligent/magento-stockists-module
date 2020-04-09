@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="stockist" resource="default" comment="Stockist locations">
         <column name="stockist_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
-        <column name="identifier" xsi:type="varchar" nullable="true" comment="External identifier" />
+        <column name="identifier" xsi:type="varchar" nullable="false" comment="External identifier" />
         <column name="lat" xsi:type="decimal" scale="6" precision="9" nullable="true" comment="Latitude" />
         <column name="lng" xsi:type="decimal" scale="6" precision="9" nullable="true" comment="Longitude" />
         <column name="name" xsi:type="varchar" comment="Name" />
@@ -17,6 +17,9 @@
         <column name="hours" xsi:type="text" comment="Store Opening Hours" />
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="stockist_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="STOCKISTS_IDENTIFIER">
+            <columns name="identifier"/>
         </constraint>
     </table>
 </schema>

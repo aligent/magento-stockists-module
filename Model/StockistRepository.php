@@ -66,17 +66,17 @@ class StockistRepository implements StockistRepositoryInterface
     }
 
     /**
-     * @param $id
+     * @param string $identifier
      * @return StockistInterface
      * @throws NoSuchEntityException
      */
-    public function get($id): StockistInterface
+    public function get(string $identifier): StockistInterface
     {
         /** @var \Aligent\Stockists\Model\Stockist $stockist */
         $stockist = $this->stockistFactory->create();
-        $this->stockistResource->load($stockist, $id);
+        $this->stockistResource->load($stockist, $identifier, 'identifier');
         if (!$stockist->getId()) {
-            throw new NoSuchEntityException(__('Form submission with ID %1 does not exist', $id));
+            throw new NoSuchEntityException(__('Stockist "%1" does not exist', $identifier));
         }
         return $stockist;
     }
@@ -102,13 +102,45 @@ class StockistRepository implements StockistRepositoryInterface
     }
 
     /**
-     * @param StockistInterface $formSubmission
+     * @param StockistInterface $stockist
      * @return StockistInterface
      * @throws \Magento\Framework\Exception\AlreadyExistsException
      */
-    public function save(StockistInterface $formSubmission): StockistInterface
+    public function save(StockistInterface $stockist): StockistInterface
     {
-        $this->stockistResource->save($formSubmission);
-        return $formSubmission;
+        //TODO Validation
+        $this->stockistResource->save($stockist);
+        return $stockist;
+    }
+
+    /**
+     * @inheritDoc
+     * @throws NoSuchEntityException
+     */
+    public function getById(int $id): StockistInterface
+    {
+        /** @var \Aligent\Stockists\Model\Stockist $stockist */
+        $stockist = $this->stockistFactory->create();
+        $this->stockistResource->load($stockist, $id);
+        if (!$stockist->getId()) {
+            throw new NoSuchEntityException(__('Stockist with ID %1 does not exist', $id));
+        }
+        return $stockist;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(StockistInterface $stockist): bool
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteByIdentifier(string $identifier): bool
+    {
+        return true;
     }
 }

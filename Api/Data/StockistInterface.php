@@ -29,7 +29,7 @@ interface StockistInterface
     /**
      * @return float
      */
-    public function getLat(): float;
+    public function getLat(): ?float;
 
     /**
      * @param float $lat
@@ -40,7 +40,7 @@ interface StockistInterface
     /**
      * @return float
      */
-    public function getLng(): float;
+    public function getLng(): ?float;
 
     /**
      * @param float $lng
@@ -51,7 +51,7 @@ interface StockistInterface
     /**
      * @return string
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * @param string $name
@@ -60,20 +60,20 @@ interface StockistInterface
     public function setName(string $name): StockistInterface;
 
     /**
-     * @return array
+     * @return string
      */
-    public function getStreet(): array;
+    public function getStreet(): ?string;
 
     /**
-     * @param array $street
+     * @param string $street
      * @return $this
      */
-    public function setStreet(array $street): StockistInterface;
+    public function setStreet(string $street): StockistInterface;
 
     /**
      * @return string
      */
-    public function getCity(): string;
+    public function getCity(): ?string;
 
     /**
      * @param string $city
@@ -84,7 +84,7 @@ interface StockistInterface
     /**
      * @return string
      */
-    public function getPostcode(): string;
+    public function getPostcode(): ?string;
 
     /**
      * @param string $postcode
@@ -95,7 +95,7 @@ interface StockistInterface
     /**
      * @return string
      */
-    public function getRegion(): string;
+    public function getRegion(): ?string;
 
     /**
      * @param string $region
@@ -106,7 +106,7 @@ interface StockistInterface
     /**
      * @return string
      */
-    public function getCountry(): string;
+    public function getCountry(): ?string;
 
     /**
      * @param string $countryCode
@@ -117,7 +117,7 @@ interface StockistInterface
     /**
      * @return string
      */
-    public function getPhone(): string;
+    public function getPhone(): ?string;
 
     /**
      * @param string $phone
@@ -126,24 +126,24 @@ interface StockistInterface
     public function setPhone(string $phone): StockistInterface;
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getStoreIds(): array;
 
     /**
-     * @param array $storeIds
+     * @param int[] $storeIds
      * @return $this
      */
     public function setStoreIds(array $storeIds): StockistInterface;
 
     /**
-     * @return array
+     * @return \Aligent\Stockists\Api\Data\TradingHoursInterface
      */
-    public function getHours(): array;
+    public function getHours(): ?\Aligent\Stockists\Api\Data\TradingHoursInterface;
 
     /**
-     * @param array $hours
+     * @param \Aligent\Stockists\Api\Data\TradingHoursInterface $hours
      * @return $this
      */
-    public function setHours(array $hours): StockistInterface;
+    public function setHours(\Aligent\Stockists\Api\Data\TradingHoursInterface $hours): StockistInterface;
 }
