@@ -1,0 +1,22 @@
+{
+  "name": "aligent/stockists",
+  "description": "Stockist location module for Magento 2",
+  "license": "proprietary",
+  "require": {
+    "php": "^7.2.0",
+    "magento/magento-composer-installer": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.6"
+  },
+  "type": "magento2-module",
+  "version": "0.0.1",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Aligent\\Stockists\\": ""
+    }
+  }
+}
