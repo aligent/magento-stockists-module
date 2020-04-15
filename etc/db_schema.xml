@@ -19,7 +19,7 @@
             <column name="stockist_id"/>
         </constraint>
         <constraint xsi:type="unique" referenceId="STOCKISTS_IDENTIFIER">
-            <columns name="identifier"/>
+            <column name="identifier"/>
         </constraint>
     </table>
 </schema>
