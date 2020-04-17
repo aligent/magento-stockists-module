@@ -37,7 +37,7 @@ interface TradingHoursInterface
     /**
      * @return string
      */
-    public function getSunday(): string
+    public function getSunday(): string;
 
     /**
      * @return string
