@@ -63,6 +63,11 @@ class TradingHours extends DataObject implements TradingHoursInterface
         return $this->getData('sunday');
     }
 
+    public function getPublicHolidays(): ?string
+    {
+        return $this->getData('public_holidays');
+    }
+
     /**
      * @param string $hours
      * @return TradingHoursInterface
@@ -124,5 +129,10 @@ class TradingHours extends DataObject implements TradingHoursInterface
     public function setSunday(string $hours): TradingHoursInterface
     {
         return $this->setData('sunday', $hours);
+    }
+
+    public function setPublicHolidays(string $publicHolidayHours): TradingHoursInterface
+    {
+        return $this->setData('public_holidays', $publicHolidayHours);
     }
 }

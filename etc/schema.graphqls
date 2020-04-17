@@ -39,7 +39,8 @@ type Hours @doc(description: "Opening hours") {
     thursday: String,
     friday: String,
     saturday: String,
-    sunday: String
+    sunday: String,
+    public_holidays: String
 }
 
 enum DistanceUnitsEnum @doc(description: "Distance unit") {

@@ -37,7 +37,12 @@ interface TradingHoursInterface
     /**
      * @return string
      */
-    public function getSunday(): string;
+    public function getSunday(): string
+
+    /**
+     * @return string
+     */
+    public function getPublicHolidays(): ?string;
 
     /**
      * @param string $hours
@@ -80,4 +85,10 @@ interface TradingHoursInterface
      * @return TradingHoursInterface
      */
     public function setSunday(string $hours): TradingHoursInterface;
+
+    /**
+     * @param string $publicHolidayHours
+     * @return TradingHoursInterface
+     */
+    public function setPublicHolidays(string $publicHolidayHours): TradingHoursInterface;
 }
