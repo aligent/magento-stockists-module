@@ -261,4 +261,21 @@ class Stockist extends AbstractModel implements StockistInterface, IdentityInter
         $this->setData('hours', $hours);
         return $this;
     }
+
+    /**
+     * @return \Aligent\Stockists\Api\Data\StockistExtensionInterface|null
+     */
+    public function getExtensionAttributes()
+    {
+        return $this->_getExtensionAttributes();
+    }
+
+    /**
+     * @param \Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes
+     * @return $this
+     */
+    public function setExtensionAttributes(\Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes)
+    {
+        return $this->_setExtensionAttributes($extensionAttributes);
+    }
 }
