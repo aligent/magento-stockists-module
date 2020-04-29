@@ -10,4 +10,6 @@
                 type="Aligent\Stockists\Model\GeoSearchCriteria" />
     <preference for="Aligent\Stockists\Api\Data\TradingHoursInterface"
                 type="Aligent\Stockists\Model\TradingHours" />
+    <preference for="Aligent\Stockists\Api\AdapterInterface"
+                type="Aligent\Stockists\Model\GoogleMapsAdapter" />
 </config>

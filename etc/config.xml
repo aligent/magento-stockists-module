@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <stockists>
+            <geocode>
+                <url>https://maps.googleapis.com/maps/api/geocode/</url>
+                <output>json</output>
+                <key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+            </geocode>
+            <search>
+                <page_title>Stockists</page_title>
+                <show_in_menu>1</show_in_menu>
+                <units>km</units>
+                <default_radius>30</default_radius>
+                <geolocation_secure>1</geolocation_secure>
+                <key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+            </search>
+            <geolocation>
+                <allowed_countries>AU,NZ</allowed_countries>
+                <center_lat>-37.827559</center_lat>
+                <center_lng>145.020685</center_lng>
+                <redirect>home</redirect>
+                <source>geolite2</source>
+                <geoip_folder>var/geoip/</geoip_folder>
+                <geoip_country_file>GeoIP.dat</geoip_country_file>
+                <geoip_location_file>GeoLiteCity.dat</geoip_location_file>
+                <geolite2_folder>var/geoip/</geolite2_folder>
+                <geolite2_country_file>GeoLite2-Country.mmdb</geolite2_country_file>
+                <geolite2_country_compression>.gz</geolite2_country_compression>
+                <geolite2_country_url>https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz</geolite2_country_url>
+                <geolite2_location_file>GeoLite2-City.mmdb</geolite2_location_file>
+                <geolite2_location_compression>.gz</geolite2_location_compression>
+                <geolite2_location_url>https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz</geolite2_location_url>
+                <geolite2_autoupdate>0</geolite2_autoupdate>
+            </geolocation>
+        </stockists>
+    </default>
+</config>
