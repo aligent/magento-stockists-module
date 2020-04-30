@@ -6,9 +6,9 @@ namespace Aligent\Stockists\Api;
 
 interface AdapterInterface
 {
-    public function buildRequest();
+    public function buildRequest(string $address, string $key) :? string;
 
-    public function performGeocode();
+    public function performGeocode(string $request) :? array;
 
-    public function handleResponse();
+    public function handleResponse(array $response) : \Magento\Framework\Controller\Result\Json;
 }
