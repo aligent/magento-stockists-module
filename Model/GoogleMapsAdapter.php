@@ -4,6 +4,7 @@
 namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\AdapterInterface;
+use Aligent\Stockists\Api\Data\StockistInterface;
 
 class GoogleMapsAdapter implements AdapterInterface
 {
@@ -28,8 +29,10 @@ class GoogleMapsAdapter implements AdapterInterface
         $this->resultJsonFactory = $resultJsonFactory;
     }
 
-    public function buildRequest(string $address, string $key) :? string
+    public function buildRequest(StockistInterface $stockist, string $key) :? string
     {
+        $address = $this->buildAddress($stockist);
+
         $queryParams = [
             'address' => $address,
             'key' => $key
@@ -38,6 +41,18 @@ class GoogleMapsAdapter implements AdapterInterface
         $query = $this->queryParamsResolver->addQueryParams($queryParams)->getQuery();
 
         return $this::PATH . $this::OUTPUT_FORMAT . '?' . $query;;
+    }
+
+    protected function buildAddress(Stockist $stockist)
+    {
+        $params = [
+            $stockist->getStreet(),
+            $stockist->getCity(),
+            $stockist->getRegion(),
+            $stockist->getCountry()
+        ];
+
+        return implode(',', $params);
     }
 
     public function performGeocode(string $request) :? array
