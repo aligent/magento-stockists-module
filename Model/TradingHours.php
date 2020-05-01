@@ -12,7 +12,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
      */
     public function getMonday(): string
     {
-        return $this->getData('monday');
+        return $this->getData('monday') || '';
     }
 
     /**
@@ -20,7 +20,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
      */
     public function getTuesday(): string
     {
-        return $this->getData('tuesday');
+        return $this->getData('tuesday') || '';
     }
 
     /**
@@ -28,7 +28,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
      */
     public function getWednesday(): string
     {
-        return $this->getData('wednesday');
+        return $this->getData('wednesday') || '';
     }
 
     /**
@@ -36,7 +36,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
      */
     public function getThursday(): string
     {
-        return $this->getData('thursday');
+        return $this->getData('thursday') || '';
     }
 
     /**
@@ -44,7 +44,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
      */
     public function getFriday(): string
     {
-        return $this->getData('friday');
+        return $this->getData('friday') || '';
     }
 
     /**
@@ -52,7 +52,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
      */
     public function getSaturday(): string
     {
-        return $this->getData('saturday');
+        return $this->getData('saturday') || '';
     }
 
     /**
@@ -60,12 +60,12 @@ class TradingHours extends DataObject implements TradingHoursInterface
      */
     public function getSunday(): string
     {
-        return $this->getData('sunday');
+        return $this->getData('sunday') || '';
     }
 
     public function getPublicHolidays(): ?string
     {
-        return $this->getData('public_holidays');
+        return $this->getData('public_holidays') || '';
     }
 
     /**
