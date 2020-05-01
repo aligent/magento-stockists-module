@@ -2,7 +2,7 @@
 
 namespace Aligent\Stockists\Model;
 
-use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\Search\SearchCriteriaBuilder;
 
 class GeoSearchCriteriaBuilder extends SearchCriteriaBuilder
 {
