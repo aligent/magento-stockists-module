@@ -133,6 +133,8 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function delete(StockistInterface $stockist): bool
     {
+        //TODO Validation
+        $this->stockistResource->delete($stockist);
         return true;
     }
 
@@ -141,6 +143,7 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function deleteByIdentifier(string $identifier): bool
     {
-        return true;
+        $stockist = $this->get($identifier);
+        return $this->delete($stockist);
     }
 }
