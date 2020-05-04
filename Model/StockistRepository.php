@@ -133,8 +133,18 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function delete(StockistInterface $stockist): bool
     {
-        //TODO Validation
-        $this->stockistResource->delete($stockist);
+        $id = $stockist->getIdentifier();
+
+        try {
+            $this->stockistResource->delete($stockist);
+        } catch (ValidatorException $e) {
+            throw new CouldNotSaveException(__($e->getMessage()));
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Exception\StateException(
+                __('The "%1" stockist couldn\'t be removed.', $id)
+            );
+        }
+
         return true;
     }
 
