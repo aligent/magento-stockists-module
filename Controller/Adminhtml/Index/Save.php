@@ -48,22 +48,20 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
             $stockist = $this->stockistFactory->create();
             $this->processSave($stockist, $requestData);
             $this->messageManager->addSuccessMessage('Stockist has been saved');
-            if ($this->getRequest()->getParam('back')) {
-                $resultRedirect->setPath('*/*/edit', [
-                    \Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID => $stockist->getStockistId(),
-                    '_current' => true,
-                ]);
-            } elseif ($this->getRequest()->getParam('redirect_to_new')) {
+            if ($this->getRequest()->getParam('redirect_to_new')) {
                 $resultRedirect->setPath('*/*/new', [
                     '_current' => true,
                 ]);
             } else {
-                $resultRedirect->setPath('*/*/edit');
+                $resultRedirect->setPath('*/*/edit', [
+                    \Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID => $stockist->getStockistId(),
+                    '_current' => true,
+                ]);
             }
 
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-            $resultRedirect->setPath('*/*/edit');
+            $resultRedirect->setPath('*/*/new');
         }
 
 
