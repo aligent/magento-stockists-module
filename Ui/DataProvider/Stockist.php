@@ -60,10 +60,10 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             // It is need for support of several fieldsets.
             // For details see \Magento\Ui\Component\Form::getDataSourceData
             if ($data['totalRecords'] > 0) {
-                $sourceCode = $data['items'][0][SourceInterface::SOURCE_CODE];
-                $sourceGeneralData = $data['items'][0];
-                $dataForSingle[$sourceCode] = [
-                    'general' => $sourceGeneralData,
+                $stockistId = $data['items'][0][\Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID];
+                $stockistGenenalData = $data['items'][0];
+                $dataForSingle[$stockistId] = [
+                    'general' => $stockistGenenalData,
                 ];
                 return $dataForSingle;
             }
