@@ -13,7 +13,7 @@ class NewAction extends \Magento\Backend\App\Action implements \Magento\Framewor
     /**
      * @var  \Magento\Framework\View\Result\PageFactory
      */
-    protected $resultPageFactory;
+    private $resultPageFactory;
 
     /**
      * Edit constructor.

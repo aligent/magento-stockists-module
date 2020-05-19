@@ -13,27 +13,27 @@ class MassDelete extends \Magento\Backend\App\Action implements \Magento\Framewo
     /**
      * @var  \Magento\Framework\View\Result\PageFactory
      */
-    protected $resultPageFactory;
+    private $resultPageFactory;
 
     /**
      * @var \Aligent\Stockists\Api\StockistRepositoryInterface
      */
-    protected $stockistRepository;
+    private $stockistRepository;
 
     /**
-     * @var \Magento\InventoryAdminUi\Ui\Component\MassAction\Filter
+     * @var \Aligent\Stockists\Ui\Component\MassAction\Filter
      */
-    protected $massActionFilter;
+    private $massActionFilter;
 
     /**
      * MassDelete constructor.
-     * @param \Magento\InventoryAdminUi\Ui\Component\MassAction\Filter $massActionFilter
+     * @param \Aligent\Stockists\Ui\Component\MassAction\Filter $massActionFilter
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\InventoryAdminUi\Ui\Component\MassAction\Filter $massActionFilter,
+        \Aligent\Stockists\Ui\Component\MassAction\Filter $massActionFilter,
         \Magento\Backend\App\Action\Context $context,
         \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
@@ -65,7 +65,7 @@ class MassDelete extends \Magento\Backend\App\Action implements \Magento\Framewo
                 $this->messageManager->addErrorMessage($errorMessage);
             }
         }
-        $this->messageManager->addSuccessMessage(__('You deleted %1 Stock(s).', $deletedItemsCount));
+        $this->messageManager->addSuccessMessage(__('You deleted %1 Stockist(s).', $deletedItemsCount));
 
         return $this->resultRedirectFactory->create()->setPath('*/*');
     }

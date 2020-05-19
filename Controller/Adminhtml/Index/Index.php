@@ -13,7 +13,7 @@ class Index extends \Magento\Backend\App\Action implements \Magento\Framework\Ap
     /**
      * @var  \Magento\Framework\View\Result\PageFactory
      */
-    protected $resultPageFactory;
+    private $resultPageFactory;
 
     /**
      * Edit constructor.

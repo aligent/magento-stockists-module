@@ -17,11 +17,11 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
      */
     const ADMIN_RESOURCE = 'Aligent_Stockists::manage';
 
-    protected $stockistHydrator;
+    private $stockistHydrator;
 
-    protected $stockistRepository;
+    private $stockistRepository;
 
-    protected $stockistFactory;
+    private $stockistFactory;
 
     public function __construct(
         \Aligent\Stockists\Api\Data\StockistInterfaceFactory $stockistFactory,
@@ -74,7 +74,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
      * @param \Aligent\Stockists\Api\Data\StockistInterface $stockist
      * @param array $requestData
      */
-    protected function processSave(\Aligent\Stockists\Api\Data\StockistInterface $stockist, array $requestData) {
+    private function processSave(\Aligent\Stockists\Api\Data\StockistInterface $stockist, array $requestData) {
         $stockist = $this->stockistHydrator->hydrate($stockist, $requestData);
         return $this->stockistRepository->save($stockist);
     }
@@ -84,7 +84,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
      * @throws \Magento\Framework\Exception\SecurityViolationException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    protected function getRequestData(): array {
+    private function getRequestData(): array {
         $request = $this->getRequest();
         if (!$request->isPost() || !$request->isSecure()) {
             throw new \Magento\Framework\Exception\SecurityViolationException(__('Must be a secured POST request'));

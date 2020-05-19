@@ -50,7 +50,7 @@ class InlineEdit extends \Aligent\Stockists\Controller\Adminhtml\Index\Save impl
      * @throws \Magento\Framework\Exception\SecurityViolationException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    protected function getRequestData(): array {
+    private function getRequestData(): array {
         $request = $this->getRequest();
         if (!$request->isPost() || !$request->isSecure()) {
             throw new \Magento\Framework\Exception\SecurityViolationException(__('Must be a secured POST request'));

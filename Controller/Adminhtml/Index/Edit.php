@@ -13,12 +13,12 @@ class Edit extends \Magento\Backend\App\Action implements \Magento\Framework\App
     /**
      * @var  \Magento\Framework\View\Result\PageFactory
      */
-    protected $resultPageFactory;
+    private $resultPageFactory;
 
     /**
      * @var \Aligent\Stockists\Api\StockistRepositoryInterface
      */
-    protected $stockistRepository;
+    private $stockistRepository;
 
     /**
      * Edit constructor.
