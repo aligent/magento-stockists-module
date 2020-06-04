@@ -17,7 +17,7 @@ class StockistValidation implements StockistValidationInterface
             return false;
         }
 
-        if (!is_subclass_of(AbstractModel::class))
+        if (!is_subclass_of($stockist,AbstractModel::class))
         {
             return false;
         }
