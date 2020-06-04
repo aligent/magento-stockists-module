@@ -1,45 +1,45 @@
 type Query {
     stockists (
-        location: LocationRequest @doc(description: "Search request"),
-        pageSize: Int = 20 @doc(description: "Number per page"),
+        location: LocationRequest @doc(description: "Search request")
+        pageSize: Int = 20 @doc(description: "Number per page")
         currentPage: Int = 1 @doc(description: "Current page")
     ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retreive Stockists")
 }
 
 type Stockist @doc(description: "A stockist location entity") {
-    id: Int,
-    identifier: String,
-    location: Location @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistLocation"),
-    name: String,
-    address: Address @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistAddress"),
-    trading_hours: Hours @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistHours"),
-    distance: Float,
+    id: Int
+    identifier: String
+    location: Location @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistLocation")
+    name: String
+    address: Address @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistAddress")
+    trading_hours: Hours @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistHours")
+    distance: Float
     units: DistanceUnitsEnum
 }
 
 type Location @doc(description: "Geo-location coordinates") {
-    lat: Float,
+    lat: Float
     lng: Float
     distance: Float
 }
 
 type Address @doc(description: "Street address of location") {
-    street: String,
-    city: String,
-    postcode: String,
-    region: String,
+    street: String
+    city: String
+    postcode: String
+    region: String
     country_code: String
     phone: String
 }
 
 type Hours @doc(description: "Opening hours") {
-    monday: String,
-    tuesday: String,
-    wednesday: String,
-    thursday: String,
-    friday: String,
-    saturday: String,
-    sunday: String,
+    monday: String
+    tuesday: String
+    wednesday: String
+    thursday: String
+    friday: String
+    saturday: String
+    sunday: String
     public_holidays: String
 }
 
@@ -49,14 +49,15 @@ enum DistanceUnitsEnum @doc(description: "Distance unit") {
 }
 
 type Stockists @doc(description: "Result of a stockist search query") {
-    locations: [Stockist] @doc(description: "List of stockists"),
-    page_info: SearchResultPageInfo @doc(description: "Page information"),
+    locations: [Stockist] @doc(description: "List of stockists")
+    page_info: SearchResultPageInfo @doc(description: "Page information")
     total_count: Int @doc(description: "Total matching locations")
 }
 
 input LocationRequest @doc(description: "Request location (origin point and search radius)") {
-    lat: Float @doc(description: "Latitude"),
-    lng: Float @doc(description: "Longitude"),
-    radius: Float @doc(description: "Search radius"),
+    lat: Float @doc(description: "Latitude")
+    lng: Float @doc(description: "Longitude")
+    postcode: String @doc(description: "Postcode")
+    radius: Float @doc(description: "Search radius")
     unit: DistanceUnitsEnum @doc(description: "Units of search radius")
 }

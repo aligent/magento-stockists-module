@@ -2,7 +2,7 @@
 
 namespace Aligent\Stockists\Model;
 
-use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\DataObject\IdentityInterface;
 use Aligent\Stockists\Model\ResourceModel\Stockist as StockistResource;
 use Aligent\Stockists\Api\Data\StockistInterface;
@@ -11,7 +11,7 @@ use Aligent\Stockists\Api\Data\StockistInterface;
  * @method StockistResource getResource()
  * @method ResourceModel\Stockist\Collection getCollection()
  */
-class Stockist extends AbstractModel implements StockistInterface, IdentityInterface
+class Stockist extends AbstractExtensibleModel implements StockistInterface, IdentityInterface
 {
     const CACHE_TAG = 'aligent_stockist';
     protected $_cacheTag = 'aligent_stockist';
