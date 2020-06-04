@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Aligent\Stockists\Model;
-
 
 use Aligent\Stockists\Api\Data\StockistInterface;
 use Aligent\Stockists\Api\StockistValidationInterface;
