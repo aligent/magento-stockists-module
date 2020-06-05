@@ -113,11 +113,17 @@ class StockistRepository implements StockistRepositoryInterface
      * @param StockistInterface $stockist
      * @return StockistInterface
      * @throws \Magento\Framework\Exception\AlreadyExistsException
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function save(StockistInterface $stockist): StockistInterface
     {
-        if ($this->stockistValidation->validate($stockist))
-        {
+        $validationResult = $this->stockistValidation->validate($stockist);
+
+        if ($validationResult !== true) {
+            throw new \Magento\Framework\Exception\CouldNotSaveException(
+                __('Invalid product data: %1', implode(',', $validationResult))
+            );
+        } else {
             $this->stockistResource->save($stockist);
         }
 
