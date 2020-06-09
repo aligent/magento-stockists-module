@@ -74,9 +74,9 @@ class GoogleMapsAdapter implements AdapterInterface
     {
         $result = $this->resultJsonFactory->create();
         $result->setData([
-            'status' => $response->status,
-            'lat' => $response->geometry->location->lat,
-            'long' => $response->geometry->location->long
+            'status' => $response["status"],
+            'lat' => $response["geometry"]["location"]["lat"],
+            'long' => $response["geometry"]["location"]["long"]
         ]);
 
         return $result;
