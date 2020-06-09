@@ -14,5 +14,5 @@ interface AdapterInterface
 
     public function performGeocode(string $request) :? array;
 
-    public function handleResponse(array $response) : \Magento\Framework\Controller\Result\Json;
+    public function handleResponse(array $response) : GeocodeResultInterface;
 }

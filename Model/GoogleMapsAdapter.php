@@ -5,6 +5,7 @@ namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\AdapterInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\GeocodeResultInterface;
 
 class GoogleMapsAdapter implements AdapterInterface
 {
@@ -14,19 +15,19 @@ class GoogleMapsAdapter implements AdapterInterface
     protected $httpClientFactory;
     protected $queryParamsResolver;
     protected $serialiser;
-    protected $resultJsonFactory;
+    private $geocodeResultFactory;
 
     public function __construct(
         \Magento\Framework\HTTP\Client\CurlFactory $httpClientFactory,
         \Magento\Framework\Url\QueryParamsResolverInterface $queryParamsResolver,
         \Magento\Framework\Serialize\Serializer\Json $serialiser,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        \Aligent\Stockists\Api\GeocodeResultInterfaceFactory $geocodeResultFactory
     )
     {
         $this->httpClientFactory = $httpClientFactory;
         $this->queryParamsResolver = $queryParamsResolver;
         $this->serialiser = $serialiser;
-        $this->resultJsonFactory = $resultJsonFactory;
+        $this->geocodeResultFactory = $geocodeResultFactory;
     }
 
     public function addressHasChangedFor($stockist) : bool
@@ -83,14 +84,11 @@ class GoogleMapsAdapter implements AdapterInterface
         return $this->serialiser->unserialize($response);
     }
 
-    public function handleResponse(array $response) : \Magento\Framework\Controller\Result\Json
+    public function handleResponse(array $response) : GeocodeResultInterface
     {
-        $result = $this->resultJsonFactory->create();
-        $result->setData([
-            'status' => $response["status"],
-            'lat' => $response["geometry"]["location"]["lat"],
-            'long' => $response["geometry"]["location"]["long"]
-        ]);
+        $result = $this->geocodeResultFactory->create();
+        $location = $response["results"][0]["geometry"]["location"];
+        $result->setData($response["status"], $location["lat"], $location["lng"]);
 
         return $result;
     }

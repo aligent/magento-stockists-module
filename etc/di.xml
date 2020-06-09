@@ -12,6 +12,8 @@
                 type="Aligent\Stockists\Model\TradingHours" />
     <preference for="Aligent\Stockists\Api\AdapterInterface"
                 type="Aligent\Stockists\Model\GoogleMapsAdapter" />
+    <preference for="Aligent\Stockists\Api\GeocodeResultInterface"
+                type="Aligent\Stockists\Model\GoogleMapsGeocodeResult" />
     <type name="Aligent\Stockists\Model\Stockist\Hydrator">
         <arguments>
             <argument name="dataProcessors" xsi:type="array">
