@@ -5,6 +5,7 @@ namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\AdapterInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class GoogleMapsAdapter implements AdapterInterface
 {
@@ -27,6 +28,19 @@ class GoogleMapsAdapter implements AdapterInterface
         $this->queryParamsResolver = $queryParamsResolver;
         $this->serialiser = $serialiser;
         $this->resultJsonFactory = $resultJsonFactory;
+    }
+
+    public function addressHasChangedFor($stockist) : Boolean
+    {
+        foreach (['street', 'city', 'region', 'country'] as $field)
+        {
+            if ($stockist->dataHasChangedFor($field))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function buildRequest(StockistInterface $stockist, string $key) :? string

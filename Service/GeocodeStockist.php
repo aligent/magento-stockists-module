@@ -40,12 +40,15 @@ class GeocodeStockist implements GeocodeStockistInterface
 
     public function execute(StockistInterface $stockist)
     {
-        $key = $this->getGeocodeKey();
-        $request = $this->adapter->buildRequest($stockist, $key);
-        $response = $this->adapter->performGeocode($request);
-        $result = $this->adapter->handleResponse($response);
-        $stockist->setLat($result["lat"]);
-        $stockist->setLong($result["long"]);
+        if($this->adapter->addressHasChanged($stockist))
+        {
+            $key = $this->getGeocodeKey();
+            $request = $this->adapter->buildRequest($stockist, $key);
+            $response = $this->adapter->performGeocode($request);
+            $result = $this->adapter->handleResponse($response);
+            $stockist->setLat($result["lat"]);
+            $stockist->setLong($result["long"]);
+        }
     }
 
     protected function getGeocodeKey()
