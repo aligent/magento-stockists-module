@@ -37,7 +37,7 @@ class SaveButton implements \Magento\Framework\View\Element\UiComponent\Control\
             'label'     => __('Save Stockist'),
             'class'     =>  'save primary',
 
-        ]
+        ];
     }
 
 
