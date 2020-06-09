@@ -4,6 +4,9 @@ type Query {
         pageSize: Int = 20 @doc(description: "Number per page")
         currentPage: Int = 1 @doc(description: "Current page")
     ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retreive Stockists")
+    stockist (
+        identifier: String @doc(description: "Location Identifier")
+    ): Stockist @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockist") @doc(description: "Retrieve individual stockist location")
 }
 
 type Stockist @doc(description: "A stockist location entity") {
