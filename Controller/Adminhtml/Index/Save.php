@@ -19,7 +19,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
 
     private $stockistHydrator;
 
-    private $stockistRepository;
+    protected $stockistRepository;
 
     private $stockistFactory;
 
@@ -72,7 +72,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
      * @param \Aligent\Stockists\Api\Data\StockistInterface $stockist
      * @param array $requestData
      */
-    private function processSave(\Aligent\Stockists\Api\Data\StockistInterface $stockist, array $requestData) {
+    protected function processSave(\Aligent\Stockists\Api\Data\StockistInterface $stockist, array $requestData) {
         $stockist = $this->stockistHydrator->hydrate($stockist, $requestData);
         return $this->stockistRepository->save($stockist);
     }

@@ -29,7 +29,7 @@ class InlineEdit extends \Aligent\Stockists\Controller\Adminhtml\Index\Save impl
             }
         } catch (\Exception $e) {
             $errorMessages[] = __('[ID: %value] %message', [
-                'value' => $stockId,
+                'value' => $stockistId,
                 'message' => $e->getMessage()
             ]);
         }
