@@ -5,7 +5,6 @@ namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\AdapterInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class GoogleMapsAdapter implements AdapterInterface
 {
@@ -17,7 +16,7 @@ class GoogleMapsAdapter implements AdapterInterface
     protected $serialiser;
     protected $resultJsonFactory;
 
-    public function _construct(
+    public function __construct(
         \Magento\Framework\HTTP\Client\CurlFactory $httpClientFactory,
         \Magento\Framework\Url\QueryParamsResolverInterface $queryParamsResolver,
         \Magento\Framework\Serialize\Serializer\Json $serialiser,
@@ -30,7 +29,7 @@ class GoogleMapsAdapter implements AdapterInterface
         $this->resultJsonFactory = $resultJsonFactory;
     }
 
-    public function addressHasChangedFor($stockist) : Boolean
+    public function addressHasChangedFor($stockist) : bool
     {
         foreach (['street', 'city', 'region', 'country'] as $field)
         {

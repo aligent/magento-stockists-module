@@ -13,6 +13,7 @@ use Aligent\Stockists\Api\Data\StockistInterface;
 use Aligent\Stockists\Api\GeocodeStockistInterface;
 use Aligent\Stockists\Api\StockistRepositoryInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class GeocodeStockist implements GeocodeStockistInterface
 {
@@ -40,7 +41,7 @@ class GeocodeStockist implements GeocodeStockistInterface
 
     public function execute(StockistInterface $stockist)
     {
-        if($this->adapter->addressHasChanged($stockist))
+        if($this->adapter->addressHasChangedFor($stockist))
         {
             $key = $this->getGeocodeKey();
             $request = $this->adapter->buildRequest($stockist, $key);
