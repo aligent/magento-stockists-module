@@ -20,4 +20,8 @@
             </argument>
         </arguments>
     </type>
+    <type name="Aligent\Stockists\Model\StockistRepository">
+        <plugin sortOrder="1" name="aligentStockistsStockistRepository"
+                type="Aligent\Stockists\Plugin\Model\StockistRepositoryPlugin"/>
+    </type>
 </config>
