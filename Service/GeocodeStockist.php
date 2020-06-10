@@ -52,7 +52,7 @@ class GeocodeStockist implements GeocodeStockistInterface
             if ($result->wasSuccessful())
             {
                 $stockist->setLat($result->getLat());
-                $stockist->setLong($result->getLong());
+                $stockist->setLng($result->getLng());
             }
         }
     }

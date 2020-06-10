@@ -10,5 +10,5 @@ interface GeocodeResultInterface
     public function getStatus() : string;
     public function wasSuccessful() : bool;
     public function getLat() : float;
-    public function getLong() : float;
+    public function getLng() : float;
 }

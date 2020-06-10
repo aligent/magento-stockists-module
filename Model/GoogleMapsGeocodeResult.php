@@ -10,13 +10,13 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
 {
     private $status;
     private $lat;
-    private $long;
+    private $lng;
 
-    public function setData(string $status, float $lat, float $long)
+    public function setData(string $status, float $lat, float $lng)
     {
         $this->status = $status;
         $this->lat = $lat;
-        $this->long = $long;
+        $this->lng = $lng;
     }
 
     public function getStatus(): string
@@ -34,8 +34,8 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
         return $this->lat;
     }
 
-    public function getLong(): float
+    public function getLng(): float
     {
-        return $this->long;
+        return $this->lng;
     }
 }
