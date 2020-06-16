@@ -37,7 +37,7 @@ class StockistValidation implements StockistValidationInterface
         return true;
     }
 
-    private function isIso2CountryCode(string $country_code)
+    private function isIso2CountryCode(string $countryCode)
     {
         // TODO: Validate country code passed in as string
         return true;
