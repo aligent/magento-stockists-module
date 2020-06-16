@@ -2,7 +2,7 @@
 /**
  * @category    Aligent
  * @package     Aligent_Stockists
- * @copyright   Copyright (c) 20120 Aligent Consulting. (http://www.aligent.com.au)
+ * @copyright   Copyright (c) 2020 Aligent Consulting. (http://www.aligent.com.au)
  *
  * @author      Torbjorn van Heeswijck <torbjorn.vanheeswijck@aligent.com.au>
  */
