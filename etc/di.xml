@@ -10,6 +10,8 @@
                 type="Aligent\Stockists\Model\GeoSearchCriteria" />
     <preference for="Aligent\Stockists\Api\Data\TradingHoursInterface"
                 type="Aligent\Stockists\Model\TradingHours" />
+    <preference for="Aligent\Stockists\Api\StockistValidationInterface"
+                type="Aligent\Stockists\Model\StockistValidation" />
     <type name="Aligent\Stockists\Model\Stockist\Hydrator">
         <arguments>
             <argument name="dataProcessors" xsi:type="array">
