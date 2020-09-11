@@ -28,4 +28,13 @@
         <plugin sortOrder="1" name="aligentStockistsStockistRepository"
                 type="Aligent\Stockists\Plugin\Model\StockistRepositoryPlugin"/>
     </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="aligent_stockists_geocode" xsi:type="object">
+                    Aligent\Stockists\Command\GeocodeStockists
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>
