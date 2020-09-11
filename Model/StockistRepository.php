@@ -13,6 +13,7 @@ use Aligent\Stockists\Model\StockistFactory;
 use Aligent\Stockists\Model\ResourceModel\Stockist\CollectionFactory as StockistCollectionFactory;
 use Aligent\Stockists\Api\Data\StockistSearchResultsInterfaceFactory as SearchResultsFactory;
 use Aligent\Stockists\Model\SearchCriteria\DistanceProcessor;
+use Magento\Framework\Model\AbstractModel;
 
 class StockistRepository implements StockistRepositoryInterface
 {
@@ -150,6 +151,22 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function delete(StockistInterface $stockist): bool
     {
+        $id = $stockist->getIdentifier();
+
+        if (!is_subclass_of($stockist, AbstractModel::class)) {
+            return false;
+        }
+
+        try {
+            $this->stockistResource->delete($stockist);
+        } catch (ValidatorException $e) {
+            throw new CouldNotSaveException(__($e->getMessage()));
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Exception\StateException(
+                __('The "%1" stockist couldn\'t be removed.', $id)
+            );
+        }
+
         return true;
     }
 
@@ -158,6 +175,7 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function deleteByIdentifier(string $identifier): bool
     {
-        return true;
+        $stockist = $this->get($identifier);
+        return $this->delete($stockist);
     }
 }
