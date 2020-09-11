@@ -7,6 +7,25 @@ use Magento\Framework\Api\ExtensibleDataInterface;
 interface StockistInterface extends ExtensibleDataInterface
 {
     /**
+     * Constants for keys of data array. Identical to the name of the getter in snake case
+     * Notes: required as some UI Components only take constant as value
+     */
+    const STOCKIST_ID = 'stockist_id';
+    const IDENTIFIER = 'identifier';
+    const LAT = 'lat';
+    const LNG = 'lng';
+    const NAME = 'name';
+    const STREET = 'street';
+    const CITY = 'city';
+    const POSTCODE = 'postcode';
+    const REGION = 'region';
+    const COUNTRY = 'country';
+    const PHONE = 'phone';
+    const HOURS = 'hours';
+    const STORE_IDS = 'store_ids';
+
+
+    /**
      * @return int
      */
     public function getStockistId(): int;

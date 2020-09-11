@@ -12,4 +12,12 @@
                 type="Aligent\Stockists\Model\TradingHours" />
     <preference for="Aligent\Stockists\Api\StockistValidationInterface"
                 type="Aligent\Stockists\Model\StockistValidation" />
+    <type name="Aligent\Stockists\Model\Stockist\Hydrator">
+        <arguments>
+            <argument name="dataProcessors" xsi:type="array">
+                <item name="tradingHours" xsi:type="object">Aligent\Stockists\Model\Stockist\DataProcessor\TradingHours</item>
+                <item name="coordinate" xsi:type="object">Aligent\Stockists\Model\Stockist\DataProcessor\Coordinate</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
