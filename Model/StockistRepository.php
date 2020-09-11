@@ -121,7 +121,7 @@ class StockistRepository implements StockistRepositoryInterface
 
         if (!$validationResult) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(
-                __('Invalid product data: %1', implode(',', $validationResult))
+                __('Invalid stockist data: %1', implode(',', $validationResult))
             );
         } else {
             $this->stockistResource->save($stockist);
