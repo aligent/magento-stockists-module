@@ -23,10 +23,17 @@ class StockistLocation implements ResolverInterface
         /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
         $stockist = $value['model'];
 
-        return [
+        $locationDetails = [
             'lat' => $stockist->getLat(),
-            'lng' => $stockist->getLng(),
-            'distance' => $value['distance']
+            'lng' => $stockist->getLng()
         ];
+
+        // If we're resolving within the context of a geo-search, we can also enrich with the distance
+        // that was calculated by the repository getList
+        if (isset($value['distance'])) {
+            $locationDetails['distance'] = $value['distance'];
+        }
+
+        return $locationDetails;
     }
 }

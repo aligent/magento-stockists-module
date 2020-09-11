@@ -2,7 +2,9 @@
 
 namespace Aligent\Stockists\Api\Data;
 
-interface StockistInterface
+use Magento\Framework\Api\ExtensibleDataInterface;
+
+interface StockistInterface extends ExtensibleDataInterface
 {
     /**
      * Constants for keys of data array. Identical to the name of the getter in snake case
@@ -165,4 +167,15 @@ interface StockistInterface
      * @return $this
      */
     public function setHours(\Aligent\Stockists\Api\Data\TradingHoursInterface $hours): StockistInterface;
+
+    /**
+     * @return \Aligent\Stockists\Api\Data\StockistExtensionInterface|null
+     */
+    public function getExtensionAttributes();
+
+    /**
+     * @param \Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes
+     * @return $this
+     */
+    public function setExtensionAttributes(\Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes);
 }

@@ -63,7 +63,7 @@ class Stockists implements ResolverInterface
      * @param $args
      * @return \Aligent\Stockists\Api\GeoSearchCriteriaInterface
      */
-    private function createSearchCriteria($args)
+    public function createSearchCriteria($args)
     {
         $radius = (float)$args['location']['radius'];
         $units = $args['location']['unit'] ?? StockistHelper::DISTANCE_UNITS_KM;
@@ -77,8 +77,6 @@ class Stockists implements ResolverInterface
             'lat' => (float)$args['location']['lat'],
             'lng' => (float)$args['location']['lng']
         ])->create();
-
-        //TODO: Attach any other filters
 
         return $searchCriteria;
     }

@@ -10,13 +10,13 @@ interface StockistRepositoryInterface
 {
     /**
      * @param string $identifier
-     * @return StockistInterface
+     * @return \Aligent\Stockists\Api\Data\StockistInterface
      */
     public function get(string $identifier): StockistInterface;
 
     /**
      * @param int $id
-     * @return StockistInterface
+     * @return \Aligent\Stockists\Api\Data\StockistInterface
      */
     public function getById(int $id): StockistInterface;
 
@@ -27,13 +27,13 @@ interface StockistRepositoryInterface
     public function getList(GeoSearchCriteriaInterface $searchCriteria): SearchResultsInterface;
 
     /**
-     * @param StockistInterface $stockist
-     * @return StockistInterface
+     * @param \Aligent\Stockists\Api\Data\StockistInterface $stockist
+     * @return \Aligent\Stockists\Api\Data\StockistInterface
      */
     public function save(StockistInterface $stockist): StockistInterface;
 
     /**
-     * @param StockistInterface $stockist
+     * @param \Aligent\Stockists\Api\Data\StockistInterface $stockist
      * @return bool
      */
     public function delete(StockistInterface $stockist): bool;
