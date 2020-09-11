@@ -161,4 +161,14 @@ class StockistRepository implements StockistRepositoryInterface
         $stockist = $this->get($identifier);
         return $this->delete($stockist);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteById(string $stockistId): bool
+    {
+        $stockist = $this->getById($stockistId);
+        $this->stockistResource->delete($stockist);
+        return true;
+    }
 }

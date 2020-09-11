@@ -8,6 +8,10 @@ use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
 
 class Stockist extends AbstractDb
 {
+
+    const TABLE_NAME_STOCKIST = 'stockist';
+    const ID_FIELD_NAME = 'stockist_id';
+
     /**
      * @var JsonSerializer
      */
@@ -26,7 +30,7 @@ class Stockist extends AbstractDb
 
     protected function _construct()
     {
-        $this->_init('stockist', 'stockist_id');
+        $this->_init(self::TABLE_NAME_STOCKIST, self::ID_FIELD_NAME);
     }
 
     /**
