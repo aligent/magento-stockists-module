@@ -52,7 +52,7 @@ class Delete extends \Magento\Backend\App\Action implements \Magento\Framework\A
         try {
             $stockistId = (int)$stockistId;
             $this->stockistRepository->deleteById($stockistId);
-            $this->messageManager->addSuccessMessage(__('The Stock has been deleted.'));
+            $this->messageManager->addSuccessMessage(__('The Stockist has been deleted.'));
             $resultRedirect->setPath('*/*');
         } catch (\Magento\Framework\Exception\CouldNotDeleteException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
