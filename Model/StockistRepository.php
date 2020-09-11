@@ -41,6 +41,11 @@ class StockistRepository implements StockistRepositoryInterface
      * @var DistanceProcessor
      */
     private $distanceProcessor;
+    /**
+     * @var StockistValidation
+     */
+    private $stockistValidation;
+
 
     /**
      * @param \Aligent\Stockists\Model\StockistFactory $stockistFactory
@@ -49,6 +54,7 @@ class StockistRepository implements StockistRepositoryInterface
      * @param SearchResultsFactory $searchResultsFactory
      * @param CollectionProcessorInterface $collectionProcessor
      * @param DistanceProcessor $distanceProcessor
+     * @param StockistValidation $stockistValidation
      */
     public function __construct(
         StockistFactory $stockistFactory,
@@ -56,7 +62,8 @@ class StockistRepository implements StockistRepositoryInterface
         StockistCollectionFactory $stockistCollectionFactory,
         SearchResultsFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor,
-        DistanceProcessor $distanceProcessor
+        DistanceProcessor $distanceProcessor,
+        StockistValidation $stockistValidation
     ) {
         $this->stockistFactory = $stockistFactory;
         $this->stockistResource = $stockistResource;
@@ -64,6 +71,7 @@ class StockistRepository implements StockistRepositoryInterface
         $this->searchResultsFactory = $searchResultsFactory;
         $this->collectionProcessor = $collectionProcessor;
         $this->distanceProcessor = $distanceProcessor;
+        $this->stockistValidation = $stockistValidation;
     }
 
     /**
@@ -106,11 +114,20 @@ class StockistRepository implements StockistRepositoryInterface
      * @param StockistInterface $stockist
      * @return StockistInterface
      * @throws \Magento\Framework\Exception\AlreadyExistsException
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function save(StockistInterface $stockist): StockistInterface
     {
-        //TODO Validation
-        $this->stockistResource->save($stockist);
+        $validationResult = $this->stockistValidation->validate($stockist);
+
+        if (!$validationResult) {
+            throw new \Magento\Framework\Exception\CouldNotSaveException(
+                __('Invalid stockist data: %1', implode(',', $validationResult))
+            );
+        } else {
+            $this->stockistResource->save($stockist);
+        }
+
         return $stockist;
     }
 
