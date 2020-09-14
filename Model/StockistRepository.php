@@ -129,10 +129,6 @@ class StockistRepository implements StockistRepositoryInterface
                 $existingStockist = $this->get($stockist->getIdentifier());
                 $stockist->setStockistId($existingStockist->getId());
             } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
-            } catch (\Exception $e) {
-                throw new \Magento\Framework\Exception\CouldNotSaveException(
-                    __('Unknow error of getting stockist entity: %1', $e->getMessage())
-                );
             }
             $this->stockistResource->save($stockist);
         }
