@@ -13,7 +13,6 @@ use Aligent\Stockists\Model\StockistFactory;
 use Aligent\Stockists\Model\ResourceModel\Stockist\CollectionFactory as StockistCollectionFactory;
 use Aligent\Stockists\Api\Data\StockistSearchResultsInterfaceFactory as SearchResultsFactory;
 use Aligent\Stockists\Model\SearchCriteria\DistanceProcessor;
-use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Model\AbstractModel;
 
 class StockistRepository implements StockistRepositoryInterface
