@@ -125,6 +125,11 @@ class StockistRepository implements StockistRepositoryInterface
                 __('Invalid stockist data: %1', implode(',', $validationResult))
             );
         } else {
+            try {
+                $existingStockist = $this->get($stockist->getIdentifier());
+                $stockist->setStockistId($existingStockist->getId());
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            }
             $this->stockistResource->save($stockist);
         }
 
