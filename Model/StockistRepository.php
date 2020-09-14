@@ -13,6 +13,7 @@ use Aligent\Stockists\Model\StockistFactory;
 use Aligent\Stockists\Model\ResourceModel\Stockist\CollectionFactory as StockistCollectionFactory;
 use Aligent\Stockists\Api\Data\StockistSearchResultsInterfaceFactory as SearchResultsFactory;
 use Aligent\Stockists\Model\SearchCriteria\DistanceProcessor;
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Model\AbstractModel;
 
 class StockistRepository implements StockistRepositoryInterface
@@ -125,6 +126,15 @@ class StockistRepository implements StockistRepositoryInterface
                 __('Invalid stockist data: %1', implode(',', $validationResult))
             );
         } else {
+            try {
+                $existingStockist = $this->get($stockist->getIdentifier());
+                $stockist->setStockistId($existingStockist->getId());
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            } catch (\Exception $e) {
+                throw new \Magento\Framework\Exception\CouldNotSaveException(
+                    __('Unknow error of getting stockist entity: %1', $e->getMessage())
+                );
+            }
             $this->stockistResource->save($stockist);
         }
 
