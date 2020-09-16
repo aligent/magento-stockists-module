@@ -65,7 +65,7 @@ class Stockists implements ResolverInterface
      */
     public function createSearchCriteria($args)
     {
-        $radius = (float)$args['location']['radius'];
+        $radius = (float)$args['location']['radius'] ?? 50;
         $units = $args['location']['unit'] ?? StockistHelper::DISTANCE_UNITS_KM;
 
         // Normalize to KM to match the computed distance
