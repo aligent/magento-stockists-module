@@ -3,6 +3,7 @@
 namespace Aligent\Stockists\Model\Resolver;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
@@ -13,11 +14,11 @@ use Aligent\Stockists\Helper\Data as StockistHelper;
 
 class Stockists implements ResolverInterface
 {
-
     /**
      * @var StockistRepositoryInterface
      */
     private $stockistRepository;
+
     /**
      * @var GeoSearchCriteriaBuilder
      */
@@ -36,10 +37,12 @@ class Stockists implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
+        $this->validateSearchArguments($args);
+
         $searchCriteria = $this->createSearchCriteria($args);
         $results = $this->stockistRepository->getList($searchCriteria);
 
-        $locations = array_map(function($location) use ($args) {
+        $locations = array_map(function ($location) use ($args) {
             /** @var \Aligent\Stockists\Model\Stockist $location */
             $locationData = $location->getData();
 
@@ -79,5 +82,20 @@ class Stockists implements ResolverInterface
         ])->create();
 
         return $searchCriteria;
+    }
+
+    /**
+     * @param array $args
+     * @throws GraphQlInputException
+     */
+    private function validateSearchArguments(array $args)
+    {
+        if (!isset($args['location'])) {
+            throw new GraphQlInputException(__('Location request is invalid.'));
+        }
+
+        if (!isset($args['location']['lat']) || !isset($args['location']['lng'])) {
+            throw new GraphQlInputException(__('Invalid search coordinates provided.'));
+        }
     }
 }
