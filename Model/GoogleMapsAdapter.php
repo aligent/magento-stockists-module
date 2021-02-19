@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\AdapterInterface;
@@ -10,11 +9,27 @@ use Aligent\Stockists\Api\GeocodeResultInterface;
 class GoogleMapsAdapter implements AdapterInterface
 {
     const PATH= 'https://maps.googleapis.com/maps/api/geocode/';
+
     const OUTPUT_FORMAT = 'json';
 
+    /**
+     * @var \Magento\Framework\HTTP\Client\CurlFactory
+     */
     protected $httpClientFactory;
+
+    /**
+     * @var \Magento\Framework\Url\QueryParamsResolverInterface
+     */
     protected $queryParamsResolver;
+
+    /**
+     * @var \Magento\Framework\Serialize\Serializer\Json
+     */
     protected $serialiser;
+
+    /**
+     * @var \Aligent\Stockists\Api\GeocodeResultInterfaceFactory
+     */
     private $geocodeResultFactory;
 
     public function __construct(
@@ -22,20 +37,17 @@ class GoogleMapsAdapter implements AdapterInterface
         \Magento\Framework\Url\QueryParamsResolverInterface $queryParamsResolver,
         \Magento\Framework\Serialize\Serializer\Json $serialiser,
         \Aligent\Stockists\Api\GeocodeResultInterfaceFactory $geocodeResultFactory
-    )
-    {
+    ) {
         $this->httpClientFactory = $httpClientFactory;
         $this->queryParamsResolver = $queryParamsResolver;
         $this->serialiser = $serialiser;
         $this->geocodeResultFactory = $geocodeResultFactory;
     }
 
-    public function addressHasChangedFor($stockist) : bool
+    public function addressHasChangedFor($stockist): bool
     {
-        foreach (['street', 'city', 'region', 'country'] as $field)
-        {
-            if ($stockist->dataHasChangedFor($field))
-            {
+        foreach (['street', 'city', 'region', 'country'] as $field) {
+            if ($stockist->dataHasChangedFor($field)) {
                 return true;
             }
         }
@@ -43,7 +55,7 @@ class GoogleMapsAdapter implements AdapterInterface
         return false;
     }
 
-    public function buildRequest(StockistInterface $stockist, string $key) :? string
+    public function buildRequest(StockistInterface $stockist, string $key): ?string
     {
         $address = $this->buildAddress($stockist);
 
@@ -54,10 +66,10 @@ class GoogleMapsAdapter implements AdapterInterface
 
         $query = $this->queryParamsResolver->addQueryParams($queryParams)->getQuery();
 
-        return $this::PATH . $this::OUTPUT_FORMAT . '?' . $query;;
+        return $this::PATH . $this::OUTPUT_FORMAT . '?' . $query;
     }
 
-    protected function buildAddress(Stockist $stockist)
+    protected function buildAddress(Stockist $stockist): string
     {
         $params = [
             $stockist->getStreet(),
@@ -69,26 +81,35 @@ class GoogleMapsAdapter implements AdapterInterface
         return implode(',', $params);
     }
 
-    public function performGeocode(string $request) :? array
+    public function performGeocode(string $request): ?array
     {
         $httpClient = $this->httpClientFactory->create();
 
         $httpClient->get($request);
 
-        if ($httpClient->getStatus() !== \Zend\Http\Response::STATUS_CODE_200) {
-            return false;
+        $response = $this->serialiser->unserialize($httpClient->getBody());
+
+        /**
+         * Google maps API return 200 and state any errors that occur as part
+         * of the api response body...
+         * 
+         * @see: https://developers.google.com/maps/documentation/geocoding/overview#StatusCodes
+         */
+        if ($response['status'] !== \Zend\Http\Response::STATUS_CODE_200) {
+            return [];
         }
 
-        $response = $httpClient->getBody();
-
-        return $this->serialiser->unserialize($response);
+        return $response;
     }
 
-    public function handleResponse(array $response) : GeocodeResultInterface
+    public function handleResponse(array $response): GeocodeResultInterface
     {
         $result = $this->geocodeResultFactory->create();
-        $location = $response["results"][0]["geometry"]["location"];
-        $result->setData($response["status"], $location["lat"], $location["lng"]);
+        $location = $response["results"][0]["geometry"]["location"] ?? null;
+
+        if ($location) {
+            $result->setData($response["status"], $location["lat"], $location["lng"]);
+        }
 
         return $result;
     }

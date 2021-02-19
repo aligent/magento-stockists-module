@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @category    Aligent
  * @package     Aligent_Stockists
@@ -6,6 +7,7 @@
  *
  * @author      Torbjorn van Heeswijck <torbjorn.vanheeswijck@aligent.com.au>
  */
+
 namespace Aligent\Stockists\Service;
 
 use Aligent\Stockists\Api\AdapterInterface;
@@ -19,8 +21,19 @@ class GeocodeStockist implements GeocodeStockistInterface
 {
     const XML_PATH_GEOCODE_KEY = 'stockists/geocode/key';
 
+    /**
+     * @var AdapterInterface
+     */
     private $adapter;
+
+    /**
+     * @var StockistRepositoryInterface
+     */
     private $stockistRepository;
+
+    /**
+     * @var ScopeConfigInterface
+     */
     private $scopeConfig;
 
     /**
@@ -45,12 +58,14 @@ class GeocodeStockist implements GeocodeStockistInterface
         {
             $key = $this->getGeocodeKey();
 
+            // Fail early if no API key is set
+            if (!isset($key) || trim($key) === '') return;
+
             $request = $this->adapter->buildRequest($stockist, $key);
             $response = $this->adapter->performGeocode($request);
             $result = $this->adapter->handleResponse($response);
 
-            if ($result->wasSuccessful())
-            {
+            if ($result->wasSuccessful()) {
                 $stockist->setLat($result->getLat());
                 $stockist->setLng($result->getLng());
             }
