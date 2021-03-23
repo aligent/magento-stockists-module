@@ -1,5 +1,5 @@
 {
-  "name": "aligent/stockists",
+  "name": "aligent/magento-stockists-module",
   "description": "Stockist location module for Magento 2",
   "license": "GPL-3.0-only",
   "require": {
