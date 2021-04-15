@@ -192,6 +192,18 @@
                 </validation>
                 <dataType>text</dataType>
                 <label translate="true">Hours</label>
+                <tooltip>
+                    <link>https://jsonformatter.org/</link>
+                    <description translate="true">example: {
+                        "monday":"08:00 to 09:30",
+                        "tuesday":"08:00 to 09:30",
+                            "PublicHolidays": {
+                            "02-02-2021":"08:00 to 09:30",
+                            "04-02-2021":"08:00 to 09:30"
+                            }
+                        }
+                        Before Adding hours go into https://jsonformatter.org/ and validate format is correct</description>
+                </tooltip>
             </settings>
         </field>
     </fieldset>
