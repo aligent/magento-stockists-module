@@ -11,4 +11,9 @@
             <argument name="targetName" xsi:type="string">stockist_form.stockist_form</argument>
         </arguments>
     </virtualType>
+    <type name="Aligent\Stockists\Ui\DataProvider\Stockist">
+        <arguments>
+            <argument name="json" xsi:type="object">Magento\Framework\Serialize\Serializer\Json</argument>
+        </arguments>
+    </type>
 </config>

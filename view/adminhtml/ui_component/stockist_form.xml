@@ -193,13 +193,17 @@
                 <dataType>text</dataType>
                 <label translate="true">Hours</label>
                 <tooltip>
-                    <link>https://jsonformatter.org/</link>
                     <description translate="true">example: {
-                        "monday":"08:00 to 09:30",
-                        "tuesday":"08:00 to 09:30",
+                        "monday":"08:00 AM to 09:30 PM",
+                        "tuesday":"08:00 AM to 09:30 PM",
+                        "wednesday":"08:00 AM to 09:30 PM",
+                        "thursday":"08:00 AM to 09:30 PM",
+                        "friday":"08:00 AM to 09:30 PM",
+                        "saturday":"08:00 AM to 05:30 PM",
+                        "sunday":"08:00 AM to 05:30 PM",
                             "PublicHolidays": {
-                            "02-02-2021":"08:00 to 09:30",
-                            "04-02-2021":"08:00 to 09:30"
+                                "02-02-2021":"08:00 AM to 05:30 PM",
+                                "04-02-2021":"08:00 AM to 05:30 PM"
                             }
                         }
                         Before Adding hours go into https://jsonformatter.org/ and validate format is correct</description>
