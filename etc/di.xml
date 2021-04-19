@@ -37,4 +37,9 @@
             </argument>
         </arguments>
     </type>
+    <type name="Aligent\Stockists\Model\Stockist\DataProcessor\TradingHours">
+        <arguments>
+            <argument name="json" xsi:type="object">Magento\Framework\Serialize\Serializer\Json</argument>
+        </arguments>
+    </type>
 </config>

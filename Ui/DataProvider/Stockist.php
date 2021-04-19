@@ -4,6 +4,8 @@
  */
 namespace Aligent\Stockists\Ui\DataProvider;
 
+use Magento\Framework\Serialize\SerializerInterface;
+
 class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
 {
 
@@ -25,6 +27,11 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
      */
     protected $session;
 
+    /**
+     * @var SerializerInterface
+     */
+    private $json;
+
     public function __construct(
         \Aligent\Stockists\Ui\DataProvider\SearchResultFactory $searchResultFactory,
         \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
@@ -35,6 +42,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         \Magento\Framework\Api\Search\ReportingInterface $reporting,
         \Aligent\Stockists\Model\GeoSearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Framework\App\RequestInterface $request,
+        SerializerInterface $json,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         array $meta = [],
         array $data = []
@@ -42,6 +50,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         parent::__construct($name, $primaryFieldName, $requestFieldName, $reporting, $searchCriteriaBuilder, $request,
             $filterBuilder, $meta, $data);
         $this->session = $session;
+        $this->json = $json;
         $this->stockistRepository = $stockistRepository;
         $this->searchResultFactory = $searchResultFactory;
     }
@@ -52,7 +61,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         $data = parent::getData();
         foreach ($data['items'] as &$item) {
             // todo: process hours output
-            $item['hours'] = '';
+            $item['hours'] = $this->json->serialize($item['hours']);
             $item['store_ids'] = \implode(',', $item['store_ids']);
             $item['country_id'] = $item['country'];
         }
