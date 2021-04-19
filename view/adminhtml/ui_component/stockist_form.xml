@@ -206,7 +206,7 @@
                                 "04-02-2021":"08:00 AM to 05:30 PM"
                             }
                         }
-                        Before Adding hours go into https://jsonformatter.org/ and validate format is correct</description>
+                    </description>
                 </tooltip>
             </settings>
         </field>
