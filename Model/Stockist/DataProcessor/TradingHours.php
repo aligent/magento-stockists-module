@@ -8,7 +8,8 @@ namespace Aligent\Stockists\Model\Stockist\DataProcessor;
 
 use Magento\Framework\Serialize\SerializerInterface;
 
-class TradingHours implements \Aligent\Stockists\Api\Data\StockistDataProcessorInterface {
+class TradingHours implements \Aligent\Stockists\Api\Data\StockistDataProcessorInterface
+{
 
     /**
      * @var \Aligent\Stockists\Api\Data\TradingHoursInterfaceFactory
@@ -44,5 +45,4 @@ class TradingHours implements \Aligent\Stockists\Api\Data\StockistDataProcessorI
         $data[\Aligent\Stockists\Api\Data\StockistInterface::HOURS] = $tradingHours;
         return $data;
     }
-
 }

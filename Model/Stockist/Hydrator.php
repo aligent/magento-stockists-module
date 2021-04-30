@@ -18,7 +18,8 @@ use Magento\Framework\Validation\ValidationException;
  * Class StockistHydrator
  * @api
  */
-class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface {
+class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
+{
 
     /**
      * @var DataObjectHelper
@@ -114,5 +115,4 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface {
         }
         return $stockist;
     }
-
 }

@@ -39,5 +39,4 @@ class Index extends \Magento\Backend\App\Action implements \Magento\Framework\Ap
         $resultPage->getConfig()->getTitle()->prepend("Manage Stockists");
         return $resultPage;
     }
-
 }

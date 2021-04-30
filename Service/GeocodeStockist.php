@@ -54,12 +54,13 @@ class GeocodeStockist implements GeocodeStockistInterface
 
     public function execute(StockistInterface $stockist, $forceGeocode = false)
     {
-        if($forceGeocode || $this->adapter->addressHasChangedFor($stockist))
-        {
+        if ($forceGeocode || $this->adapter->addressHasChangedFor($stockist)) {
             $key = $this->getGeocodeKey();
 
             // Fail early if no API key is set
-            if (!isset($key) || trim($key) === '') return;
+            if (!isset($key) || trim($key) === '') {
+                return;
+            }
 
             $request = $this->adapter->buildRequest($stockist, $key);
             $response = $this->adapter->performGeocode($request);

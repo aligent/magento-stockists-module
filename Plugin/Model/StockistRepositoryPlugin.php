@@ -17,8 +17,7 @@ class StockistRepositoryPlugin
      */
     public function __construct(
         GeocodeStockist $geocodeStockistService
-    )
-    {
+    ) {
         $this->geocodeStockistService = $geocodeStockistService;
     }
 

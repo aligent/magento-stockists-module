@@ -28,21 +28,18 @@ class StockistValidation implements StockistValidationInterface
     public function __construct(
         CountryFactory $countryFactory,
         Country $country
-    )
-    {
+    ) {
         $this->countryFactory = $countryFactory;
         $this->countryResource = $country;
     }
 
     public function validate(StockistInterface $stockist) : bool
     {
-        if (!$stockist->getIdentifier())
-        {
+        if (!$stockist->getIdentifier()) {
             return false;
         }
 
-        if (!$stockist->getName())
-        {
+        if (!$stockist->getName()) {
             return false;
         }
 
@@ -54,8 +51,7 @@ class StockistValidation implements StockistValidationInterface
 
         $countryCode = $stockist->getCountry();
 
-        if($countryCode && !$this->isIso2CountryCode($countryCode))
-        {
+        if ($countryCode && !$this->isIso2CountryCode($countryCode)) {
             return false;
         }
 

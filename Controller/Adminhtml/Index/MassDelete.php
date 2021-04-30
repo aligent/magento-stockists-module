@@ -69,8 +69,4 @@ class MassDelete extends \Magento\Backend\App\Action implements \Magento\Framewo
 
         return $this->resultRedirectFactory->create()->setPath('*/*');
     }
-
 }
-
-
-

@@ -47,8 +47,17 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         array $meta = [],
         array $data = []
     ) {
-        parent::__construct($name, $primaryFieldName, $requestFieldName, $reporting, $searchCriteriaBuilder, $request,
-            $filterBuilder, $meta, $data);
+        parent::__construct(
+            $name,
+            $primaryFieldName,
+            $requestFieldName,
+            $reporting,
+            $searchCriteriaBuilder,
+            $request,
+            $filterBuilder,
+            $meta,
+            $data
+        );
         $this->session = $session;
         $this->json = $json;
         $this->stockistRepository = $stockistRepository;
@@ -99,5 +108,4 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             \Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID
         );
     }
-
 }

@@ -13,7 +13,8 @@ class DistanceProcessor
      * @param AbstractDb $collection
      * @return AbstractDb
      */
-    public function process(GeoSearchCriteriaInterface $searchCriteria, AbstractDb $collection) : AbstractDb {
+    public function process(GeoSearchCriteriaInterface $searchCriteria, AbstractDb $collection) : AbstractDb
+    {
         $latLng = $searchCriteria->getSearchOrigin();
         $radius = $searchCriteria->getSearchRadius();
 

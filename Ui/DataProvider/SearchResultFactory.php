@@ -14,5 +14,4 @@ class SearchResultFactory extends \Magento\Ui\DataProvider\SearchResultFactory
     ) {
         parent::__construct($hydrator, $documentFactory, $searchResultFactory, $attributeValueFactory);
     }
-
 }
