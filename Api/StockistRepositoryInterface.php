@@ -15,6 +15,12 @@ interface StockistRepositoryInterface
     public function get(string $identifier): StockistInterface;
 
     /**
+     * @param string $urlKey
+     * @return StockistInterface
+     */
+    public function getByUrlKey(string $urlKey): StockistInterface;
+
+    /**
      * @param int $id
      * @return StockistInterface
      */

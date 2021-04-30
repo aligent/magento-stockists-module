@@ -6,6 +6,7 @@ use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\DataObject\IdentityInterface;
 use Aligent\Stockists\Model\ResourceModel\Stockist as StockistResource;
 use Aligent\Stockists\Api\Data\StockistInterface;
+use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @method StockistResource getResource()
@@ -61,6 +62,60 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     public function setIdentifier(string $identifier): StockistInterface
     {
         $this->setData('identifier', $identifier);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->getData('description');
+    }
+
+    /**
+     * @param string $description
+     * @return StockistInterface
+     */
+    public function setDescription(string $description): StockistInterface
+    {
+        $this->setData('description', $description);
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGallery(): ?string
+    {
+        return $this->getData('gallery');
+    }
+
+    /**
+     * @param string $gallery
+     * @return StockistInterface
+     */
+    public function setGallery(string $gallery): StockistInterface
+    {
+        $this->setData('gallery', $gallery);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlKey(): string
+    {
+        return $this->getData('url_key');
+    }
+
+    /**
+     * @param string $urlKey
+     * @return StockistInterface
+     */
+    public function setUrlKey(string $urlKey): StockistInterface
+    {
+        $this->setData('url_key', $urlKey);
         return $this;
     }
 
@@ -133,6 +188,24 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     public function setStreet(string $street): StockistInterface
     {
         $this->setData('street', $street);
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSuburb(): ?string
+    {
+        return $this->getData('suburb');
+    }
+
+    /**
+     * @param string $suburb
+     * @return StockistInterface
+     */
+    public function setSuburb(string $suburb): StockistInterface
+    {
+        $this->setData('suburb', $suburb);
         return $this;
     }
 
@@ -223,6 +296,24 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     public function setPhone(string $phone): StockistInterface
     {
         $this->setData('phone', $phone);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAllowStoreDelivery(): ?bool
+    {
+        return !!$this->getData('allow_store_delivery');
+    }
+
+    /**
+     * @param string $allowStoreDelivery
+     * @return $this
+     */
+    public function setAllowStoreDelivery(string $allowStoreDelivery): StockistInterface
+    {
+        $this->setData('allow_store_delivery', $allowStoreDelivery);
         return $this;
     }
 

@@ -39,7 +39,8 @@ class TradingHours implements \Aligent\Stockists\Api\Data\StockistDataProcessorI
     public function execute(array $data): array
     {
         $tradingHours = $this->tradingHoursFactory->create();
-        $tradingHours->setData($this->json->unserialize($data[\Aligent\Stockists\Api\Data\StockistInterface::HOURS]));
+        $tradingHoursData = $data[\Aligent\Stockists\Api\Data\StockistInterface::HOURS] ? $this->json->unserialize($data[\Aligent\Stockists\Api\Data\StockistInterface::HOURS]) : "{}";
+        $tradingHours->setData($tradingHoursData);
         $data[\Aligent\Stockists\Api\Data\StockistInterface::HOURS] = $tradingHours;
         return $data;
     }

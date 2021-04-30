@@ -12,11 +12,16 @@ interface StockistInterface extends ExtensibleDataInterface
      */
     const STOCKIST_ID = 'stockist_id';
     const IDENTIFIER = 'identifier';
+    const DESCRIPTION = 'description';
+    const URL_KEY = 'url_key';
+    const GALLERY = 'gallery';
+    const ALLOW_STORE_DELIVERY = 'allow_store_delivery';
     const LAT = 'lat';
     const LNG = 'lng';
     const NAME = 'name';
     const STREET = 'street';
     const CITY = 'city';
+    const SUBURB = 'suburb';
     const POSTCODE = 'postcode';
     const REGION = 'region';
     const COUNTRY = 'country';
@@ -46,6 +51,39 @@ interface StockistInterface extends ExtensibleDataInterface
      * @return $this
      */
     public function setIdentifier(string $identifier): StockistInterface;
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string;
+
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription(string $description): StockistInterface;
+
+    /**
+     * @return string
+     */
+    public function getGallery(): ?string;
+
+    /**
+     * @param string $gallery
+     * @return $this
+     */
+    public function setGallery(string $gallery): StockistInterface;
+
+    /**
+     * @return string
+     */
+    public function getUrlKey(): string;
+
+    /**
+     * @param string $urlKey
+     * @return $this
+     */
+    public function setUrlKey(string $urlKey): StockistInterface;
 
     /**
      * @return float
@@ -90,6 +128,17 @@ interface StockistInterface extends ExtensibleDataInterface
      * @return $this
      */
     public function setStreet(string $street): StockistInterface;
+
+    /**
+     * @return string|null
+     */
+    public function getSuburb(): ?string;
+
+    /**
+     * @param string $suburb
+     * @return $this
+     */
+    public function setSuburb(string $suburb): StockistInterface;
 
     /**
      * @return string
@@ -145,6 +194,17 @@ interface StockistInterface extends ExtensibleDataInterface
      * @return $this
      */
     public function setPhone(string $phone): StockistInterface;
+
+    /**
+     * @return bool|null
+     */
+    public function getAllowStoreDelivery(): ?bool;
+
+    /**
+     * @param string $allowStoreDelivery
+     * @return $this
+     */
+    public function setAllowStoreDelivery(string $allowStoreDelivery): StockistInterface;
 
     /**
      * @return int[]

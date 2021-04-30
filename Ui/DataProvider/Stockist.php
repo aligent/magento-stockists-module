@@ -64,6 +64,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             $item['hours'] = $this->json->serialize($item['hours']);
             $item['store_ids'] = \implode(',', $item['store_ids']);
             $item['country_id'] = $item['country'];
+            $item['allow_store_delivery'] = isset($item['allow_store_delivery']) && $item['allow_store_delivery'] == 1;
         }
         if (self::STOCKIST_FORM_NAME === $this->name) {
             // It is need for support of several fieldsets.
@@ -91,13 +92,12 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
     {
         $searchCriteria = $this->getSearchCriteria();
         $result = $this->stockistRepository->getList($searchCriteria);
-        $searchResult = $this->searchResultFactory->create(
+        return $this->searchResultFactory->create(
             $result->getItems(),
             $result->getTotalCount(),
             $searchCriteria,
             \Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID
         );
-        return $searchResult;
     }
 
 }

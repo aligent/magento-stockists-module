@@ -91,6 +91,22 @@ class StockistRepository implements StockistRepositoryInterface
     }
 
     /**
+     * @param string $urlKey
+     * @return StockistInterface
+     */
+    public function getByUrlKey(string $urlKey): StockistInterface
+    {
+        /** @var \Aligent\Stockists\Model\Stockist $stockist */
+        $stockist = $this->stockistFactory->create();
+        $this->stockistResource->load($stockist, $urlKey, 'url_key');
+        if (!$stockist->getId()) {
+            throw new NoSuchEntityException(__('Stockist "%1" does not exist', $urlKey));
+        }
+
+        return $stockist;
+    }
+
+    /**
      * @param GeoSearchCriteriaInterface $searchCriteria
      * @return SearchResultsInterface
      */
