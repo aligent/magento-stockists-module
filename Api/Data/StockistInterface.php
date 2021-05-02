@@ -53,13 +53,13 @@ interface StockistInterface extends ExtensibleDataInterface
     public function setIdentifier(string $identifier): StockistInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription(): ?string;
 
     /**
      * @param string $description
-     * @return $this
+     * @return StockistInterface
      */
     public function setDescription(string $description): StockistInterface;
 
@@ -70,7 +70,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $gallery
-     * @return $this
+     * @return StockistInterface
      */
     public function setGallery(string $gallery): StockistInterface;
 
@@ -81,7 +81,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $urlKey
-     * @return $this
+     * @return StockistInterface
      */
     public function setUrlKey(string $urlKey): StockistInterface;
 
@@ -136,7 +136,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $suburb
-     * @return $this
+     * @return StockistInterface
      */
     public function setSuburb(string $suburb): StockistInterface;
 
@@ -202,7 +202,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $allowStoreDelivery
-     * @return $this
+     * @return StockistInterface
      */
     public function setAllowStoreDelivery(string $allowStoreDelivery): StockistInterface;
 

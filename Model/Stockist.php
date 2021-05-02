@@ -66,7 +66,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -79,8 +79,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setDescription(string $description): StockistInterface
     {
-        $this->setData('description', $description);
-        return $this;
+        return $this->setData('description', $description);
     }
 
     /**
@@ -97,8 +96,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setGallery(string $gallery): StockistInterface
     {
-        $this->setData('gallery', $gallery);
-        return $this;
+        return $this->setData('gallery', $gallery);
     }
 
     /**
@@ -115,8 +113,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setUrlKey(string $urlKey): StockistInterface
     {
-        $this->setData('url_key', $urlKey);
-        return $this;
+        return $this->setData('url_key', $urlKey);
     }
 
     /**
@@ -205,8 +202,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setSuburb(string $suburb): StockistInterface
     {
-        $this->setData('suburb', $suburb);
-        return $this;
+        return $this->setData('suburb', $suburb);
     }
 
     /**
@@ -300,7 +296,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     }
 
     /**
-     * @return string
+     * @return bool|null
      */
     public function getAllowStoreDelivery(): ?bool
     {
@@ -309,7 +305,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
 
     /**
      * @param string $allowStoreDelivery
-     * @return $this
+     * @return StockistInterface
      */
     public function setAllowStoreDelivery(string $allowStoreDelivery): StockistInterface
     {

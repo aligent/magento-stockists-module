@@ -1,8 +1,3 @@
-type StoreConfig {
-    geolocation_status : Boolean  @doc(description: "Geolocation Option Enabled/Disable")
-    geolocation_link : String  @doc(description: "Geolocation Option link")
-}
-
 type Query {
     stockists (
         location: LocationRequest @doc(description: "Search request")
