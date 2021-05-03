@@ -11,7 +11,7 @@ use Aligent\Stockists\Api\Data\TradingHoursInterfaceFactory;
 use Magento\Framework\Serialize\SerializerInterface;
 use Aligent\Stockists\Api\Data\StockistDataProcessorInterface;
 
-class TradingHours implements stockistDataProcessorInterface
+class TradingHours implements StockistDataProcessorInterface
 {
 
     /**

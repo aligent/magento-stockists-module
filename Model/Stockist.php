@@ -6,7 +6,6 @@ use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\DataObject\IdentityInterface;
 use Aligent\Stockists\Model\ResourceModel\Stockist as StockistResource;
 use Aligent\Stockists\Api\Data\StockistInterface;
-use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @method StockistResource getResource()
