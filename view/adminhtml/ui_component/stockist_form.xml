@@ -74,6 +74,66 @@
                 <label translate="true">Name</label>
             </settings>
         </field>
+        <field name="url_key" formElement="input" sortOrder="45">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">url_key</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">URL Key</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-identifier" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="description" formElement="wysiwyg" sortOrder="50" template="ui/form/field">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="pagebuilder_button" xsi:type="boolean">false</item>
+                        <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
+                        <item name="toggle_button" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Description</label>
+                <dataScope>description</dataScope>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
+        <field name="gallery" formElement="wysiwyg" sortOrder="55" template="ui/form/field">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="pagebuilder_button" xsi:type="boolean">true</item>
+                        <item name="is_pagebuilder_enabled" xsi:type="boolean">true</item>
+                        <item name="toggle_button" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Gallery</label>
+                <dataScope>gallery</dataScope>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
         <field name="store_ids" formElement="multiselect">
             <settings>
                 <dataType>number</dataType>
@@ -144,6 +204,12 @@
                 <label translate="true">Street</label>
             </settings>
         </field>
+        <field name="suburb" formElement="input" sortOrder="44">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Suburb</label>
+            </settings>
+        </field>
         <field name="postcode" formElement="input" sortOrder="50">
             <settings>
                 <dataType>text</dataType>
@@ -176,6 +242,32 @@
                 <dataType>number</dataType>
                 <label translate="true">Longitude</label>
             </settings>
+        </field>
+    </fieldset>
+    <fieldset name="Shipping" sortOrder="25">
+        <settings>
+            <label translate="true">Shipping</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+            <dataScope>general</dataScope>
+        </settings>
+        <field name="allow_store_delivery">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Allow Store Delivery</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">allow_store_delivery</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="boolean">1</item>
+                        <item name="false" xsi:type="boolean">0</item>
+                    </item>
+                </item>
+            </argument>
         </field>
     </fieldset>
     <fieldset name="Extra Information" sortOrder="30">

@@ -54,8 +54,7 @@ class GeocodeStockists extends Command
         $geocodeSuccess = 0;
 
         /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
-        foreach ($this->getUncodedStockists() as $stockist)
-        {
+        foreach ($this->getUncodedStockists() as $stockist) {
             $this->geocodeStockist->execute($stockist, true);
             if ($stockist->getLat() !== null) {
                 $output->write('.');
@@ -77,5 +76,4 @@ class GeocodeStockists extends Command
         $searchCriteria = $this->searchCriteriaBuilder->addFilter($filter)->create();
         return $this->stockistRepository->getList($searchCriteria)->getItems();
     }
-
 }

@@ -65,6 +65,57 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     }
 
     /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->getData('description');
+    }
+
+    /**
+     * @param string $description
+     * @return StockistInterface
+     */
+    public function setDescription(string $description): StockistInterface
+    {
+        return $this->setData('description', $description);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGallery(): ?string
+    {
+        return $this->getData('gallery');
+    }
+
+    /**
+     * @param string $gallery
+     * @return StockistInterface
+     */
+    public function setGallery(string $gallery): StockistInterface
+    {
+        return $this->setData('gallery', $gallery);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlKey(): string
+    {
+        return $this->getData('url_key');
+    }
+
+    /**
+     * @param string $urlKey
+     * @return StockistInterface
+     */
+    public function setUrlKey(string $urlKey): StockistInterface
+    {
+        return $this->setData('url_key', $urlKey);
+    }
+
+    /**
      * @return float
      */
     public function getLat(): ?float
@@ -134,6 +185,23 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     {
         $this->setData('street', $street);
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSuburb(): ?string
+    {
+        return $this->getData('suburb');
+    }
+
+    /**
+     * @param string $suburb
+     * @return StockistInterface
+     */
+    public function setSuburb(string $suburb): StockistInterface
+    {
+        return $this->setData('suburb', $suburb);
     }
 
     /**
@@ -223,6 +291,24 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     public function setPhone(string $phone): StockistInterface
     {
         $this->setData('phone', $phone);
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getAllowStoreDelivery(): ?bool
+    {
+        return !!$this->getData('allow_store_delivery');
+    }
+
+    /**
+     * @param string $allowStoreDelivery
+     * @return StockistInterface
+     */
+    public function setAllowStoreDelivery(string $allowStoreDelivery): StockistInterface
+    {
+        $this->setData('allow_store_delivery', $allowStoreDelivery);
         return $this;
     }
 

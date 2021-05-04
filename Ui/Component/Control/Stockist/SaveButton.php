@@ -39,6 +39,4 @@ class SaveButton implements \Magento\Framework\View\Element\UiComponent\Control\
 
         ];
     }
-
-
 }

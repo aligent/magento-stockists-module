@@ -3,7 +3,6 @@
 
 namespace Aligent\Stockists\Model;
 
-
 use Aligent\Stockists\Api\GeocodeResultInterface;
 
 class GoogleMapsGeocodeResult implements GeocodeResultInterface

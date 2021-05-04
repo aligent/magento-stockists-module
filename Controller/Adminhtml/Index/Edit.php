@@ -55,5 +55,4 @@ class Edit extends \Magento\Backend\App\Action implements \Magento\Framework\App
         }
         return $result;
     }
-
 }

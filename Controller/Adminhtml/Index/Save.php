@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
-
 /**
  * Save Controller
  */
@@ -72,7 +71,8 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
      * @param \Aligent\Stockists\Api\Data\StockistInterface $stockist
      * @param array $requestData
      */
-    protected function processSave(\Aligent\Stockists\Api\Data\StockistInterface $stockist, array $requestData) {
+    protected function processSave(\Aligent\Stockists\Api\Data\StockistInterface $stockist, array $requestData)
+    {
         $stockist = $this->stockistHydrator->hydrate($stockist, $requestData);
         return $this->stockistRepository->save($stockist);
     }
@@ -82,7 +82,8 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
      * @throws \Magento\Framework\Exception\SecurityViolationException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    private function getRequestData(): array {
+    private function getRequestData(): array
+    {
         $request = $this->getRequest();
         if (!$request->isPost() || !$request->isSecure()) {
             throw new \Magento\Framework\Exception\SecurityViolationException(__('Must be a secured POST request'));
@@ -94,6 +95,4 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
         }
         return $requestData['general'];
     }
-
-
 }

@@ -6,12 +6,16 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Model\Stockist\DataProcessor;
 
+use Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\Data\TradingHoursInterfaceFactory;
 use Magento\Framework\Serialize\SerializerInterface;
+use Aligent\Stockists\Api\Data\StockistDataProcessorInterface;
 
-class TradingHours implements \Aligent\Stockists\Api\Data\StockistDataProcessorInterface {
+class TradingHours implements StockistDataProcessorInterface
+{
 
     /**
-     * @var \Aligent\Stockists\Api\Data\TradingHoursInterfaceFactory
+     * @var TradingHoursInterfaceFactory
      */
     protected $tradingHoursFactory;
 
@@ -22,10 +26,10 @@ class TradingHours implements \Aligent\Stockists\Api\Data\StockistDataProcessorI
 
     /**
      * TradingHours constructor.
-     * @param \Aligent\Stockists\Api\Data\TradingHoursInterfaceFactory $tradingHoursFactory
+     * @param TradingHoursInterfaceFactory $tradingHoursFactory
      */
     public function __construct(
-        \Aligent\Stockists\Api\Data\TradingHoursInterfaceFactory $tradingHoursFactory,
+        TradingHoursInterfaceFactory $tradingHoursFactory,
         SerializerInterface $json
     ) {
         $this->json = $json;
@@ -39,9 +43,9 @@ class TradingHours implements \Aligent\Stockists\Api\Data\StockistDataProcessorI
     public function execute(array $data): array
     {
         $tradingHours = $this->tradingHoursFactory->create();
-        $tradingHours->setData($this->json->unserialize($data[\Aligent\Stockists\Api\Data\StockistInterface::HOURS]));
-        $data[\Aligent\Stockists\Api\Data\StockistInterface::HOURS] = $tradingHours;
+        $tradingHoursData = $data[StockistInterface::HOURS] ? $this->json->unserialize($data[StockistInterface::HOURS]) : "{}";
+        $tradingHours->setData($tradingHoursData);
+        $data[StockistInterface::HOURS] = $tradingHours;
         return $data;
     }
-
 }

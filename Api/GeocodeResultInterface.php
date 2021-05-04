@@ -3,7 +3,6 @@
 
 namespace Aligent\Stockists\Api;
 
-
 interface GeocodeResultInterface
 {
     public function setData(string $status, float $lat, float $long);

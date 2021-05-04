@@ -18,7 +18,8 @@ use Magento\Framework\Validation\ValidationException;
  * Class StockistHydrator
  * @api
  */
-class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface {
+class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
+{
 
     /**
      * @var DataObjectHelper
@@ -91,6 +92,11 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface {
         if (empty($data[StockistInterface::STOCKIST_ID])) {
             unset($data[StockistInterface::STOCKIST_ID]);
         }
+        if (isset($data['allow_store_delivery']) && $data['allow_store_delivery'] === 'true') {
+            $data['allow_store_delivery'] = 1;
+        } else {
+            $data['allow_store_delivery'] = 0;
+        }
 
         if (empty($data[StockistInterface::COUNTRY]) && !empty($data['country_id'])) {
             // possible todo: convert to full name?
@@ -109,5 +115,4 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface {
         }
         return $stockist;
     }
-
 }

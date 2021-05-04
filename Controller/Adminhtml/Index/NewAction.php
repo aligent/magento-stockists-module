@@ -39,5 +39,4 @@ class NewAction extends \Magento\Backend\App\Action implements \Magento\Framewor
         $resultPage->getConfig()->getTitle()->prepend("New Stockist");
         return $resultPage;
     }
-
 }

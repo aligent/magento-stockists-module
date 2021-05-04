@@ -64,8 +64,4 @@ class Delete extends \Magento\Backend\App\Action implements \Magento\Framework\A
 
         return $resultRedirect;
     }
-
 }
-
-
-

@@ -28,12 +28,18 @@ class Stockist implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if (!isset($args['identifier'])) {
-            throw new GraphQlInputException(__('Identifier must be provided.'));
+        if (!isset($args['identifier']) && !isset($args['url_key'])) {
+            throw new GraphQlInputException(__('Identifier or url_key must be provided.'));
         }
 
         try {
-            $result = $this->stockistRepository->get($args['identifier']);
+            if (isset($args['identifier'])) {
+                $result = $this->stockistRepository->get($args['identifier']);
+            } elseif (isset($args['url_key'])) {
+                $result = $this->stockistRepository->getByUrlKey($args['url_key']);
+            } else {
+                throw new GraphQlInputException(__('The provided identifier or url_key is invalid.'));
+            }
             $locationData = $result->getData();
             $locationData['model'] = $result;
             return $locationData;

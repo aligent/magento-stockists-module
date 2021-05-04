@@ -21,7 +21,8 @@ class StockistRepositoryTest extends \PHPUnit\Framework\TestCase
     private $collectionProcessor;
     private $distanceProcessor;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->stockistFactory = $this->createMock(StockistFactory::class);
         $this->stockistResource = $this->createMock(StockistResource::class);
         $this->stockistCollectionFactory = $this->createMock(StockistResource\CollectionFactory::class);

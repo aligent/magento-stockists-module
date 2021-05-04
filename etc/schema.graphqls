@@ -6,6 +6,7 @@ type Query {
     ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retreive Stockists")
     stockist (
         identifier: String @doc(description: "Location Identifier")
+        url_key: String @doc(description: "Location url_key")
     ): Stockist @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockist") @doc(description: "Retrieve individual stockist location")
 }
 
@@ -14,6 +15,10 @@ type Stockist @doc(description: "A stockist location entity") {
     identifier: String
     location: Location @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistLocation")
     name: String
+    gallery: String
+    url_key: String
+    description: String
+    allow_store_delivery: Boolean
     address: Address @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistAddress")
     trading_hours: Hours @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistHours")
     distance: Float
@@ -29,6 +34,7 @@ type Location @doc(description: "Geo-location coordinates") {
 type Address @doc(description: "Street address of location") {
     street: String
     city: String
+    suburb: String
     postcode: String
     region: String
     country_code: String
