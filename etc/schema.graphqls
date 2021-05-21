@@ -15,7 +15,7 @@ type Stockist @doc(description: "A stockist location entity") {
     identifier: String
     location: Location @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistLocation")
     name: String
-    gallery: String
+    gallery: String @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistGallery")
     url_key: String
     description: String
     allow_store_delivery: Boolean
