@@ -13,7 +13,7 @@ class StockistGallery implements ResolverInterface
     /**
      * @var FilterProvider
      */
-    private FilterProvider $filterProvider;
+    private $filterProvider;
 
     /**
      * StockistGallery constructor.
