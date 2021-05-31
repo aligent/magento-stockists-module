@@ -34,7 +34,7 @@ class StockistGallery implements ResolverInterface
 
         /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
         $stockist = $value['model'];
-        $gallery = $stockist->getGallery();
+        $gallery = $stockist->getGallery() ?? '';
 
         return $this->filterProvider->getPageFilter()->filter($gallery);
     }
