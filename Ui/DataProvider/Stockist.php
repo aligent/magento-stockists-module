@@ -4,6 +4,7 @@
  */
 namespace Aligent\Stockists\Ui\DataProvider;
 
+use Aligent\Stockists\Api\Data\StockistInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 
 class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
@@ -70,11 +71,11 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         $data = parent::getData();
         foreach ($data['items'] as &$item) {
             // todo: process hours output
-            $item['hours'] = $this->json->serialize($item['hours']);
-            $item['store_ids'] = \implode(',', $item['store_ids']);
-            $item['country_id'] = $item['country'];
-            $item['allow_store_delivery'] = isset($item['allow_store_delivery']) && $item['allow_store_delivery'] === "1";
-            $item['is_active'] = isset($item['is_active']) && $item['is_active'] === "1";
+            $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
+            $item[StockistInterface::STORE_IDS] = \implode(',', $item[StockistInterface::STORE_IDS]);
+            $item[StockistInterface::COUNTRY] = $item[StockistInterface::COUNTRY];
+            $item[StockistInterface::ALLOW_STORE_DELIVERY] = isset($item[StockistInterface::ALLOW_STORE_DELIVERY]) && $item[StockistInterface::ALLOW_STORE_DELIVERY] === "1";
+            $item[StockistInterface::IS_ACTIVE] = isset($item[StockistInterface::IS_ACTIVE]) && $item[StockistInterface::IS_ACTIVE] === "1";
 
         }
         if (self::STOCKIST_FORM_NAME === $this->name) {

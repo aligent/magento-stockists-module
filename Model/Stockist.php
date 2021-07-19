@@ -42,7 +42,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setStockistId(int $id): StockistInterface
     {
-        $this->setData('stockist_id', $id);
+        $this->setData(StockistInterface::STOCKIST_ID, $id);
         return $this;
     }
 
@@ -51,7 +51,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getIdentifier(): string
     {
-        return $this->getData('identifier');
+        return $this->getData(StockistInterface::IDENTIFIER);
     }
 
     /**
@@ -60,7 +60,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setIdentifier(string $identifier): StockistInterface
     {
-        $this->setData('identifier', $identifier);
+        $this->setData(StockistInterface::IDENTIFIER, $identifier);
         return $this;
     }
 
@@ -69,7 +69,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getDescription(): ?string
     {
-        return $this->getData('description');
+        return $this->getData(StockistInterface::DESCRIPTION);
     }
 
     /**
@@ -78,7 +78,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setDescription(string $description): StockistInterface
     {
-        return $this->setData('description', $description);
+        return $this->setData(StockistInterface::DESCRIPTION, $description);
     }
 
     /**
@@ -86,7 +86,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getIsActive(): bool
     {
-        return !!$this->getData('is_active');
+        return !!$this->getData(StockistInterface::IS_ACTIVE);
     }
 
     /**
@@ -95,7 +95,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setIsActive(bool $isActive): StockistInterface
     {
-        return $this->setData('is_active', $isActive);
+        return $this->setData(StockistInterface::IS_ACTIVE, $isActive);
     }
 
     /**
@@ -103,7 +103,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getGallery(): ?string
     {
-        return $this->getData('gallery');
+        return $this->getData(StockistInterface::GALLERY);
     }
 
     /**
@@ -112,7 +112,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setGallery(string $gallery): StockistInterface
     {
-        return $this->setData('gallery', $gallery);
+        return $this->setData(StockistInterface::GALLERY, $gallery);
     }
 
     /**
@@ -120,7 +120,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getUrlKey(): string
     {
-        return $this->getData('url_key');
+        return $this->getData(StockistInterface::URL_KEY);
     }
 
     /**
@@ -129,7 +129,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setUrlKey(string $urlKey): StockistInterface
     {
-        return $this->setData('url_key', $urlKey);
+        return $this->setData(StockistInterface::URL_KEY, $urlKey);
     }
 
     /**
@@ -137,7 +137,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getLat(): ?float
     {
-        return $this->getData('lat');
+        return $this->getData(StockistInterface::LAT);
     }
 
     /**
@@ -146,7 +146,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setLat(float $lat): StockistInterface
     {
-        $this->setData('lat', $lat);
+        $this->setData(StockistInterface::LAT, $lat);
         return $this;
     }
 
@@ -155,7 +155,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getLng(): ?float
     {
-        return $this->getData('lng');
+        return $this->getData(StockistInterface::LNG);
     }
 
     /**
@@ -164,7 +164,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setLng(float $lng): StockistInterface
     {
-        $this->setData('lng', $lng);
+        $this->setData(StockistInterface::LNG, $lng);
         return $this;
     }
 
@@ -173,7 +173,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getName(): ?string
     {
-        return $this->getData('name');
+        return $this->getData(StockistInterface::NAME);
     }
 
     /**
@@ -182,7 +182,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setName(string $name): StockistInterface
     {
-        $this->setData('name', $name);
+        $this->setData(StockistInterface::NAME, $name);
         return $this;
     }
 
@@ -191,7 +191,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getStreet(): ?string
     {
-        return $this->getData('street');
+        return $this->getData(StockistInterface::STREET);
     }
 
     /**
@@ -200,7 +200,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setStreet(string $street): StockistInterface
     {
-        $this->setData('street', $street);
+        $this->setData(StockistInterface::STREET, $street);
         return $this;
     }
 
@@ -209,7 +209,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getSuburb(): ?string
     {
-        return $this->getData('suburb');
+        return $this->getData(StockistInterface::SUBURB);
     }
 
     /**
@@ -218,7 +218,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setSuburb(string $suburb): StockistInterface
     {
-        return $this->setData('suburb', $suburb);
+        return $this->setData(StockistInterface::SUBURB, $suburb);
     }
 
     /**
@@ -226,7 +226,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getCity(): ?string
     {
-        return $this->getData('city');
+        return $this->getData(StockistInterface::CITY);
     }
 
     /**
@@ -235,7 +235,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setCity(string $city): StockistInterface
     {
-        $this->setData('city', $city);
+        $this->setData(StockistInterface::CITY, $city);
         return $this;
     }
 
@@ -244,7 +244,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getPostcode(): ?string
     {
-        return $this->getData('postcode');
+        return $this->getData(StockistInterface::POSTCODE);
     }
 
     /**
@@ -253,7 +253,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setPostcode(string $postcode): StockistInterface
     {
-        $this->setData('postcode', $postcode);
+        $this->setData(StockistInterface::POSTCODE, $postcode);
         return $this;
     }
 
@@ -262,7 +262,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getRegion(): ?string
     {
-        return $this->getData('region');
+        return $this->getData(StockistInterface::REGION);
     }
 
     /**
@@ -271,7 +271,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setRegion(string $region): StockistInterface
     {
-        $this->setData('region', $region);
+        $this->setData(StockistInterface::REGION, $region);
         return $this;
     }
 
@@ -280,7 +280,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getCountry(): ?string
     {
-        return $this->getData('country');
+        return $this->getData(StockistInterface::COUNTRY);
     }
 
     /**
@@ -289,7 +289,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setCountry(string $countryCode): StockistInterface
     {
-        $this->setData('country', $countryCode);
+        $this->setData(StockistInterface::COUNTRY, $countryCode);
         return $this;
     }
 
@@ -298,7 +298,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getPhone(): ?string
     {
-        return $this->getData('phone');
+        return $this->getData(StockistInterface::PHONE);
     }
 
     /**
@@ -307,7 +307,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setPhone(string $phone): StockistInterface
     {
-        $this->setData('phone', $phone);
+        $this->setData(StockistInterface::PHONE, $phone);
         return $this;
     }
 
@@ -316,7 +316,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getAllowStoreDelivery(): ?bool
     {
-        return !!$this->getData('allow_store_delivery');
+        return !!$this->getData(StockistInterface::ALLOW_STORE_DELIVERY);
     }
 
     /**
@@ -325,7 +325,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setAllowStoreDelivery(string $allowStoreDelivery): StockistInterface
     {
-        $this->setData('allow_store_delivery', $allowStoreDelivery);
+        $this->setData(StockistInterface::ALLOW_STORE_DELIVERY, $allowStoreDelivery);
         return $this;
     }
 
@@ -334,7 +334,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getStoreIds(): array
     {
-        return $this->getData('store_ids');
+        return $this->getData(StockistInterface::STORE_IDS);
     }
 
     /**
@@ -343,7 +343,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setStoreIds(array $storeIds): StockistInterface
     {
-        $this->setData('store_ids', $storeIds);
+        $this->setData(StockistInterface::STORE_IDS, $storeIds);
         return $this;
     }
 
@@ -352,7 +352,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getHours(): ?\Aligent\Stockists\Api\Data\TradingHoursInterface
     {
-        return $this->getData('hours');
+        return $this->getData(StockistInterface::HOURS);
     }
 
     /**
@@ -361,7 +361,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function setHours(\Aligent\Stockists\Api\Data\TradingHoursInterface $hours): StockistInterface
     {
-        $this->setData('hours', $hours);
+        $this->setData(StockistInterface::HOURS, $hours);
         return $this;
     }
 

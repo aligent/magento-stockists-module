@@ -18,7 +18,7 @@ use Magento\Framework\Model\AbstractModel;
 class StockistRepository implements StockistRepositoryInterface
 {
     /**
-     * @var \Aligent\Stockists\Model\StockistFactory
+     * @var StockistFactory
      */
     private $stockistFactory;
     /**
@@ -46,9 +46,8 @@ class StockistRepository implements StockistRepositoryInterface
      */
     private $stockistValidation;
 
-
     /**
-     * @param \Aligent\Stockists\Model\StockistFactory $stockistFactory
+     * @param StockistFactory $stockistFactory
      * @param StockistResource $stockistResource
      * @param StockistCollectionFactory $stockistCollectionFactory
      * @param SearchResultsFactory $searchResultsFactory
@@ -81,9 +80,9 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function get(string $identifier): StockistInterface
     {
-        /** @var \Aligent\Stockists\Model\Stockist $stockist */
+        /** @var Stockist $stockist */
         $stockist = $this->stockistFactory->create();
-        $this->stockistResource->load($stockist, $identifier, 'identifier');
+        $this->stockistResource->load($stockist, $identifier, Stockist::IDENTIFIER);
         if (!$stockist->getId()) {
             throw new NoSuchEntityException(__('Stockist "%1" does not exist', $identifier));
         }
@@ -96,9 +95,9 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function getByUrlKey(string $urlKey): StockistInterface
     {
-        /** @var \Aligent\Stockists\Model\Stockist $stockist */
+        /** @var Stockist $stockist */
         $stockist = $this->stockistFactory->create();
-        $this->stockistResource->load($stockist, $urlKey, 'url_key');
+        $this->stockistResource->load($stockist, $urlKey, Stockist::URL_KEY);
         if (!$stockist->getId()) {
             throw new NoSuchEntityException(__('Stockist "%1" does not exist', $urlKey));
         }
@@ -158,7 +157,7 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function getById(int $id): StockistInterface
     {
-        /** @var \Aligent\Stockists\Model\Stockist $stockist */
+        /** @var Stockist $stockist */
         $stockist = $this->stockistFactory->create();
         $this->stockistResource->load($stockist, $id);
         if (!$stockist->getId()) {
