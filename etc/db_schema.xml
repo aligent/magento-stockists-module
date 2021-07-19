@@ -4,6 +4,7 @@
     <table name="stockist" resource="default" comment="Stockist locations">
         <column name="stockist_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
         <column name="identifier" xsi:type="varchar" nullable="false" comment="External identifier" />
+        <column name="is_active" xsi:type="boolean" nullable="false" comment="Store is currently active" default="true"/>
         <column name="url_key" xsi:type="varchar" nullable="false" comment="Url Key"/>
         <column name="lat" xsi:type="decimal" scale="6" precision="9" nullable="true" comment="Latitude" />
         <column name="lng" xsi:type="decimal" scale="6" precision="9" nullable="true" comment="Longitude" />

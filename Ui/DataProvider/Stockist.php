@@ -74,6 +74,8 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             $item['store_ids'] = \implode(',', $item['store_ids']);
             $item['country_id'] = $item['country'];
             $item['allow_store_delivery'] = isset($item['allow_store_delivery']) && $item['allow_store_delivery'] === "1";
+            $item['is_active'] = isset($item['is_active']) && $item['is_active'] === "1";
+
         }
         if (self::STOCKIST_FORM_NAME === $this->name) {
             // It is need for support of several fieldsets.

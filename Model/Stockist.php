@@ -82,6 +82,23 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     }
 
     /**
+     * @return bool
+     */
+    public function getIsActive(): bool
+    {
+        return !!$this->getData('is_active');
+    }
+
+    /**
+     * @param bool $isActive
+     * @return StockistInterface
+     */
+    public function setIsActive(bool $isActive): StockistInterface
+    {
+        return $this->setData('is_active', $isActive);
+    }
+
+    /**
      * @return string|null
      */
     public function getGallery(): ?string

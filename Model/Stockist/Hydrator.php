@@ -92,6 +92,12 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
         if (empty($data[StockistInterface::STOCKIST_ID])) {
             unset($data[StockistInterface::STOCKIST_ID]);
         }
+        if (isset($data['is_active']) && $data['is_active'] === 'true') {
+            $data['is_active'] = 1;
+        } else {
+            $data['is_active'] = 0;
+        }
+
         if (isset($data['allow_store_delivery']) && $data['allow_store_delivery'] === 'true') {
             $data['allow_store_delivery'] = 1;
         } else {
