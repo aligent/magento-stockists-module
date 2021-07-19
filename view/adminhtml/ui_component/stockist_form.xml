@@ -281,7 +281,7 @@
                     <item name="label" xsi:type="string" translate="true">Allow Store Delivery</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
-                    <item name="source" xsi:type="string">page</item>
+                    <item name="source" xsi:type="string">allow_store_delivery</item>
                     <item name="sortOrder" xsi:type="number">10</item>
                     <item name="dataScope" xsi:type="string">allow_store_delivery</item>
                     <item name="valueMap" xsi:type="array">
