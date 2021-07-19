@@ -43,6 +43,10 @@ class StockistValidation implements StockistValidationInterface
             return false;
         }
 
+        if (!$stockist->getUrlKey()) {
+            return false;
+        }
+
         if ($stockist->getIsActive() === null) {
             $stockist->setIsActive(true);
         }
