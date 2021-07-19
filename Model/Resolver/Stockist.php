@@ -40,6 +40,9 @@ class Stockist implements ResolverInterface
             } else {
                 throw new GraphQlInputException(__('The provided identifier or url_key is invalid.'));
             }
+            if (!$result->getIsActive()) {
+                throw new GraphQlInputException(__('The provided identifier or url_key is invalid.'));
+            }
             $locationData = $result->getData();
             $locationData['model'] = $result;
             return $locationData;

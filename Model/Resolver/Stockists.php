@@ -2,6 +2,8 @@
 
 namespace Aligent\Stockists\Model\Resolver;
 
+use Magento\Framework\Api\FilterBuilder;
+use Magento\Framework\Api\Search\FilterGroupBuilder;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
@@ -24,12 +26,26 @@ class Stockists implements ResolverInterface
      */
     private $searchCriteriaBuilder;
 
+    /**
+     * @var FilterBuilder
+     */
+    private FilterBuilder $filterBuilder;
+
+    /**
+     * @var FilterGroupBuilder
+     */
+    private FilterGroupBuilder $filterGroupBuilder;
+
     public function __construct(
         StockistRepositoryInterface $stockistRepository,
-        GeoSearchCriteriaBuilder $searchCriteriaBuilder
+        GeoSearchCriteriaBuilder $searchCriteriaBuilder,
+        FilterBuilder $filterBuilder,
+        FilterGroupBuilder $filterGroupBuilder
     ) {
         $this->stockistRepository = $stockistRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->filterBuilder = $filterBuilder;
+        $this->filterGroupBuilder = $filterGroupBuilder;
     }
 
     /**
@@ -40,6 +56,13 @@ class Stockists implements ResolverInterface
         $this->validateSearchArguments($args);
 
         $searchCriteria = $this->createSearchCriteria($args);
+
+        $activeFilter = $this->filterBuilder->setField('is_active')
+            ->setValue((bool) true)
+            ->setConditionType('eq')
+            ->create();
+        $filterGroup = $this->filterGroupBuilder->addFilter($activeFilter)->create();
+        $searchCriteria->setFilterGroups([$filterGroup]);
         $results = $this->stockistRepository->getList($searchCriteria);
 
         $locations = array_map(function ($location) use ($args) {
