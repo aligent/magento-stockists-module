@@ -74,8 +74,10 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
             $item[StockistInterface::STORE_IDS] = \implode(',', $item[StockistInterface::STORE_IDS]);
             $item[StockistInterface::COUNTRY] = $item[StockistInterface::COUNTRY];
-            $item[StockistInterface::ALLOW_STORE_DELIVERY] = isset($item[StockistInterface::ALLOW_STORE_DELIVERY]) && $item[StockistInterface::ALLOW_STORE_DELIVERY] === "1";
-            $item[StockistInterface::IS_ACTIVE] = isset($item[StockistInterface::IS_ACTIVE]) && $item[StockistInterface::IS_ACTIVE] === "1";
+            $item[StockistInterface::ALLOW_STORE_DELIVERY] = isset($item[StockistInterface::ALLOW_STORE_DELIVERY])
+                && $item[StockistInterface::ALLOW_STORE_DELIVERY] === "1";
+            $item[StockistInterface::IS_ACTIVE] = isset($item[StockistInterface::IS_ACTIVE])
+                && $item[StockistInterface::IS_ACTIVE] === "1";
 
         }
         if (self::STOCKIST_FORM_NAME === $this->name) {

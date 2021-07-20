@@ -2,6 +2,7 @@
 
 namespace Aligent\Stockists\Model\Resolver;
 
+use Aligent\Stockists\Api\Data\StockistInterface;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\FilterGroupBuilder;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -57,7 +58,7 @@ class Stockists implements ResolverInterface
 
         $searchCriteria = $this->createSearchCriteria($args);
 
-        $activeFilter = $this->filterBuilder->setField('is_active')
+        $activeFilter = $this->filterBuilder->setField(StockistInterface::IS_ACTIVE)
             ->setValue((bool) true)
             ->setConditionType('eq')
             ->create();

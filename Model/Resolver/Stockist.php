@@ -10,7 +10,7 @@ use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use \Aligent\Stockists\Model\Stockist as StockistModel;
+use \Aligent\Stockists\Api\Data\StockistInterface;
 
 class Stockist implements ResolverInterface
 {
@@ -29,15 +29,15 @@ class Stockist implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if (!isset($args[StockistModel::IDENTIFIER]) && !isset($args[StockistModel::URL_KEY])) {
+        if (!isset($args[StockistInterface::IDENTIFIER]) && !isset($args[StockistInterface::URL_KEY])) {
             throw new GraphQlInputException(__('Identifier or url_key must be provided.'));
         }
 
         try {
-            if (isset($args[StockistModel::IDENTIFIER])) {
-                $result = $this->stockistRepository->get($args[StockistModel::IDENTIFIER]);
-            } elseif (isset($args[StockistModel::URL_KEY])) {
-                $result = $this->stockistRepository->getByUrlKey($args[StockistModel::URL_KEY]);
+            if (isset($args[StockistInterface::IDENTIFIER])) {
+                $result = $this->stockistRepository->get($args[StockistInterface::IDENTIFIER]);
+            } elseif (isset($args[StockistInterface::URL_KEY])) {
+                $result = $this->stockistRepository->getByUrlKey($args[StockistInterface::URL_KEY]);
             } else {
                 throw new GraphQlInputException(__('The provided identifier or url_key is invalid.'));
             }

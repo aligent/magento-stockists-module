@@ -133,6 +133,10 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function save(StockistInterface $stockist): StockistInterface
     {
+        // New non nullable field which might not be considered in older API
+        if ($stockist->getIsActive() === null) {
+            $stockist->setIsActive(true);
+        }
         $validationResult = $this->stockistValidation->validate($stockist);
 
         if (!$validationResult) {

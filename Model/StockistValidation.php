@@ -48,7 +48,7 @@ class StockistValidation implements StockistValidationInterface
         }
 
         if ($stockist->getIsActive() === null) {
-            $stockist->setIsActive(true);
+            return false;
         }
 
         $tradingHours = $stockist->getHours();
