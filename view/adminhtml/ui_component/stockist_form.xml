@@ -55,6 +55,28 @@
                 <visible>false</visible>
             </settings>
         </field>
+        <field name="is_active">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Is Active</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">is_active</item>
+                    <item name="sortOrder" xsi:type="number">15</item>
+                    <item name="dataScope" xsi:type="string">is_active</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="boolean">1</item>
+                        <item name="false" xsi:type="boolean">0</item>
+                    </item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="default" xsi:type="boolean">1</item>
+                </item>
+            </argument>
+        </field>
         <field name="identifier" formElement="input" sortOrder="20">
             <settings>
                 <validation>
@@ -259,7 +281,7 @@
                     <item name="label" xsi:type="string" translate="true">Allow Store Delivery</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
-                    <item name="source" xsi:type="string">page</item>
+                    <item name="source" xsi:type="string">allow_store_delivery</item>
                     <item name="sortOrder" xsi:type="number">10</item>
                     <item name="dataScope" xsi:type="string">allow_store_delivery</item>
                     <item name="valueMap" xsi:type="array">

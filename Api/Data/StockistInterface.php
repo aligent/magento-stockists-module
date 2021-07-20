@@ -12,6 +12,7 @@ interface StockistInterface extends ExtensibleDataInterface
      */
     const STOCKIST_ID = 'stockist_id';
     const IDENTIFIER = 'identifier';
+    const IS_ACTIVE = 'is_active';
     const DESCRIPTION = 'description';
     const URL_KEY = 'url_key';
     const GALLERY = 'gallery';
@@ -51,6 +52,17 @@ interface StockistInterface extends ExtensibleDataInterface
      * @return $this
      */
     public function setIdentifier(string $identifier): StockistInterface;
+
+    /**
+     * @return bool
+     */
+    public function getIsActive(): bool;
+
+    /**
+     * @param bool $isActive
+     * @return $this
+     */
+    public function setIsActive(bool $isActive): StockistInterface;
 
     /**
      * @return string|null

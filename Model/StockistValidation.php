@@ -43,6 +43,14 @@ class StockistValidation implements StockistValidationInterface
             return false;
         }
 
+        if (!$stockist->getUrlKey()) {
+            return false;
+        }
+
+        if ($stockist->getIsActive() === null) {
+            return false;
+        }
+
         $tradingHours = $stockist->getHours();
 
         if ($tradingHours && !is_subclass_of($tradingHours, TradingHoursInterface::class)) {

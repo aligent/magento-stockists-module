@@ -44,7 +44,7 @@
         </settings>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
-        <filterSearch name="fulltext"/>
+        <filterSearch name="name"/>
         <filters name="listing_filters" />
         <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
             <action name="delete">
