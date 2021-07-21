@@ -5,6 +5,7 @@
 namespace Aligent\Stockists\Ui\DataProvider;
 
 use Aligent\Stockists\Api\Data\StockistInterface;
+use Magento\Directory\Model\RegionFactory;
 use Magento\Framework\Serialize\SerializerInterface;
 
 class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
@@ -33,6 +34,11 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
      */
     private $json;
 
+    /**
+     * @var RegionFactory
+     */
+    protected $regionFactory;
+
     public function __construct(
         \Aligent\Stockists\Ui\DataProvider\SearchResultFactory $searchResultFactory,
         \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
@@ -45,6 +51,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         \Magento\Framework\App\RequestInterface $request,
         SerializerInterface $json,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
+        RegionFactory $regionFactory,
         array $meta = [],
         array $data = []
     ) {
@@ -63,6 +70,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         $this->json = $json;
         $this->stockistRepository = $stockistRepository;
         $this->searchResultFactory = $searchResultFactory;
+        $this->regionFactory = $regionFactory;
     }
 
 
@@ -74,6 +82,10 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
             $item[StockistInterface::STORE_IDS] = \implode(',', $item[StockistInterface::STORE_IDS]);
             $item[StockistInterface::COUNTRY_ID] = $item[StockistInterface::COUNTRY];
+            $item[StockistInterface::REGION_ID] = $this->regionFactory->create()->loadByName(
+                $item[StockistInterface::REGION],
+                $item[StockistInterface::COUNTRY_ID],
+            )->getRegionId();
             $item[StockistInterface::ALLOW_STORE_DELIVERY] = isset($item[StockistInterface::ALLOW_STORE_DELIVERY])
                 && $item[StockistInterface::ALLOW_STORE_DELIVERY] === "1";
             $item[StockistInterface::IS_ACTIVE] = isset($item[StockistInterface::IS_ACTIVE])

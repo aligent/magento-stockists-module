@@ -25,6 +25,7 @@ interface StockistInterface extends ExtensibleDataInterface
     const SUBURB = 'suburb';
     const POSTCODE = 'postcode';
     const REGION = 'region';
+    const REGION_ID = 'region_id';
     const COUNTRY = 'country';
     const COUNTRY_ID = 'country_id';
     const PHONE = 'phone';

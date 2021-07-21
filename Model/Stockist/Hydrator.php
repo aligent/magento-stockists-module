@@ -8,6 +8,7 @@ namespace Aligent\Stockists\Model\Stockist;
 
 use Aligent\Stockists\Api\Data\StockistDataProcessorInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
+use Magento\Directory\Model\RegionFactory;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\EntityManager\MapperPool;
 use Magento\Framework\EntityManager\TypeResolver;
@@ -47,24 +48,32 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
     protected $dataObjectProcessor;
 
     /**
+     * @var RegionFactory
+     */
+    protected $regionFactory;
+
+    /**
      * StockistHydrator constructor.
      * @param DataObjectProcessor $dataObjectProcessor
      * @param MapperPool $mapperPool
      * @param TypeResolver $typeResolver
      * @param DataObjectHelper $dataObjectHelper
      * @param StockistDataProcessorInterface[] $dataProcessors
+     * @param RegionFactory $regionFactory
      */
     public function __construct(
         DataObjectProcessor $dataObjectProcessor,
         MapperPool $mapperPool,
         TypeResolver $typeResolver,
         DataObjectHelper $dataObjectHelper,
+        RegionFactory $regionFactory,
         array $dataProcessors = []
     ) {
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->typeResolver = $typeResolver;
         $this->mapperPool = $mapperPool;
         $this->dataObjectHelper = $dataObjectHelper;
+        $this->regionFactory = $regionFactory;
         $this->dataProcessors = $dataProcessors;
     }
 
@@ -107,6 +116,11 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
         if (empty($data[StockistInterface::COUNTRY]) && !empty($data[StockistInterface::COUNTRY_ID])) {
             // possible todo: convert to full name?
             $data[StockistInterface::COUNTRY] = $data[StockistInterface::COUNTRY_ID];
+        }
+
+        if (isset($data[StockistInterface::REGION_ID])) {
+            $region = $this->regionFactory->create()->load($data[StockistInterface::REGION_ID]);
+            $data[StockistInterface::REGION] = $region->getName();
         }
 
         foreach ($this->dataProcessors as $dataProcessor) {

@@ -196,7 +196,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="region" component="Magento_Customer/js/form/element/region" formElement="select">
+        <field name="region_id" component="Magento_Customer/js/form/element/region" formElement="select">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">State/Province</label>
