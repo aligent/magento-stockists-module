@@ -73,7 +73,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             // todo: process hours output
             $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
             $item[StockistInterface::STORE_IDS] = \implode(',', $item[StockistInterface::STORE_IDS]);
-            $item[StockistInterface::COUNTRY] = $item[StockistInterface::COUNTRY];
+            $item[StockistInterface::COUNTRY_ID] = $item[StockistInterface::COUNTRY];
             $item[StockistInterface::ALLOW_STORE_DELIVERY] = isset($item[StockistInterface::ALLOW_STORE_DELIVERY])
                 && $item[StockistInterface::ALLOW_STORE_DELIVERY] === "1";
             $item[StockistInterface::IS_ACTIVE] = isset($item[StockistInterface::IS_ACTIVE])
