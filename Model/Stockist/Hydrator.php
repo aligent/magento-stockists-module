@@ -128,9 +128,13 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
         }
 
         if (isset($data[StockistInterface::REGION_ID])) {
-            $region = $this->regionFactory->create();
-            $this->regionResource->load($region, $data[StockistInterface::REGION_ID], 'region_id');
-            $data[StockistInterface::REGION] = $region->getName();
+            if (!$data[StockistInterface::REGION_ID]) {
+                $data[StockistInterface::REGION] = "";
+            } else {
+                $region = $this->regionFactory->create();
+                $this->regionResource->load($region, $data[StockistInterface::REGION_ID], 'region_id');
+                $data[StockistInterface::REGION] = $region->getName();
+            }
         }
 
         foreach ($this->dataProcessors as $dataProcessor) {
