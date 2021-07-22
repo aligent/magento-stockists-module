@@ -4,9 +4,24 @@ namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\Data\TradingHoursInterface;
 use Magento\Framework\DataObject;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class TradingHours extends DataObject implements TradingHoursInterface
 {
+    /**
+     * @var SerializerInterface
+     */
+    private $json;
+
+    /**
+     * TradingHours constructor.
+     * @param SerializerInterface $json
+     */
+    public function __construct(
+        SerializerInterface $json
+    ) {
+        $this->json = $json;
+    }
     /**
      * @return string
      */
@@ -65,7 +80,9 @@ class TradingHours extends DataObject implements TradingHoursInterface
 
     public function getPublicHolidays(): ?string
     {
-        return $this->getData('public_holidays') ?: '';
+        $publicHolidaysData = $this->getData('public_holidays') ?: '';
+
+        return $this->json->serialize($publicHolidaysData);
     }
 
     /**
