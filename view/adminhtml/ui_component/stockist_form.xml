@@ -180,7 +180,7 @@
             <opened>true</opened>
             <dataScope>general</dataScope>
         </settings>
-        <field name="country" formElement="select" sortOrder="10">
+        <field name="country_id" formElement="select" sortOrder="10">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Country</label>
@@ -196,7 +196,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="region" component="Magento_Customer/js/form/element/region" formElement="select">
+        <field name="region_id" component="Magento_Customer/js/form/element/region" formElement="select">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">State/Province</label>
@@ -205,8 +205,8 @@
                 <select>
                     <settings>
                         <filterBy>
-                            <field>country</field>
-                            <target>${ $.provider }:${ $.parentScope }.country</target>
+                            <field>country_id</field>
+                            <target>${ $.provider }:${ $.parentScope }.country_id</target>
                         </filterBy>
                         <customEntry>region</customEntry>
                         <options class="Magento\Directory\Model\ResourceModel\Region\Collection"/>
@@ -315,7 +315,7 @@
                         "friday":"08:00 AM to 09:30 PM",
                         "saturday":"08:00 AM to 05:30 PM",
                         "sunday":"08:00 AM to 05:30 PM",
-                            "PublicHolidays": {
+                        "public_holidays": {
                                 "02-02-2021":"08:00 AM to 05:30 PM",
                                 "04-02-2021":"08:00 AM to 05:30 PM"
                             }

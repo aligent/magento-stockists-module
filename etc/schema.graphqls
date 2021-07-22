@@ -11,7 +11,8 @@ type Query {
 }
 
 type Stockist @doc(description: "A stockist location entity") {
-    id: Int
+    id: Int @doc(description: "Deprecated, use stockist_id")
+    stockist_id: Int
     identifier: String
     location: Location @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistLocation")
     name: String
