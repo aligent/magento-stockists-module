@@ -9,6 +9,7 @@ namespace Aligent\Stockists\Model\Stockist;
 use Aligent\Stockists\Api\Data\StockistDataProcessorInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
 use Magento\Directory\Model\RegionFactory;
+use Magento\Directory\Model\ResourceModel\Region;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\EntityManager\MapperPool;
 use Magento\Framework\EntityManager\TypeResolver;
@@ -53,6 +54,11 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
     protected $regionFactory;
 
     /**
+     * @var Region
+     */
+    protected $regionResource;
+
+    /**
      * StockistHydrator constructor.
      * @param DataObjectProcessor $dataObjectProcessor
      * @param MapperPool $mapperPool
@@ -60,6 +66,7 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
      * @param DataObjectHelper $dataObjectHelper
      * @param StockistDataProcessorInterface[] $dataProcessors
      * @param RegionFactory $regionFactory
+     * @param Region $regionResource
      */
     public function __construct(
         DataObjectProcessor $dataObjectProcessor,
@@ -67,6 +74,7 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
         TypeResolver $typeResolver,
         DataObjectHelper $dataObjectHelper,
         RegionFactory $regionFactory,
+        Region $regionResource,
         array $dataProcessors = []
     ) {
         $this->dataObjectProcessor = $dataObjectProcessor;
@@ -74,6 +82,7 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
         $this->mapperPool = $mapperPool;
         $this->dataObjectHelper = $dataObjectHelper;
         $this->regionFactory = $regionFactory;
+        $this->regionResource = $regionResource;
         $this->dataProcessors = $dataProcessors;
     }
 
@@ -119,7 +128,8 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
         }
 
         if (isset($data[StockistInterface::REGION_ID])) {
-            $region = $this->regionFactory->create()->load($data[StockistInterface::REGION_ID]);
+            $region = $this->regionFactory->create();
+            $this->regionResource->load($region, $data[StockistInterface::REGION_ID], 'region_id');
             $data[StockistInterface::REGION] = $region->getName();
         }
 
