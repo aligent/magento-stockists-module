@@ -2,6 +2,7 @@
 
 namespace Aligent\Stockists\Model\ResourceModel;
 
+use Aligent\Stockists\Model\TradingHoursFactory;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
@@ -18,14 +19,26 @@ class Stockist extends AbstractDb
     private $json;
 
     /**
+     * @var TradingHoursFactory
+     */
+    private  $tradingHoursFactory;
+
+    /**
      * @param Context $context
      * @param JsonSerializer $json
+     * @param TradingHoursFactory $tradingHoursFactory
      * @param null $connectionName
      */
-    public function __construct(Context $context, JsonSerializer $json, $connectionName = null)
+    public function __construct(
+        Context $context,
+        JsonSerializer $json,
+        TradingHoursFactory $tradingHoursFactory,
+        $connectionName = null
+    )
     {
         parent::__construct($context, $connectionName);
         $this->json = $json;
+        $this->tradingHoursFactory = $tradingHoursFactory;
     }
 
     protected function _construct()
@@ -58,10 +71,12 @@ class Stockist extends AbstractDb
      */
     protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {
-        $openingHours = $object->getData('hours');
+        $rawHours = $this->json->unserialize($object->getData('hours'));
 
-        if ($openingHours) {
-            $object->setData('hours', new \Aligent\Stockists\Model\TradingHours($this->json->unserialize($openingHours)));
+        if ($rawHours) {
+            $tradingHours = $this->tradingHoursFactory->create();
+            $tradingHours->setData($rawHours);
+            $object->setData('hours', $tradingHours);
         }
 
         $object->setData('store_ids', explode(',', $object->getData('store_ids')));
@@ -75,9 +90,12 @@ class Stockist extends AbstractDb
      */
     protected function _afterLoad(\Magento\Framework\Model\AbstractModel $object)
     {
-        $openingHours = $object->getData('hours');
-        if ($openingHours) {
-            $object->setData('hours', new \Aligent\Stockists\Model\TradingHours($this->json->unserialize($openingHours)));
+        $rawHours = $this->json->unserialize($object->getData('hours'));
+
+        if ($rawHours) {
+            $tradingHours = $this->tradingHoursFactory->create();
+            $tradingHours->setData($rawHours);
+            $object->setData('hours', $tradingHours);
         }
 
         $object->setData('store_ids', explode(',', $object->getData('store_ids')));
