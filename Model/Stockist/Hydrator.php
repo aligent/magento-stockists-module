@@ -122,7 +122,7 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
             $data[StockistInterface::ALLOW_STORE_DELIVERY] = 0;
         }
 
-        if (empty($data[StockistInterface::COUNTRY]) && !empty($data[StockistInterface::COUNTRY_ID])) {
+        if (isset($data[StockistInterface::COUNTRY_ID])) {
             // possible todo: convert to full name?
             $data[StockistInterface::COUNTRY] = $data[StockistInterface::COUNTRY_ID];
         }
