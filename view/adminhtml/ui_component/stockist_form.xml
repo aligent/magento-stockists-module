@@ -315,7 +315,7 @@
                         "friday":"08:00 AM to 09:30 PM",
                         "saturday":"08:00 AM to 05:30 PM",
                         "sunday":"08:00 AM to 05:30 PM",
-                            "PublicHolidays": {
+                        "public_holidays": {
                                 "02-02-2021":"08:00 AM to 05:30 PM",
                                 "04-02-2021":"08:00 AM to 05:30 PM"
                             }
