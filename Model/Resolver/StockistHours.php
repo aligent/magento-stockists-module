@@ -8,9 +8,25 @@ use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class StockistHours implements ResolverInterface
 {
+    /**
+     * @var SerializerInterface
+     */
+    private $json;
+
+    /**
+     * StockistHours constructor.
+     * @param SerializerInterface $json
+     */
+    public function __construct(
+        SerializerInterface $json
+    )
+    {
+        $this->json = $json;
+    }
     /**
      * @inheritDoc
      */
@@ -22,6 +38,11 @@ class StockistHours implements ResolverInterface
 
         /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
         $stockist = $value['model'];
-        return $stockist->getHours() ?? [];
+        $tradingHours = $stockist->getHours() ?? [];
+        if (isset($tradingHours['public_holidays']) && $tradingHours['public_holidays']) {
+            $tradingHours['public_holidays'] = $this->json->serialize($tradingHours['public_holidays']);
+        }
+
+        return $tradingHours;
     }
 }
