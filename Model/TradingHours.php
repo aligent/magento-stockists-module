@@ -82,6 +82,10 @@ class TradingHours extends DataObject implements TradingHoursInterface
     {
         $publicHolidaysData = $this->getData('public_holidays') ?: '';
 
+        if (!$publicHolidaysData) {
+            return null;
+        }
+
         return $this->json->serialize($publicHolidaysData);
     }
 

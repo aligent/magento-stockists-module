@@ -71,11 +71,12 @@ class Stockist extends AbstractDb
      */
     protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {
-        $rawHours = $this->json->unserialize($object->getData('hours'));
+        $rawHours = $object->getData('hours');
 
         if ($rawHours) {
             $tradingHours = $this->tradingHoursFactory->create();
-            $tradingHours->setData($rawHours);
+            $unserializedHours = $this->json->unserialize($rawHours);
+            $tradingHours->setData($unserializedHours);
             $object->setData('hours', $tradingHours);
         }
 
@@ -90,11 +91,12 @@ class Stockist extends AbstractDb
      */
     protected function _afterLoad(\Magento\Framework\Model\AbstractModel $object)
     {
-        $rawHours = $this->json->unserialize($object->getData('hours'));
+        $rawHours = $object->getData('hours');
 
         if ($rawHours) {
             $tradingHours = $this->tradingHoursFactory->create();
-            $tradingHours->setData($rawHours);
+            $unserializedHours = $this->json->unserialize($rawHours);
+            $tradingHours->setData($unserializedHours);
             $object->setData('hours', $tradingHours);
         }
 
