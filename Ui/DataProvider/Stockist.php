@@ -4,6 +4,7 @@
  */
 namespace Aligent\Stockists\Ui\DataProvider;
 
+use Aligent\Stockists\Model\TradingHours;
 use Aligent\Stockists\Api\Data\StockistInterface;
 use Magento\Directory\Model\RegionFactory;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -79,8 +80,8 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         $data = parent::getData();
         foreach ($data['items'] as &$item) {
             // todo: process hours output
-            if (isset($item[StockistInterface::HOURS]) && $item[StockistInterface::HOURS]['public_holidays']) {
-                $item[StockistInterface::HOURS]['public_holidays'] = $this->json->unserialize($item[StockistInterface::HOURS]['public_holidays']);
+            if (isset($item[StockistInterface::HOURS]) && $item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS]) {
+                $item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS] = $this->json->unserialize($item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS]);
             }
             $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
             $item[StockistInterface::STORE_IDS] = \implode(',', $item[StockistInterface::STORE_IDS]);

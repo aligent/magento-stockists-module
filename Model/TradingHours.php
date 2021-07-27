@@ -8,6 +8,8 @@ use Magento\Framework\Serialize\SerializerInterface;
 
 class TradingHours extends DataObject implements TradingHoursInterface
 {
+    const PUBLIC_HOLIDAYS = 'public_holidays';
+
     /**
      * @var SerializerInterface
      */
@@ -80,7 +82,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
 
     public function getPublicHolidays(): ?string
     {
-        $publicHolidaysData = $this->getData('public_holidays') ?: '';
+        $publicHolidaysData = $this->getData($this::PUBLIC_HOLIDAYS) ?: '';
 
         if (!$publicHolidaysData) {
             return null;
@@ -154,6 +156,6 @@ class TradingHours extends DataObject implements TradingHoursInterface
 
     public function setPublicHolidays(string $publicHolidayHours): TradingHoursInterface
     {
-        return $this->setData('public_holidays', $publicHolidayHours);
+        return $this->setData($this::PUBLIC_HOLIDAYS, $publicHolidayHours);
     }
 }
