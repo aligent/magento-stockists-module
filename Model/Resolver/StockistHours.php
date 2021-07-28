@@ -40,7 +40,7 @@ class StockistHours implements ResolverInterface
         /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
         $stockist = $value['model'];
         $tradingHours = $stockist->getHours() ?? [];
-        if (isset($tradingHours[TradingHours::PUBLIC_HOLIDAYS]) && $tradingHours[TradingHours::PUBLIC_HOLIDAYS]) {
+        if (!empty($tradingHours[TradingHours::PUBLIC_HOLIDAYS])) {
             $tradingHours[TradingHours::PUBLIC_HOLIDAYS] = $this->json->serialize($tradingHours[TradingHours::PUBLIC_HOLIDAYS]);
         }
 

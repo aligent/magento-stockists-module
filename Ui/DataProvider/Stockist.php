@@ -80,7 +80,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         $data = parent::getData();
         foreach ($data['items'] as &$item) {
             // todo: process hours output
-            if (isset($item[StockistInterface::HOURS]) && $item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS]) {
+            if (!empty($item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS])) {
                 $item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS] = $this->json->unserialize($item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS]);
             }
             $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
