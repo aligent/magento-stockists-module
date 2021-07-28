@@ -2,6 +2,7 @@
 
 namespace Aligent\Stockists\Model\ResourceModel;
 
+use Aligent\Stockists\Model\Stockist as StockistModel;
 use Aligent\Stockists\Model\TradingHoursFactory;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
@@ -53,12 +54,12 @@ class Stockist extends AbstractDb
      */
     protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
-        $storeIds = $object->getData('store_ids') ?? [0];
-        $object->setData('store_ids', implode(',', $storeIds));
+        $storeIds = $object->getData(StockistModel::STORE_IDS) ?? [0];
+        $object->setData(StockistModel::STORE_IDS, implode(',', $storeIds));
 
-        $openingHours = $object->getData('hours') ? $object->getData('hours')->getData() : null;
+        $openingHours = $object->getData(StockistModel::HOURS) ? $object->getData(StockistModel::HOURS)->getData() : null;
         if (is_array($openingHours)) {
-            $object->setData('hours', $this->json->serialize($openingHours));
+            $object->setData(StockistModel::HOURS, $this->json->serialize($openingHours));
         }
         return parent::_beforeSave($object);
     }
@@ -71,15 +72,16 @@ class Stockist extends AbstractDb
      */
     protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {
-        $rawHours = $this->json->unserialize($object->getData('hours'));
+        $rawHours = $object->getData(StockistModel::HOURS);
 
         if ($rawHours) {
             $tradingHours = $this->tradingHoursFactory->create();
-            $tradingHours->setData($rawHours);
-            $object->setData('hours', $tradingHours);
+            $unserializedHours = $this->json->unserialize($rawHours);
+            $tradingHours->setData($unserializedHours);
+            $object->setData(StockistModel::HOURS, $tradingHours);
         }
 
-        $object->setData('store_ids', explode(',', $object->getData('store_ids')));
+        $object->setData(StockistModel::STORE_IDS, explode(',', $object->getData(StockistModel::STORE_IDS)));
         return parent::_afterSave($object);
     }
 
@@ -90,15 +92,16 @@ class Stockist extends AbstractDb
      */
     protected function _afterLoad(\Magento\Framework\Model\AbstractModel $object)
     {
-        $rawHours = $this->json->unserialize($object->getData('hours'));
+        $rawHours = $object->getData(StockistModel::HOURS);
 
         if ($rawHours) {
             $tradingHours = $this->tradingHoursFactory->create();
-            $tradingHours->setData($rawHours);
-            $object->setData('hours', $tradingHours);
+            $unserializedHours = $this->json->unserialize($rawHours);
+            $tradingHours->setData($unserializedHours);
+            $object->setData(StockistModel::HOURS, $tradingHours);
         }
 
-        $object->setData('store_ids', explode(',', $object->getData('store_ids')));
+        $object->setData(StockistModel::STORE_IDS, explode(',', $object->getData(StockistModel::STORE_IDS)));
         return parent::_afterLoad($object);
     }
 }

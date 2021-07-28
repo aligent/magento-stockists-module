@@ -2,15 +2,32 @@
 
 namespace Aligent\Stockists\Model\Resolver;
 
+use Aligent\Stockists\Model\TradingHours;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class StockistHours implements ResolverInterface
 {
+    /**
+     * @var SerializerInterface
+     */
+    private $json;
+
+    /**
+     * StockistHours constructor.
+     * @param SerializerInterface $json
+     */
+    public function __construct(
+        SerializerInterface $json
+    )
+    {
+        $this->json = $json;
+    }
     /**
      * @inheritDoc
      */
@@ -22,6 +39,11 @@ class StockistHours implements ResolverInterface
 
         /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
         $stockist = $value['model'];
-        return $stockist->getHours() ?? [];
+        $tradingHours = $stockist->getHours() ?? [];
+        if (!empty($tradingHours[TradingHours::PUBLIC_HOLIDAYS])) {
+            $tradingHours[TradingHours::PUBLIC_HOLIDAYS] = $this->json->serialize($tradingHours[TradingHours::PUBLIC_HOLIDAYS]);
+        }
+
+        return $tradingHours;
     }
 }

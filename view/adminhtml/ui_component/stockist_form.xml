@@ -307,15 +307,16 @@
                 <dataType>text</dataType>
                 <label translate="true">Hours</label>
                 <tooltip>
-                    <description translate="true">example: {
-                        "monday":"08:00 AM to 09:30 PM",
-                        "tuesday":"08:00 AM to 09:30 PM",
-                        "wednesday":"08:00 AM to 09:30 PM",
-                        "thursday":"08:00 AM to 09:30 PM",
-                        "friday":"08:00 AM to 09:30 PM",
-                        "saturday":"08:00 AM to 05:30 PM",
-                        "sunday":"08:00 AM to 05:30 PM",
-                        "public_holidays": {
+                    <description translate="true">
+                        example: {
+                            "monday":"08:00 AM to 09:30 PM",
+                            "tuesday":"08:00 AM to 09:30 PM",
+                            "wednesday":"08:00 AM to 09:30 PM",
+                            "thursday":"08:00 AM to 09:30 PM",
+                            "friday":"08:00 AM to 09:30 PM",
+                            "saturday":"08:00 AM to 05:30 PM",
+                            "sunday":"08:00 AM to 05:30 PM",
+                            "public_holidays": {
                                 "02-02-2021":"08:00 AM to 05:30 PM",
                                 "04-02-2021":"08:00 AM to 05:30 PM"
                             }

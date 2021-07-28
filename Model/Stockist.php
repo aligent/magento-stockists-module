@@ -339,7 +339,9 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getHours(): ?\Aligent\Stockists\Api\Data\TradingHoursInterface
     {
-        return $this->getData(StockistInterface::HOURS);
+        $res = $this->getData(StockistInterface::HOURS);
+
+        return $res === "" ? null : $res;
     }
 
     /**
