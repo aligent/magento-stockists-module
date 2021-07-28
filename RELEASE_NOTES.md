@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+## v1.2.8
+Better handling of null/empty trading hours values.
+
 ## v1.2.7
 
 Fix minor bug in region update, and save full name of region to database
