@@ -74,7 +74,6 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         $this->regionFactory = $regionFactory;
     }
 
-
     public function getData()
     {
         $data = parent::getData();
@@ -95,6 +94,11 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             $item[StockistInterface::IS_ACTIVE] = isset($item[StockistInterface::IS_ACTIVE])
                 && $item[StockistInterface::IS_ACTIVE] === "1";
 
+            // Make sure extension attributes are copied onto the item itself, then we can
+            // reference them in Ui Components
+            if (isset($item[StockistInterface::EXTENSION_ATTRIBUTES])) {
+                $item = array_merge($item, $item[StockistInterface::EXTENSION_ATTRIBUTES])
+            }
         }
         if (self::STOCKIST_FORM_NAME === $this->name) {
             // It is need for support of several fieldsets.
