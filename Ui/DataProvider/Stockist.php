@@ -97,7 +97,7 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
             // Make sure extension attributes are copied onto the item itself, then we can
             // reference them in Ui Components
             if (isset($item[StockistInterface::EXTENSION_ATTRIBUTES])) {
-                $item = array_merge($item, $item[StockistInterface::EXTENSION_ATTRIBUTES])
+                $item = array_merge($item, $item[StockistInterface::EXTENSION_ATTRIBUTES]);
             }
         }
         if (self::STOCKIST_FORM_NAME === $this->name) {
