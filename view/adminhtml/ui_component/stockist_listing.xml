@@ -15,7 +15,7 @@
             <button name="add">
                 <url path="*/*/new"/>
                 <class>primary</class>
-                <label translate="true">Add New Stock</label>
+                <label translate="true">Add New Stockist</label>
             </button>
         </buttons>
         <spinner>stockist_listing_columns</spinner>
