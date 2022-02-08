@@ -31,6 +31,7 @@ interface StockistInterface extends ExtensibleDataInterface
     const PHONE = 'phone';
     const HOURS = 'hours';
     const STORE_IDS = 'store_ids';
+    const EXTENSION_ATTRIBUTES = 'extension_attributes';
 
 
     /**
