@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+## v1.2.9
+Copy extension attributes onto the returned item within the DataProvider
+
 ## v1.2.8
 Better handling of null/empty trading hours values.
 
