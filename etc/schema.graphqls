@@ -65,9 +65,9 @@ type Stockists @doc(description: "Result of a stockist search query") {
 }
 
 input LocationRequest @doc(description: "Request location (origin point and search radius)") {
-    lat: Float @doc(description: "Latitude")
-    lng: Float @doc(description: "Longitude")
+    lat: Float! @doc(description: "Latitude")
+    lng: Float! @doc(description: "Longitude")
     postcode: String @doc(description: "Postcode")
-    radius: Float @doc(description: "Search radius")
+    radius: Float! @doc(description: "Search radius")
     unit: DistanceUnitsEnum @doc(description: "Units of search radius")
 }

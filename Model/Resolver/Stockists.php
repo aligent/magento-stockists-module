@@ -118,7 +118,7 @@ class Stockists implements ResolverInterface
             throw new GraphQlInputException(__('Location request is invalid.'));
         }
 
-        if (!isset($args['location']['lat']) || !isset($args['location']['lng'])) {
+        if (!isset($args['location']['lat']) || !isset($args['location']['lng']) || !isset($args['location']['radius'])) {
             throw new GraphQlInputException(__('Invalid search coordinates provided.'));
         }
     }
