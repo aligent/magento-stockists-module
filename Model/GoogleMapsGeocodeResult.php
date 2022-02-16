@@ -11,6 +11,9 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
     private $lat;
     private $lng;
 
+    /**
+     * @inheritDoc
+     */
     public function setData(string $status, float $lat, float $lng)
     {
         $this->status = $status;
@@ -18,21 +21,33 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
         $this->lng = $lng;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function wasSuccessful() : bool
     {
         return $this->getStatus() == "OK";
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getLat(): float
     {
         return $this->lat;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getLng(): float
     {
         return $this->lng;

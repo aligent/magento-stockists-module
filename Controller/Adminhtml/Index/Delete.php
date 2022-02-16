@@ -5,34 +5,33 @@
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
-class Delete extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
+use Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\StockistRepositoryInterface;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
+
+class Delete extends Action implements HttpPostActionInterface
 {
 
     const ADMIN_RESOURCE = 'Aligent_Stockists::manage';
 
     /**
-     * @var  \Magento\Framework\View\Result\PageFactory
-     */
-    private $resultPageFactory;
-
-    /**
-     * @var \Aligent\Stockists\Api\StockistRepositoryInterface
+     * @var StockistRepositoryInterface
      */
     private $stockistRepository;
 
     /**
-     * Edit constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Context $context
+     * @param StockistRepositoryInterface $stockistRepository
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        Context $context,
+        StockistRepositoryInterface $stockistRepository
     ) {
         parent::__construct($context);
-        $this->resultPageFactory = $resultPageFactory;
         $this->stockistRepository = $stockistRepository;
     }
 
@@ -43,7 +42,7 @@ class Delete extends \Magento\Backend\App\Action implements \Magento\Framework\A
     {
         $resultRedirect = $this->resultRedirectFactory->create();
 
-        $stockistId = $this->getRequest()->getPost(\Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID);
+        $stockistId = $this->getRequest()->getPost(StockistInterface::STOCKIST_ID);
         if ($stockistId === null) {
             $this->messageManager->addErrorMessage(__('Wrong request.'));
             return $resultRedirect->setPath('*/*');
@@ -54,12 +53,15 @@ class Delete extends \Magento\Backend\App\Action implements \Magento\Framework\A
             $this->stockistRepository->deleteById($stockistId);
             $this->messageManager->addSuccessMessage(__('The Stockist has been deleted.'));
             $resultRedirect->setPath('*/*');
-        } catch (\Magento\Framework\Exception\CouldNotDeleteException $e) {
+        } catch (CouldNotDeleteException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-            $resultRedirect->setPath('*/*/edit', [
-                \Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID => $stockistId,
-                '_current' => true,
-            ]);
+            $resultRedirect->setPath(
+                '*/*/edit',
+                [
+                    StockistInterface::STOCKIST_ID => $stockistId,
+                    '_current' => true
+                ]
+            );
         }
 
         return $resultRedirect;

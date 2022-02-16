@@ -66,7 +66,7 @@ class StockistValidation implements StockistValidationInterface
         return true;
     }
 
-    private function isIso2CountryCode(string $countryCode)
+    private function isIso2CountryCode(string $countryCode): bool
     {
         $country = $this->countryFactory->create();
         try {

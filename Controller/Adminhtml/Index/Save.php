@@ -6,27 +6,54 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
+use Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\Data\StockistInterfaceFactory;
+use Aligent\Stockists\Api\StockistRepositoryInterface;
+use Aligent\Stockists\Model\Stockist\Hydrator;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\HttpRequestInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\SecurityViolationException;
+use Magento\Framework\Validation\ValidationException;
+
 /**
  * Save Controller
  */
-class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
+class Save extends Action implements HttpPostActionInterface
 {
     /**
      * @see _isAllowed()
      */
     const ADMIN_RESOURCE = 'Aligent_Stockists::manage';
 
+    /**
+     * @var Hydrator
+     */
     private $stockistHydrator;
 
+    /**
+     * @var StockistRepositoryInterface
+     */
     protected $stockistRepository;
 
+    /**
+     * @var StockistInterfaceFactory
+     */
     private $stockistFactory;
 
+    /**
+     * @param StockistInterfaceFactory $stockistFactory
+     * @param Hydrator $stockistHydrator
+     * @param StockistRepositoryInterface $stockistRepository
+     * @param Context $context
+     */
     public function __construct(
-        \Aligent\Stockists\Api\Data\StockistInterfaceFactory $stockistFactory,
-        \Aligent\Stockists\Model\Stockist\Hydrator $stockistHydrator,
-        \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
-        \Magento\Backend\App\Action\Context $context
+        StockistInterfaceFactory $stockistFactory,
+        Hydrator $stockistHydrator,
+        StockistRepositoryInterface $stockistRepository,
+        Context $context
     ) {
         parent::__construct($context);
         $this->stockistHydrator = $stockistHydrator;
@@ -37,7 +64,7 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
     /**
      * @inheritdoc
      */
-    public function execute(): \Magento\Framework\Controller\ResultInterface
+    public function execute(): ResultInterface
     {
 
         $resultRedirect = $this->resultRedirectFactory->create();
@@ -48,14 +75,20 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
             $this->processSave($stockist, $requestData);
             $this->messageManager->addSuccessMessage('Stockist has been saved');
             if ($this->getRequest()->getParam('redirect_to_new')) {
-                $resultRedirect->setPath('*/*/new', [
-                    '_current' => true,
-                ]);
+                $resultRedirect->setPath(
+                    '*/*/new',
+                    [
+                        '_current' => true
+                    ]
+                );
             } else {
-                $resultRedirect->setPath('*/*/edit', [
-                    \Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID => $stockist->getStockistId(),
-                    '_current' => true,
-                ]);
+                $resultRedirect->setPath(
+                    '*/*/edit',
+                    [
+                        StockistInterface::STOCKIST_ID => $stockist->getStockistId(),
+                        '_current' => true
+                    ]
+                );
             }
 
         } catch (\Exception $e) {
@@ -63,15 +96,16 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
             $resultRedirect->setPath('*/*/new');
         }
 
-
         return $resultRedirect;
     }
 
     /**
-     * @param \Aligent\Stockists\Api\Data\StockistInterface $stockist
+     * @param StockistInterface $stockist
      * @param array $requestData
+     * @return StockistInterface
+     * @throws ValidationException
      */
-    protected function processSave(\Aligent\Stockists\Api\Data\StockistInterface $stockist, array $requestData)
+    protected function processSave(StockistInterface $stockist, array $requestData): StockistInterface
     {
         $stockist = $this->stockistHydrator->hydrate($stockist, $requestData);
         return $this->stockistRepository->save($stockist);
@@ -79,19 +113,19 @@ class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App
 
     /**
      * @return array
-     * @throws \Magento\Framework\Exception\SecurityViolationException
-     * @throws \Magento\Framework\Validation\ValidationException
+     * @throws SecurityViolationException
+     * @throws ValidationException
      */
     private function getRequestData(): array
     {
         $request = $this->getRequest();
         if (!$request->isPost() || !$request->isSecure()) {
-            throw new \Magento\Framework\Exception\SecurityViolationException(__('Must be a secured POST request'));
+            throw new SecurityViolationException(__('Must be a secured POST request'));
         }
 
         $requestData = $request->getPost()->toArray();
         if (empty($requestData['general'])) {
-            throw new \Magento\Framework\Validation\ValidationException(__('Invalid data'));
+            throw new ValidationException(__('Invalid data'));
         }
         return $requestData['general'];
     }

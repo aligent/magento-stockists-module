@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Ui\Component\MassAction;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter as BaseFilter;
 use Magento\Framework\Api\Search\DocumentInterface;
 
@@ -34,6 +35,7 @@ class Filter
      * Get ids from search filter
      *
      * @return array
+     * @throws LocalizedException
      */
     public function getIds(): array
     {

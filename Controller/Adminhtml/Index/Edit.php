@@ -5,31 +5,40 @@
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
-class Edit extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpGetActionInterface
+use Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\StockistRepositoryInterface;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Result\PageFactory;
+
+class Edit extends Action implements HttpGetActionInterface
 {
 
     const ADMIN_RESOURCE = 'Aligent_Stockists::manage';
 
     /**
-     * @var  \Magento\Framework\View\Result\PageFactory
+     * @var  PageFactory
      */
     private $resultPageFactory;
 
     /**
-     * @var \Aligent\Stockists\Api\StockistRepositoryInterface
+     * @var StockistRepositoryInterface
      */
     private $stockistRepository;
 
     /**
-     * Edit constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Context $context
+     * @param StockistRepositoryInterface $stockistRepository
+     * @param PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        Context $context,
+        StockistRepositoryInterface $stockistRepository,
+        PageFactory $resultPageFactory
     ) {
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
@@ -37,20 +46,24 @@ class Edit extends \Magento\Backend\App\Action implements \Magento\Framework\App
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return ResultInterface
      */
-    public function execute(): \Magento\Framework\Controller\ResultInterface
+    public function execute(): ResultInterface
     {
-        $stockistId = $this->getRequest()->getParam(\Aligent\Stockists\Model\Stockist::STOCKIST_ID);
+        $stockistId = $this->getRequest()->getParam(StockistInterface::STOCKIST_ID);
         try {
             $stockist = $this->stockistRepository->getById($stockistId);
-            /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
+            /* @var Page $result */
             $result = $this->resultPageFactory->create();
             $result->setActiveMenu("Aligent_Stockists::stockists_manage");
-            $result->getConfig()->getTitle()->prepend(__("Edit Stockist %identifier", ['identifier' => $stockist->getIdentifier()]));
-        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            $result->getConfig()->getTitle()->prepend(
+                __("Edit Stockist %identifier", ['identifier' => $stockist->getIdentifier()])
+            );
+        } catch (NoSuchEntityException $e) {
             $result = $this->resultRedirectFactory->create();
-            $this->messageManager->addErrorMessage(\__('Stockist with id "%value" does not exist', ['value' => $stockistId]));
+            $this->messageManager->addErrorMessage(
+                __('Stockist with id "%value" does not exist', ['value' => $stockistId])
+            );
             $result->setPath('*/*');
         }
         return $result;

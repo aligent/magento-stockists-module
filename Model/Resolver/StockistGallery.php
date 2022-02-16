@@ -2,6 +2,7 @@
 
 namespace Aligent\Stockists\Model\Resolver;
 
+use Aligent\Stockists\Api\Data\StockistInterface;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -16,10 +17,10 @@ class StockistGallery implements ResolverInterface
     private $filterProvider;
 
     /**
-     * StockistGallery constructor.
      * @param FilterProvider $filterProvider
      */
-    public function __construct(FilterProvider $filterProvider) {
+    public function __construct(FilterProvider $filterProvider)
+    {
         $this->filterProvider = $filterProvider;
     }
 
@@ -32,11 +33,10 @@ class StockistGallery implements ResolverInterface
             throw new LocalizedException(__('"model" value should be specified'));
         }
 
-        /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
+        /** @var StockistInterface $stockist */
         $stockist = $value['model'];
         $gallery = $stockist->getGallery() ?? '';
 
         return $this->filterProvider->getPageFilter()->filter($gallery);
     }
 }
-

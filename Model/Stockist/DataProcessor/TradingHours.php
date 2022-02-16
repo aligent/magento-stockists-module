@@ -27,6 +27,7 @@ class TradingHours implements StockistDataProcessorInterface
     /**
      * TradingHours constructor.
      * @param TradingHoursInterfaceFactory $tradingHoursFactory
+     * @param SerializerInterface $json
      */
     public function __construct(
         TradingHoursInterfaceFactory $tradingHoursFactory,
@@ -43,7 +44,8 @@ class TradingHours implements StockistDataProcessorInterface
     public function execute(array $data): array
     {
         $tradingHours = $this->tradingHoursFactory->create();
-        $tradingHoursData = $data[StockistInterface::HOURS] ? $this->json->unserialize($data[StockistInterface::HOURS]) : "{}";
+        $tradingHoursData = $data[StockistInterface::HOURS] ?
+            $this->json->unserialize($data[StockistInterface::HOURS]) : "{}";
         $tradingHours->setData($tradingHoursData);
         $data[StockistInterface::HOURS] = $tradingHours;
         return $data;

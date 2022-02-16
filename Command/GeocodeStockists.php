@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Command;
 
+use Aligent\Stockists\Api\Data\StockistInterface;
 use Aligent\Stockists\Api\StockistRepositoryInterface;
 use Aligent\Stockists\Service\GeocodeStockist as GeocodeStockistService;
 use Aligent\Stockists\Model\GeoSearchCriteriaBuilder;
@@ -17,12 +18,24 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GeocodeStockists extends Command
 {
+    /**
+     * @var StockistRepositoryInterface
+     */
     private $stockistRepository;
 
+    /**
+     * @var GeoSearchCriteriaBuilder
+     */
     private $searchCriteriaBuilder;
 
+    /**
+     * @var GeocodeStockistService
+     */
     private $geocodeStockist;
 
+    /**
+     * @var FilterBuilder
+     */
     private $filterBuilder;
 
     public function __construct(
@@ -48,13 +61,18 @@ class GeocodeStockists extends Command
         parent::configure();
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $geocodeFailed = 0;
         $geocodeSuccess = 0;
 
-        /** @var \Aligent\Stockists\Api\Data\StockistInterface $stockist */
-        foreach ($this->getUncodedStockists() as $stockist) {
+        /** @var StockistInterface $stockist */
+        foreach ($this->getNonGeocodedStockists() as $stockist) {
             $this->geocodeStockist->execute($stockist, true);
             if ($stockist->getLat() !== null) {
                 $output->write('.');
@@ -70,7 +88,10 @@ class GeocodeStockists extends Command
         return 0;
     }
 
-    private function getUncodedStockists(): array
+    /**
+     * @return array
+     */
+    private function getNonGeocodedStockists(): array
     {
         $filter = $this->filterBuilder->setField('lat')->setConditionType('null')->create();
         $searchCriteria = $this->searchCriteriaBuilder->addFilter($filter)->create();

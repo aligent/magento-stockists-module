@@ -5,35 +5,41 @@
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
-class Index extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpGetActionInterface
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\View\Result\PageFactory;
+
+class Index extends Action implements HttpGetActionInterface
 {
 
     const ADMIN_RESOURCE = 'Aligent_Stockists::manage';
 
     /**
-     * @var  \Magento\Framework\View\Result\PageFactory
+     * @var  PageFactory
      */
     private $resultPageFactory;
 
     /**
-     * Edit constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Context $context
+     * @param PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        Context $context,
+        PageFactory $resultPageFactory
     ) {
-        \Magento\Backend\App\Action::__construct($context);
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return ResultInterface
      */
-    public function execute(): \Magento\Framework\Controller\ResultInterface
+    public function execute(): ResultInterface
     {
-        /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /* @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu("Aligent_Stockists::stockists_manage");
         $resultPage->getConfig()->getTitle()->prepend("Manage Stockists");

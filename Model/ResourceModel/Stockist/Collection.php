@@ -7,29 +7,14 @@ use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
 use Aligent\Stockists\Model\ResourceModel\Stockist as StockistResource;
 use Aligent\Stockists\Model\Stockist as StockistModel;
 use Aligent\Stockists\Helper\Data as StockistHelper;
-use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
 
 class Collection extends AbstractCollection
 {
     protected $_idFieldName = 'stockist_id';
+
     /**
-     * @var JsonSerializer
+     * @inheritDoc
      */
-    private $json;
-
-    public function __construct(
-        \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
-        JsonSerializer $json,
-        \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
-        \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
-    ) {
-        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $connection, $resource);
-        $this->json = $json;
-    }
-
     protected function _construct()
     {
         $this->_init(StockistModel::class, StockistResource::class);
@@ -60,7 +45,7 @@ class Collection extends AbstractCollection
                 . 'SIN(RADIANS(' . (float)$lat . ')) * '
                 . 'SIN(RADIANS(`lat`))'
                 . '))'
-                . ' <= ' . (float)$radius
+                . ' <= ' . $radius
             ));
 
             $this->_totalRecords = $this->getConnection()->fetchOne($countSelect);
@@ -69,12 +54,15 @@ class Collection extends AbstractCollection
         return (int)$this->_totalRecords;
     }
 
-    protected function _afterLoad()
+    /**
+     * @inheritDoc
+     */
+    protected function _afterLoad(): Collection
     {
         parent::_afterLoad();
 
-        /** @var \Aligent\Stockists\Model\Stockist $item */
-        foreach ($this->_items as &$item) {
+        /** @var StockistModel $item */
+        foreach ($this->_items as $item) {
             $this->getResource()->afterLoad($item);
         }
 

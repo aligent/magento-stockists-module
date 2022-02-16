@@ -16,16 +16,19 @@ class TradingHours extends DataObject implements TradingHoursInterface
     private $json;
 
     /**
-     * TradingHours constructor.
      * @param SerializerInterface $json
+     * @param array $data
      */
     public function __construct(
-        SerializerInterface $json
+        SerializerInterface $json,
+        array $data = []
     ) {
+        parent::__construct($data);
         $this->json = $json;
     }
+
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getMonday(): string
     {
@@ -33,7 +36,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getTuesday(): string
     {
@@ -41,7 +44,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getWednesday(): string
     {
@@ -49,7 +52,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getThursday(): string
     {
@@ -57,7 +60,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getFriday(): string
     {
@@ -65,7 +68,7 @@ class TradingHours extends DataObject implements TradingHoursInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getSaturday(): string
     {
@@ -73,13 +76,16 @@ class TradingHours extends DataObject implements TradingHoursInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getSunday(): string
     {
         return $this->getData('sunday') ?: '';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPublicHolidays(): ?string
     {
         $publicHolidaysData = $this->getData($this::PUBLIC_HOLIDAYS) ?: '';
@@ -92,70 +98,66 @@ class TradingHours extends DataObject implements TradingHoursInterface
     }
 
     /**
-     * @param string $hours
-     * @return TradingHoursInterface
+     * @inheritDoc
      */
-    public function setMonday(string $hours): TradingHoursInterface
+    public function setMonday(string $hours): void
     {
-        return $this->setData('monday', $hours);
+        $this->setData('monday', $hours);
     }
 
     /**
-     * @param string $hours
-     * @return TradingHoursInterface
+     * @inheritDoc
      */
-    public function setTuesday(string $hours): TradingHoursInterface
+    public function setTuesday(string $hours): void
     {
-        return $this->setData('tuesday', $hours);
+        $this->setData('tuesday', $hours);
     }
 
     /**
-     * @param string $hours
-     * @return TradingHoursInterface
+     * @inheritDoc
      */
-    public function setWednesday(string $hours): TradingHoursInterface
+    public function setWednesday(string $hours): void
     {
-        return $this->setData('wednesday', $hours);
+        $this->setData('wednesday', $hours);
     }
 
     /**
-     * @param string $hours
-     * @return TradingHoursInterface
+     * @inheritDoc
      */
-    public function setThursday(string $hours): TradingHoursInterface
+    public function setThursday(string $hours): void
     {
-        return $this->setData('thursday', $hours);
+        $this->setData('thursday', $hours);
     }
 
     /**
-     * @param string $hours
-     * @return TradingHoursInterface
+     * @inheritDoc
      */
-    public function setFriday(string $hours): TradingHoursInterface
+    public function setFriday(string $hours): void
     {
-        return $this->setData('friday', $hours);
+        $this->setData('friday', $hours);
     }
 
     /**
-     * @param string $hours
-     * @return TradingHoursInterface
+     * @inheritDoc
      */
-    public function setSaturday(string $hours): TradingHoursInterface
+    public function setSaturday(string $hours): void
     {
-        return $this->setData('saturday', $hours);
+        $this->setData('saturday', $hours);
     }
 
     /**
-     * @param string $hours
-     * @return TradingHoursInterface
+     * @inheritDoc
      */
-    public function setSunday(string $hours): TradingHoursInterface
+    public function setSunday(string $hours): void
     {
-        return $this->setData('sunday', $hours);
+        $this->setData('sunday', $hours);
     }
 
-    public function setPublicHolidays(string $publicHolidayHours): TradingHoursInterface
+    /**
+     * @inheritDoc
+     */
+    public function setPublicHolidays(string $publicHolidayHours): void
     {
-        return $this->setData($this::PUBLIC_HOLIDAYS, $publicHolidayHours);
+        $this->setData($this::PUBLIC_HOLIDAYS, $publicHolidayHours);
     }
 }

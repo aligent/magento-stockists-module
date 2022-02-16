@@ -4,7 +4,6 @@ namespace Aligent\Stockists\Api;
 
 use Magento\Framework\Api\SearchResultsInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
-use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
 
 interface StockistRepositoryInterface
 {
@@ -27,7 +26,7 @@ interface StockistRepositoryInterface
     public function getById(int $id): StockistInterface;
 
     /**
-     * @param \Aligent\Stockists\Api\GeoSearchCriteriaInterface $searchCriteria
+     * @param GeoSearchCriteriaInterface $searchCriteria
      * @return SearchResultsInterface
      */
     public function getList(GeoSearchCriteriaInterface $searchCriteria): SearchResultsInterface;

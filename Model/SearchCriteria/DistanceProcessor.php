@@ -18,7 +18,7 @@ class DistanceProcessor
         $latLng = $searchCriteria->getSearchOrigin();
         $radius = $searchCriteria->getSearchRadius();
 
-        if ($latLng && array_key_exists('lat', $latLng) && array_key_exists('lng', $latLng) && is_numeric($radius)) {
+        if ($latLng && array_key_exists('lat', $latLng) && array_key_exists('lng', $latLng)) {
             $collection = $this->addDistanceFilter($collection, $latLng['lat'], $latLng['lng'], $radius);
         }
 
@@ -32,14 +32,14 @@ class DistanceProcessor
      * @param float $radius
      * @return AbstractDb
      */
-    private function addDistanceFilter($collection, $lat, $lng, $radius) : AbstractDb
+    private function addDistanceFilter(AbstractDb $collection, float $lat, float $lng, float $radius) : AbstractDb
     {
         $collection->getSelect()->columns(['distance' => new \Zend_Db_Expr(
             '(' . StockistHelper::EARTH_MEAN_RADIUS_KM . ' * ACOS('
-            . 'COS(RADIANS(' . (float)$lat . ')) * '
+            . 'COS(RADIANS(' . $lat . ')) * '
             . 'COS(RADIANS(`lat`)) * '
-            . 'COS(RADIANS(`lng`) - RADIANS(' . (float)$lng . ')) + '
-            . 'SIN(RADIANS(' . (float)$lat . ')) * '
+            . 'COS(RADIANS(`lng`) - RADIANS(' . $lng . ')) + '
+            . 'SIN(RADIANS(' . $lat . ')) * '
             . 'SIN(RADIANS(`lat`))'
             . '))'
         )]);
