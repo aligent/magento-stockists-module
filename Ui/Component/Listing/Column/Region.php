@@ -6,15 +6,13 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Ui\Component\Listing\Column;
 
+use Aligent\Stockists\Model\OptionSource\RegionSource;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\InventoryAdminUi\Model\OptionSource\RegionSource;
 use Magento\Ui\Component\Listing\Columns\Column;
 
 /**
  * Prepare grid column region.
- * Note this is a copy of \Magento\InventoryAdminUi\Ui\Component\Listing\Column\Region which should have been in the Ui Component core module
- * @todo: remove this if the above component makes it way into the right module
  */
 class Region extends Column
 {
@@ -44,7 +42,7 @@ class Region extends Column
     /**
      * @inheritdoc
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         if ($dataSource['data']['totalRecords'] > 0) {
             $options = array_column($this->regionSource->toOptionArray(), 'label', 'value');
