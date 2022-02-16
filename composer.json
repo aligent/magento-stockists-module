@@ -3,7 +3,7 @@
   "description": "Stockist location module for Magento 2",
   "license": "GPL-3.0-only",
   "require": {
-    "php": "^7.2.0",
+    "php": ">=7.3",
     "magento/magento-composer-installer": "*"
   },
   "require-dev": {
