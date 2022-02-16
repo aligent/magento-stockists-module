@@ -18,13 +18,11 @@ interface GeoSearchCriteriaInterface extends SearchCriteriaInterface
 
     /**
      * @param array $origin Array having 'lat' and 'lng' keys
-     * @return GeoSearchCriteriaInterface
      */
-    public function setSearchOrigin(array $origin) : GeoSearchCriteriaInterface;
+    public function setSearchOrigin(array $origin) : void;
 
     /**
      * @param float $radius - in kilometers
-     * @return GeoSearchCriteriaInterface
      */
-    public function setSearchRadius(float $radius) : GeoSearchCriteriaInterface;
+    public function setSearchRadius(float $radius) : void;
 }

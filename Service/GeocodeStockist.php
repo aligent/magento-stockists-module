@@ -51,8 +51,10 @@ class GeocodeStockist implements GeocodeStockistInterface
         $this->scopeConfig = $scopeConfig;
     }
 
-
-    public function execute(StockistInterface $stockist, $forceGeocode = false)
+    /**
+     * @inheritDoc
+     */
+    public function execute(StockistInterface $stockist, $forceGeocode = false): void
     {
         if ($forceGeocode || $this->adapter->addressHasChangedFor($stockist)) {
             $key = $this->getGeocodeKey();

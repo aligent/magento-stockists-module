@@ -3,7 +3,7 @@
 namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
-use \Magento\Framework\Api\Search\SearchCriteria;
+use Magento\Framework\Api\Search\SearchCriteria;
 
 class GeoSearchCriteria extends SearchCriteria implements GeoSearchCriteriaInterface
 {
@@ -14,18 +14,16 @@ class GeoSearchCriteria extends SearchCriteria implements GeoSearchCriteriaInter
 
     public function getSearchRadius(): float
     {
-        return $this->_get('radius');
+        return (float)$this->_get('radius');
     }
 
-    public function setSearchOrigin(array $origin): GeoSearchCriteriaInterface
+    public function setSearchOrigin(array $origin): void
     {
         $this->_data['origin'] = $origin;
-        return $this;
     }
 
-    public function setSearchRadius(float $radius): GeoSearchCriteriaInterface
+    public function setSearchRadius(float $radius): void
     {
         $this->_data['radius'] = $radius;
-        return $this;
     }
 }
