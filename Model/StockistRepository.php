@@ -2,7 +2,11 @@
 
 namespace Aligent\Stockists\Model;
 
+use Aligent\Stockists\Api\Data\StockistSearchResultsInterface;
+use Aligent\Stockists\Model\ResourceModel\Stockist\Collection as StockistCollection;
 use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Exception\AlreadyExistsException;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
@@ -13,6 +17,8 @@ use Aligent\Stockists\Model\StockistFactory;
 use Aligent\Stockists\Model\ResourceModel\Stockist\CollectionFactory as StockistCollectionFactory;
 use Aligent\Stockists\Api\Data\StockistSearchResultsInterfaceFactory as SearchResultsFactory;
 use Aligent\Stockists\Model\SearchCriteria\DistanceProcessor;
+use Magento\Framework\Exception\StateException;
+use Magento\Framework\Exception\ValidatorException;
 use Magento\Framework\Model\AbstractModel;
 
 class StockistRepository implements StockistRepositoryInterface
@@ -82,7 +88,7 @@ class StockistRepository implements StockistRepositoryInterface
     {
         /** @var Stockist $stockist */
         $stockist = $this->stockistFactory->create();
-        $this->stockistResource->load($stockist, $identifier, Stockist::IDENTIFIER);
+        $this->stockistResource->load($stockist, $identifier, StockistInterface::IDENTIFIER);
         if (!$stockist->getId()) {
             throw new NoSuchEntityException(__('Stockist "%1" does not exist', $identifier));
         }
@@ -92,12 +98,13 @@ class StockistRepository implements StockistRepositoryInterface
     /**
      * @param string $urlKey
      * @return StockistInterface
+     * @throws NoSuchEntityException
      */
     public function getByUrlKey(string $urlKey): StockistInterface
     {
         /** @var Stockist $stockist */
         $stockist = $this->stockistFactory->create();
-        $this->stockistResource->load($stockist, $urlKey, Stockist::URL_KEY);
+        $this->stockistResource->load($stockist, $urlKey, StockistInterface::URL_KEY);
         if (!$stockist->getId()) {
             throw new NoSuchEntityException(__('Stockist "%1" does not exist', $urlKey));
         }
@@ -111,13 +118,13 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function getList(GeoSearchCriteriaInterface $searchCriteria): SearchResultsInterface
     {
-        /** @var \Aligent\Stockists\Model\ResourceModel\Stockist\Collection $collection */
+        /** @var StockistCollection $collection */
         $collection = $this->stockistCollectionFactory->create();
 
         $this->distanceProcessor->process($searchCriteria, $collection);
         $this->collectionProcessor->process($searchCriteria, $collection);
 
-        /** @var \Aligent\Stockists\Api\Data\StockistSearchResultsInterface $searchResults */
+        /** @var StockistSearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
         $searchResults->setItems($collection->getItems());
@@ -128,12 +135,12 @@ class StockistRepository implements StockistRepositoryInterface
     /**
      * @param StockistInterface $stockist
      * @return StockistInterface
-     * @throws \Magento\Framework\Exception\AlreadyExistsException
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws AlreadyExistsException
+     * @throws CouldNotSaveException
      */
     public function save(StockistInterface $stockist): StockistInterface
     {
-        // New non nullable field which might not be considered in older API
+        // New non-nullable field which might not be considered in older API
         if ($stockist->getIsActive() === null) {
             $stockist->setIsActive(true);
         }
@@ -147,7 +154,8 @@ class StockistRepository implements StockistRepositoryInterface
             try {
                 $existingStockist = $this->get($stockist->getIdentifier());
                 $stockist->setStockistId($existingStockist->getId());
-            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            } catch (NoSuchEntityException $e) {
+                throw new CouldNotSaveException(__('Stockist with ID %1 does not exist', $stockist->getIdentifier()));
             }
             $this->stockistResource->save($stockist);
         }
@@ -172,6 +180,8 @@ class StockistRepository implements StockistRepositoryInterface
 
     /**
      * @inheritDoc
+     * @throws CouldNotSaveException
+     * @throws StateException
      */
     public function delete(StockistInterface $stockist): bool
     {
@@ -186,8 +196,8 @@ class StockistRepository implements StockistRepositoryInterface
         } catch (ValidatorException $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         } catch (\Exception $e) {
-            throw new \Magento\Framework\Exception\StateException(
-                __('The "%1" stockist couldn\'t be removed.', $id)
+            throw new StateException(
+                __("The '%1' stockist couldn't be removed.", $id)
             );
         }
 
@@ -196,6 +206,11 @@ class StockistRepository implements StockistRepositoryInterface
 
     /**
      * @inheritDoc
+     * @param string $identifier
+     * @return bool
+     * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
+     * @throws StateException
      */
     public function deleteByIdentifier(string $identifier): bool
     {
@@ -205,6 +220,8 @@ class StockistRepository implements StockistRepositoryInterface
 
     /**
      * @inheritDoc
+     * @throws NoSuchEntityException
+     * @throws \Exception
      */
     public function deleteById(string $stockistId): bool
     {
