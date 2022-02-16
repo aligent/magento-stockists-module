@@ -9,10 +9,12 @@ use Aligent\Stockists\Model\SearchCriteria\DistanceProcessor;
 use Aligent\Stockists\Model\Stockist;
 use Aligent\Stockists\Model\StockistFactory;
 use Aligent\Stockists\Model\StockistRepository;
+use Aligent\Stockists\Model\StockistValidation;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
+use PHPUnit\Framework\TestCase;
 
-class StockistRepositoryTest extends \PHPUnit\Framework\TestCase
+class StockistRepositoryTest extends TestCase
 {
     private $stockistFactory;
     private $stockistResource;
@@ -20,8 +22,9 @@ class StockistRepositoryTest extends \PHPUnit\Framework\TestCase
     private $searchResultsFactory;
     private $collectionProcessor;
     private $distanceProcessor;
+    private $stockistValidation;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->stockistFactory = $this->createMock(StockistFactory::class);
         $this->stockistResource = $this->createMock(StockistResource::class);
@@ -29,9 +32,10 @@ class StockistRepositoryTest extends \PHPUnit\Framework\TestCase
         $this->searchResultsFactory = $this->createMock(StockistSearchResultsInterfaceFactory::class);
         $this->collectionProcessor = $this->createMock(CollectionProcessorInterface::class);
         $this->distanceProcessor = $this->createMock(DistanceProcessor::class);
+        $this->stockistValidation = $this->createMock(StockistValidation::class);
     }
 
-    private function createStockistRepository()
+    private function createStockistRepository(): StockistRepository
     {
         return new StockistRepository(
             $this->stockistFactory,
@@ -39,7 +43,8 @@ class StockistRepositoryTest extends \PHPUnit\Framework\TestCase
             $this->stockistCollectionFactory,
             $this->searchResultsFactory,
             $this->collectionProcessor,
-            $this->distanceProcessor
+            $this->distanceProcessor,
+            $this->stockistValidation
         );
     }
 
