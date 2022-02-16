@@ -193,26 +193,9 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      * @param string $street
      * @return $this
      */
-    public function setStreet(string $street): StockistInterface
+    public function setStreet(string $street): void
     {
-        return $this->setData(StockistInterface::STREET, $street);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSuburb(): ?string
-    {
-        return $this->getData(StockistInterface::SUBURB);
-    }
-
-    /**
-     * @param string $suburb
-     * @return StockistInterface
-     */
-    public function setSuburb(string $suburb): StockistInterface
-    {
-        return $this->setData(StockistInterface::SUBURB, $suburb);
+        $this->setData(StockistInterface::STREET, $street);
     }
 
     /**

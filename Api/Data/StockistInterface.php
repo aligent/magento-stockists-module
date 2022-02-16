@@ -22,7 +22,6 @@ interface StockistInterface extends ExtensibleDataInterface
     const NAME = 'name';
     const STREET = 'street';
     const CITY = 'city';
-    const SUBURB = 'suburb';
     const POSTCODE = 'postcode';
     const REGION = 'region';
     const REGION_ID = 'region_id';
@@ -140,20 +139,8 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $street
-     * @return $this
      */
-    public function setStreet(string $street): StockistInterface;
-
-    /**
-     * @return string|null
-     */
-    public function getSuburb(): ?string;
-
-    /**
-     * @param string $suburb
-     * @return StockistInterface
-     */
-    public function setSuburb(string $suburb): StockistInterface;
+    public function setStreet(string $street): void;
 
     /**
      * @return string

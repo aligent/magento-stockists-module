@@ -24,7 +24,6 @@ class StockistAddress implements ResolverInterface
         return [
             'street' => $stockist->getStreet(),
             'city' => $stockist->getCity(),
-            'suburb' => $stockist->getSuburb(),
             'postcode' => $stockist->getPostcode(),
             'region' => $stockist->getRegion(),
             'country_code' => $stockist->getCountry(),

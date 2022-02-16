@@ -35,7 +35,6 @@ type Location @doc(description: "Geo-location coordinates") {
 type Address @doc(description: "Street address of location") {
     street: String
     city: String
-    suburb: String
     postcode: String
     region: String
     country_code: String

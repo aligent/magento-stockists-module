@@ -13,7 +13,6 @@
         <column name="gallery" xsi:type="text" comment="Gallery"/>
         <column name="street" xsi:type="varchar" comment="Street" />
         <column name="city" xsi:type="varchar" comment="City" />
-        <column name="suburb" xsi:type="varchar" comment="Suburb"/>
         <column name="postcode" xsi:type="varchar" comment="Postcode" />
         <column name="region" xsi:type="varchar" comment="Region" />
         <column name="country" xsi:type="varchar" comment="Country Code" />
