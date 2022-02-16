@@ -4,29 +4,38 @@
  */
 namespace Aligent\Stockists\Ui\DataProvider;
 
+use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
+use Aligent\Stockists\Api\StockistRepositoryInterface;
+use Aligent\Stockists\Model\GeoSearchCriteriaBuilder;
 use Aligent\Stockists\Model\TradingHours;
 use Aligent\Stockists\Api\Data\StockistInterface;
+use Magento\Backend\Model\Session;
 use Magento\Directory\Model\RegionFactory;
+use Magento\Framework\Api\FilterBuilder;
+use Magento\Framework\Api\Search\ReportingInterface;
+use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Serialize\SerializerInterface;
+use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider;
+use Magento\Ui\DataProvider\SearchResultFactory;
 
-class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
+class Stockist extends DataProvider
 {
 
     const STOCKIST_FORM_NAME = 'stockist_form_data_stockist';
 
-
     /**
-     * @var \Aligent\Stockists\Api\StockistRepositoryInterface
+     * @var StockistRepositoryInterface
      */
     protected $stockistRepository;
 
     /**
-     * @var \Magento\Ui\DataProvider\SearchResultFactory
+     * @var SearchResultFactory
      */
     protected $searchResultFactory;
 
     /**
-     * @var \Magento\Backend\Model\Session
+     * @var Session
      */
     protected $session;
 
@@ -41,17 +50,17 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
     protected $regionFactory;
 
     public function __construct(
-        \Aligent\Stockists\Ui\DataProvider\SearchResultFactory $searchResultFactory,
-        \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
-        \Magento\Backend\Model\Session $session,
+        SearchResultFactory $searchResultFactory,
+        StockistRepositoryInterface $stockistRepository,
+        Session $session,
         $name,
         $primaryFieldName,
         $requestFieldName,
-        \Magento\Framework\Api\Search\ReportingInterface $reporting,
-        \Aligent\Stockists\Model\GeoSearchCriteriaBuilder $searchCriteriaBuilder,
-        \Magento\Framework\App\RequestInterface $request,
+        ReportingInterface $reporting,
+        GeoSearchCriteriaBuilder $searchCriteriaBuilder,
+        RequestInterface $request,
         SerializerInterface $json,
-        \Magento\Framework\Api\FilterBuilder $filterBuilder,
+        FilterBuilder $filterBuilder,
         RegionFactory $regionFactory,
         array $meta = [],
         array $data = []
@@ -74,40 +83,42 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         $this->regionFactory = $regionFactory;
     }
 
-    public function getData()
+    /**
+     * @inheritDoc
+     */
+    public function getData(): array
     {
         $data = parent::getData();
         foreach ($data['items'] as &$item) {
-            // todo: process hours output
             if (!empty($item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS])) {
-                $item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS] = $this->json->unserialize($item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS]);
+                $item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS] =
+                    $this->json->unserialize($item[StockistInterface::HOURS][TradingHours::PUBLIC_HOLIDAYS]);
             }
             $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
-            $item[StockistInterface::STORE_IDS] = \implode(',', $item[StockistInterface::STORE_IDS]);
+            $item[StockistInterface::STORE_IDS] = implode(',', $item[StockistInterface::STORE_IDS]);
             $item[StockistInterface::COUNTRY_ID] = $item[StockistInterface::COUNTRY];
             $item[StockistInterface::REGION_ID] = $this->regionFactory->create()->loadByName(
                 $item[StockistInterface::REGION],
                 $item[StockistInterface::COUNTRY_ID],
             )->getRegionId();
-            $item[StockistInterface::ALLOW_STORE_DELIVERY] = isset($item[StockistInterface::ALLOW_STORE_DELIVERY])
-                && $item[StockistInterface::ALLOW_STORE_DELIVERY] === "1";
-            $item[StockistInterface::IS_ACTIVE] = isset($item[StockistInterface::IS_ACTIVE])
-                && $item[StockistInterface::IS_ACTIVE] === "1";
+            $item[StockistInterface::ALLOW_STORE_DELIVERY] = (bool)$item[StockistInterface::ALLOW_STORE_DELIVERY];
+            $item[StockistInterface::IS_ACTIVE] = (bool)$item[StockistInterface::IS_ACTIVE];
 
             // Make sure extension attributes are copied onto the item itself, then we can
             // reference them in Ui Components
-            if (isset($item[StockistInterface::EXTENSION_ATTRIBUTES])) {
-                $item = array_merge($item, $item[StockistInterface::EXTENSION_ATTRIBUTES]);
+            foreach ($item[StockistInterface::EXTENSION_ATTRIBUTES] ?? [] as $key => $value) {
+                $item[$key] = $value;
             }
         }
+
         if (self::STOCKIST_FORM_NAME === $this->name) {
-            // It is need for support of several fieldsets.
+            // It is needed for support of several fieldsets.
             // For details see \Magento\Ui\Component\Form::getDataSourceData
             if ($data['totalRecords'] > 0) {
-                $stockistId = $data['items'][0][\Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID];
-                $stockistGenenalData = $data['items'][0];
+                $stockistId = $data['items'][0][StockistInterface::STOCKIST_ID];
+                $stockistGeneralData = $data['items'][0];
                 $dataForSingle[$stockistId] = [
-                    'general' => $stockistGenenalData,
+                    'general' => $stockistGeneralData,
                 ];
                 return $dataForSingle;
             }
@@ -122,15 +133,19 @@ class Stockist extends \Magento\Framework\View\Element\UiComponent\DataProvider\
         return $data;
     }
 
-    public function getSearchResult()
+    /**
+     * @inheritDoc
+     */
+    public function getSearchResult(): SearchResultInterface
     {
+        /** @var GeoSearchCriteriaInterface $searchCriteria */
         $searchCriteria = $this->getSearchCriteria();
         $result = $this->stockistRepository->getList($searchCriteria);
         return $this->searchResultFactory->create(
             $result->getItems(),
             $result->getTotalCount(),
             $searchCriteria,
-            \Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID
+            StockistInterface::STOCKIST_ID
         );
     }
 }
