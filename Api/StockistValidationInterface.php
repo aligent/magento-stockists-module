@@ -8,7 +8,7 @@ interface StockistValidationInterface
 {
     /**
      * @param StockistInterface $stockist
-     * @return bool
+     * @return array
      */
-    public function validate(StockistInterface $stockist) : bool;
+    public function validate(StockistInterface $stockist) : array;
 }

@@ -137,11 +137,11 @@ class StockistRepository implements StockistRepositoryInterface
         if ($stockist->getIsActive() === null) {
             $stockist->setIsActive(true);
         }
-        $validationResult = $this->stockistValidation->validate($stockist);
+        $validationErrors = $this->stockistValidation->validate($stockist);
 
-        if (!$validationResult) {
-            throw new \Magento\Framework\Exception\CouldNotSaveException(
-                __('Invalid stockist data: %1', implode(',', $validationResult))
+        if (!empty($validationErrors)) {
+            throw new CouldNotSaveException(
+                __('Invalid stockist data: %1', implode(',', $validationErrors))
             );
         } else {
             try {

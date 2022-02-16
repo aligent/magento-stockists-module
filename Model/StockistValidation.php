@@ -33,37 +33,32 @@ class StockistValidation implements StockistValidationInterface
         $this->countryResource = $country;
     }
 
-    public function validate(StockistInterface $stockist) : bool
+    /**
+     * @param StockistInterface $stockist
+     * @return array
+     */
+    public function validate(StockistInterface $stockist) : array
     {
+        $errors = [];
         if (!$stockist->getIdentifier()) {
-            return false;
+            $errors[] = __('Identifier is missing');
         }
 
         if (!$stockist->getName()) {
-            return false;
+            $errors[] = __('Name is missing');
         }
 
         if (!$stockist->getUrlKey()) {
-            return false;
-        }
-
-        if ($stockist->getIsActive() === null) {
-            return false;
-        }
-
-        $tradingHours = $stockist->getHours();
-
-        if ($tradingHours && !is_subclass_of($tradingHours, TradingHoursInterface::class)) {
-            return false;
+            $errors[] = __('URL Key is missing');
         }
 
         $countryCode = $stockist->getCountry();
 
         if ($countryCode && !$this->isIso2CountryCode($countryCode)) {
-            return false;
+            $errors[] = __('Country code is invalid');
         }
 
-        return true;
+        return $errors;
     }
 
     private function isIso2CountryCode(string $countryCode): bool
