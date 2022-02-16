@@ -2,8 +2,9 @@
 
 namespace Aligent\Stockists\Model\ResourceModel;
 
-use Aligent\Stockists\Model\Stockist as StockistModel;
+use Aligent\Stockists\Api\Data\StockistInterface;
 use Aligent\Stockists\Model\TradingHoursFactory;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
@@ -22,7 +23,7 @@ class Stockist extends AbstractDb
     /**
      * @var TradingHoursFactory
      */
-    private  $tradingHoursFactory;
+    private $tradingHoursFactory;
 
     /**
      * @param Context $context
@@ -35,31 +36,33 @@ class Stockist extends AbstractDb
         JsonSerializer $json,
         TradingHoursFactory $tradingHoursFactory,
         $connectionName = null
-    )
-    {
+    ) {
         parent::__construct($context, $connectionName);
         $this->json = $json;
         $this->tradingHoursFactory = $tradingHoursFactory;
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function _construct()
     {
         $this->_init(self::TABLE_NAME_STOCKIST, self::ID_FIELD_NAME);
     }
 
     /**
-     * JSON-encode the opening hours data before persisting it to the database.
-     * @param \Magento\Framework\Model\AbstractModel $object
+     * JSON-encode the opening hours before persisting it to the database.
+     * @param AbstractModel $object
      * @return AbstractDb
      */
-    protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
+    protected function _beforeSave(AbstractModel $object): AbstractDb
     {
-        $storeIds = $object->getData(StockistModel::STORE_IDS) ?? [0];
-        $object->setData(StockistModel::STORE_IDS, implode(',', $storeIds));
+        $storeIds = $object->getData(StockistInterface::STORE_IDS) ?? [0];
+        $object->setData(StockistInterface::STORE_IDS, implode(',', $storeIds));
 
-        $openingHours = $object->getData(StockistModel::HOURS) ? $object->getData(StockistModel::HOURS)->getData() : null;
+        $openingHours = $object->getData(StockistInterface::HOURS) ?? null;
         if (is_array($openingHours)) {
-            $object->setData(StockistModel::HOURS, $this->json->serialize($openingHours));
+            $object->setData(StockistInterface::HOURS, $this->json->serialize($openingHours));
         }
         return parent::_beforeSave($object);
     }
@@ -67,41 +70,41 @@ class Stockist extends AbstractDb
     /**
      * Once the JSON-encoded hours data has been persisted by save(), re-hydrate the model with the
      * array structure
-     * @param \Magento\Framework\Model\AbstractModel $object
+     * @param AbstractModel $object
      * @return AbstractDb
      */
-    protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
+    protected function _afterSave(AbstractModel $object): AbstractDb
     {
-        $rawHours = $object->getData(StockistModel::HOURS);
-
-        if ($rawHours) {
-            $tradingHours = $this->tradingHoursFactory->create();
-            $unserializedHours = $this->json->unserialize($rawHours);
-            $tradingHours->setData($unserializedHours);
-            $object->setData(StockistModel::HOURS, $tradingHours);
-        }
-
-        $object->setData(StockistModel::STORE_IDS, explode(',', $object->getData(StockistModel::STORE_IDS)));
+        $this->handleTradingHours($object);
         return parent::_afterSave($object);
     }
 
     /**
      * When loading a stockist model, unserialize the JSON-encoded opening hours into it's array form
-     * @param \Magento\Framework\Model\AbstractModel $object
+     * @param AbstractModel $object
      * @return AbstractDb
      */
-    protected function _afterLoad(\Magento\Framework\Model\AbstractModel $object)
+    protected function _afterLoad(AbstractModel $object): AbstractDb
     {
-        $rawHours = $object->getData(StockistModel::HOURS);
+        $this->handleTradingHours($object);
+        return parent::_afterLoad($object);
+    }
+
+    /**
+     * @param AbstractModel $object
+     * @return void
+     */
+    private function handleTradingHours(AbstractModel $object): void
+    {
+        $rawHours = $object->getData(StockistInterface::HOURS);
 
         if ($rawHours) {
             $tradingHours = $this->tradingHoursFactory->create();
             $unserializedHours = $this->json->unserialize($rawHours);
             $tradingHours->setData($unserializedHours);
-            $object->setData(StockistModel::HOURS, $tradingHours);
+            $object->setData(StockistInterface::HOURS, $tradingHours);
         }
 
-        $object->setData(StockistModel::STORE_IDS, explode(',', $object->getData(StockistModel::STORE_IDS)));
-        return parent::_afterLoad($object);
+        $object->setData(StockistInterface::STORE_IDS, explode(',', $object->getData(StockistInterface::STORE_IDS)));
     }
 }
