@@ -12,6 +12,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\LocalizedException;
 
 class MassDelete extends Action implements HttpPostActionInterface
 {
@@ -45,6 +46,7 @@ class MassDelete extends Action implements HttpPostActionInterface
 
     /**
      * @inheritdoc
+     * @throws LocalizedException
      */
     public function execute(): ResultInterface
     {

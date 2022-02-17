@@ -11,7 +11,9 @@ use Aligent\Stockists\Model\StockistFactory;
 use Aligent\Stockists\Model\StockistRepository;
 use Aligent\Stockists\Model\StockistValidation;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\StateException;
 use PHPUnit\Framework\TestCase;
 
 class StockistRepositoryTest extends TestCase
@@ -48,6 +50,10 @@ class StockistRepositoryTest extends TestCase
         );
     }
 
+    /**
+     * @throws StateException
+     * @throws CouldNotSaveException
+     */
     public function testStockistIsDeleted()
     {
         $stockist = $this->createMock(Stockist::class);
@@ -64,6 +70,10 @@ class StockistRepositoryTest extends TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @throws StateException
+     * @throws CouldNotSaveException
+     */
     public function testDeleteMethodDoesNotFailWhenGivenStockistInterface()
     {
         $stockist = $this->createMock(StockistInterface::class);
@@ -79,6 +89,11 @@ class StockistRepositoryTest extends TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @throws NoSuchEntityException
+     * @throws StateException
+     * @throws CouldNotSaveException
+     */
     public function testStockistIsDeletedByIdentifier()
     {
         $identifier = 'TEST_IDENTIFIER';
@@ -110,6 +125,10 @@ class StockistRepositoryTest extends TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @throws StateException
+     * @throws CouldNotSaveException
+     */
     public function testExceptionWhenDeletingStockistWithNoId()
     {
         $identifier = 'TEST_IDENTIFIER';
