@@ -2,12 +2,28 @@
 
 namespace Aligent\Stockists\Model\SearchCriteria;
 
+use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\Data\Collection\AbstractDb;
 use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
 use Aligent\Stockists\Helper\Data as StockistHelper;
 
 class DistanceProcessor
 {
+
+    private const SORT_FIELD = 'distance';
+    private const DIRECTION = 'ASC';
+
+    /**
+     * @var SortOrderBuilder
+     */
+    private $sortOrderBuilder;
+
+    public function __construct(
+        SortOrderBuilder $sortOrderBuilder
+    ) {
+        $this->sortOrderBuilder = $sortOrderBuilder;
+    }
+
     /**
      * @param GeoSearchCriteriaInterface $searchCriteria
      * @param AbstractDb $collection
@@ -20,6 +36,10 @@ class DistanceProcessor
 
         if ($latLng && array_key_exists('lat', $latLng) && array_key_exists('lng', $latLng)) {
             $collection = $this->addDistanceFilter($collection, $latLng['lat'], $latLng['lng'], $radius);
+            $sortOrder = $this->sortOrderBuilder->setField(self::SORT_FIELD)
+                ->setDirection(self::DIRECTION)
+                ->create();
+            $searchCriteria->setSortOrders([$sortOrder]);
         }
 
         return $collection;
