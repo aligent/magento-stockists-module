@@ -58,7 +58,7 @@ class Stockists implements ResolverInterface
         array $value = null,
         array $args = null
     ): array {
-        $this->validateSearchArguments($args);
+        $args = $this->defaultSearchArguments($args);
 
         $searchCriteria = $this->createSearchCriteria($args);
         $results = $this->stockistRepository->getList($searchCriteria);
@@ -85,10 +85,10 @@ class Stockists implements ResolverInterface
     }
 
     /**
-     * @param $args
+     * @param array $args
      * @return GeoSearchCriteriaInterface
      */
-    public function createSearchCriteria($args): GeoSearchCriteriaInterface
+    private function createSearchCriteria(array $args): GeoSearchCriteriaInterface
     {
         $radius = $args['location']['radius'];
         $units = $args['location']['unit'];
@@ -119,16 +119,13 @@ class Stockists implements ResolverInterface
 
     /**
      * @param array $args
-     * @throws GraphQlInputException
+     * @return array
      */
-    private function validateSearchArguments(array $args)
+    private function defaultSearchArguments(array $args): array
     {
-        if (!isset($args['location'])) {
-            throw new GraphQlInputException(__('Location request is invalid.'));
-        }
-
-        if (!isset($args['location']['lat']) || !isset($args['location']['lng'])) {
-            throw new GraphQlInputException(__('Invalid search coordinates provided.'));
-        }
+        // default radius and units if not present
+        $args['location']['radius'] = $args['location']['radius'] ?? 50.0;
+        $args['location']['unit'] = $args['location']['unit'] ?? StockistHelper::DISTANCE_UNITS_KM;
+        return $args;
     }
 }

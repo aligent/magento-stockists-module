@@ -1,6 +1,6 @@
 type Query {
     stockists (
-        location: LocationRequest @doc(description: "Search request")
+        location: LocationRequest! @doc(description: "Search request")
         pageSize: Int = 20 @doc(description: "Number per page")
         currentPage: Int = 1 @doc(description: "Current page")
     ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retrieve Stockists")
@@ -64,8 +64,8 @@ type Stockists @doc(description: "Result of a stockist search query") {
 }
 
 input LocationRequest @doc(description: "Request location (origin point and search radius)") {
-    lat: Float @doc(description: "Latitude")
-    lng: Float @doc(description: "Longitude")
-    radius: Float = 50 @doc(description: "Search radius")
-    unit: DistanceUnitsEnum = KM @doc(description: "Units of search radius")
+    lat: Float! @doc(description: "Latitude")
+    lng: Float! @doc(description: "Longitude")
+    radius: Float @doc(description: "Search radius")
+    unit: DistanceUnitsEnum @doc(description: "Units of search radius")
 }
