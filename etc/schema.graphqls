@@ -19,7 +19,6 @@ type Stockist @doc(description: "A stockist location entity") {
     gallery: String @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistGallery")
     url_key: String
     description: String
-    allow_store_delivery: Boolean
     address: Address @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistAddress")
     trading_hours: Hours @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistHours")
     distance: Float

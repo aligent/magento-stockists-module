@@ -19,7 +19,6 @@
         <column name="phone" xsi:type="varchar" comment="Phone" />
         <column name="store_ids" xsi:type="varchar" comment="Associated store views" />
         <column name="hours" xsi:type="text" comment="Store Opening Hours" />
-        <column name="allow_store_delivery" xsi:type="boolean" comment="Allow Store for Delivery" default="false"/>
         <constraint xsi:type="unique" referenceId="STOCKIST_URL_KEY">
             <column name="url_key"/>
         </constraint>

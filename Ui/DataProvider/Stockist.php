@@ -101,7 +101,6 @@ class Stockist extends DataProvider
                 $item[StockistInterface::REGION],
                 $item[StockistInterface::COUNTRY_ID],
             )->getRegionId();
-            $item[StockistInterface::ALLOW_STORE_DELIVERY] = (bool)$item[StockistInterface::ALLOW_STORE_DELIVERY];
             $item[StockistInterface::IS_ACTIVE] = (bool)$item[StockistInterface::IS_ACTIVE];
 
             // Make sure extension attributes are copied onto the item itself, then we can

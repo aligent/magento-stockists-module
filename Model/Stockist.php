@@ -275,22 +275,6 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     /**
      * @inheritDoc
      */
-    public function getAllowStoreDelivery(): bool
-    {
-        return (bool)$this->getData(StockistInterface::ALLOW_STORE_DELIVERY);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setAllowStoreDelivery(bool $allowStoreDelivery): void
-    {
-        $this->setData(StockistInterface::ALLOW_STORE_DELIVERY, $allowStoreDelivery);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getStoreIds(): array
     {
         return $this->getData(StockistInterface::STORE_IDS);

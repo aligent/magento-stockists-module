@@ -17,7 +17,6 @@ interface StockistInterface extends ExtensibleDataInterface
     const DESCRIPTION = 'description';
     const URL_KEY = 'url_key';
     const GALLERY = 'gallery';
-    const ALLOW_STORE_DELIVERY = 'allow_store_delivery';
     const LAT = 'lat';
     const LNG = 'lng';
     const NAME = 'name';
@@ -182,16 +181,6 @@ interface StockistInterface extends ExtensibleDataInterface
      * @param string $phone
      */
     public function setPhone(string $phone): void;
-
-    /**
-     * @return bool
-     */
-    public function getAllowStoreDelivery(): bool;
-
-    /**
-     * @param bool $allowStoreDelivery
-     */
-    public function setAllowStoreDelivery(bool $allowStoreDelivery): void;
 
     /**
      * @return int[]

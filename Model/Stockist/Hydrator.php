@@ -107,7 +107,6 @@ class Hydrator implements HydratorInterface
             unset($data[StockistInterface::STOCKIST_ID]);
         }
         $data[StockistInterface::IS_ACTIVE] = (bool)$data[StockistInterface::IS_ACTIVE];
-        $data[StockistInterface::ALLOW_STORE_DELIVERY] = (bool)$data[StockistInterface::ALLOW_STORE_DELIVERY];
 
         if (isset($data[StockistInterface::COUNTRY_ID])) {
             $data[StockistInterface::COUNTRY] = $data[StockistInterface::COUNTRY_ID];

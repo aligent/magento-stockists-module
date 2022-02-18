@@ -260,32 +260,6 @@
             </settings>
         </field>
     </fieldset>
-    <fieldset name="Shipping" sortOrder="25">
-        <settings>
-            <label translate="true">Shipping</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-            <dataScope>general</dataScope>
-        </settings>
-        <field name="allow_store_delivery">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="visible" xsi:type="boolean">true</item>
-                    <item name="dataType" xsi:type="string">select</item>
-                    <item name="label" xsi:type="string" translate="true">Allow Store Delivery</item>
-                    <item name="formElement" xsi:type="string">checkbox</item>
-                    <item name="prefer" xsi:type="string">toggle</item>
-                    <item name="source" xsi:type="string">allow_store_delivery</item>
-                    <item name="sortOrder" xsi:type="number">10</item>
-                    <item name="dataScope" xsi:type="string">allow_store_delivery</item>
-                    <item name="valueMap" xsi:type="array">
-                        <item name="true" xsi:type="boolean">1</item>
-                        <item name="false" xsi:type="boolean">0</item>
-                    </item>
-                </item>
-            </argument>
-        </field>
-    </fieldset>
     <fieldset name="Extra Information" sortOrder="30">
         <settings>
             <label translate="true">Extra Information</label>
