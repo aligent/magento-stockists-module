@@ -214,12 +214,12 @@ interface StockistInterface extends ExtensibleDataInterface
     public function setHours(TradingHoursInterface $hours): void;
 
     /**
-     * @return ExtensionAttributesInterface
+     * @return \Aligent\Stockists\Api\Data\StockistExtensionInterface
      */
-    public function getExtensionAttributes(): ExtensionAttributesInterface;
+    public function getExtensionAttributes(): StockistExtensionInterface;
 
     /**
-     * @param ExtensionAttributesInterface $extensionAttributes
+     * @param \Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes
      */
-    public function setExtensionAttributes(ExtensionAttributesInterface $extensionAttributes): void;
+    public function setExtensionAttributes(StockistExtensionInterface $extensionAttributes): void;
 }

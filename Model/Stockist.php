@@ -2,6 +2,7 @@
 
 namespace Aligent\Stockists\Model;
 
+use Aligent\Stockists\Api\Data\StockistExtensionInterface;
 use Aligent\Stockists\Api\Data\TradingHoursInterface;
 use Magento\Framework\Api\ExtensionAttributesInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
@@ -323,7 +324,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     /**
      * @inheritDoc
      */
-    public function getExtensionAttributes(): ExtensionAttributesInterface
+    public function getExtensionAttributes(): StockistExtensionInterface
     {
         return $this->_getExtensionAttributes();
     }
@@ -331,7 +332,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     /**
      * @inheritDoc
      */
-    public function setExtensionAttributes(ExtensionAttributesInterface $extensionAttributes): void
+    public function setExtensionAttributes(StockistExtensionInterface $extensionAttributes): void
     {
         $this->_setExtensionAttributes($extensionAttributes);
     }
