@@ -39,6 +39,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param int $id
+     * @return void
      */
     public function setStockistId(int $id): void;
 
@@ -49,6 +50,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $identifier
+     * @return void
      */
     public function setIdentifier(string $identifier): void;
 
@@ -59,6 +61,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param bool $isActive
+     * @return void
      */
     public function setIsActive(bool $isActive): void;
 
@@ -69,6 +72,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $description
+     * @return void
      */
     public function setDescription(string $description): void;
 
@@ -79,6 +83,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $gallery
+     * @return void
      */
     public function setGallery(string $gallery): void;
 
@@ -89,6 +94,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $urlKey
+     * @return void
      */
     public function setUrlKey(string $urlKey): void;
 
@@ -99,6 +105,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param float $lat
+     * @return void
      */
     public function setLat(float $lat): void;
 
@@ -109,6 +116,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param float $lng
+     * @return void
      */
     public function setLng(float $lng): void;
 
@@ -119,6 +127,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $name
+     * @return void
      */
     public function setName(string $name): void;
 
@@ -129,6 +138,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $street
+     * @return void
      */
     public function setStreet(string $street): void;
 
@@ -139,6 +149,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $city
+     * @return void
      */
     public function setCity(string $city): void;
 
@@ -149,6 +160,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $postcode
+     * @return void
      */
     public function setPostcode(string $postcode): void;
 
@@ -159,6 +171,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $region
+     * @return void
      */
     public function setRegion(string $region): void;
 
@@ -169,6 +182,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $countryCode
+     * @return void
      */
     public function setCountry(string $countryCode): void;
 
@@ -179,6 +193,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $phone
+     * @return void
      */
     public function setPhone(string $phone): void;
 
@@ -189,16 +204,18 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param int[] $storeIds
+     * @return void
      */
     public function setStoreIds(array $storeIds): void;
 
     /**
-     * @return TradingHoursInterface|null
+     * @return \Aligent\Stockists\Api\Data\TradingHoursInterface|null
      */
     public function getHours(): ?TradingHoursInterface;
 
     /**
-     * @param TradingHoursInterface $hours
+     * @param \Aligent\Stockists\Api\Data\TradingHoursInterface $hours
+     * @return void
      */
     public function setHours(TradingHoursInterface $hours): void;
 

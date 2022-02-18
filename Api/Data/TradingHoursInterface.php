@@ -46,41 +46,49 @@ interface TradingHoursInterface
 
     /**
      * @param string $hours
+     * @return void
      */
     public function setMonday(string $hours): void;
 
     /**
      * @param string $hours
+     * @return void
      */
     public function setTuesday(string $hours): void;
 
     /**
      * @param string $hours
+     * @return void
      */
     public function setWednesday(string $hours): void;
 
     /**
      * @param string $hours
+     * @return void
      */
     public function setThursday(string $hours): void;
 
     /**
      * @param string $hours
+     * @return void
      */
     public function setFriday(string $hours): void;
 
     /**
      * @param string $hours
+     * @return void
      */
     public function setSaturday(string $hours): void;
 
     /**
      * @param string $hours
+     * @return void
      */
     public function setSunday(string $hours): void;
 
     /**
      * @param string $publicHolidayHours
+     * @return void
      */
     public function setPublicHolidays(string $publicHolidayHours): void;
 }
