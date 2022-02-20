@@ -1,0 +1,26 @@
+{
+  "stockist": {
+    "column": {
+      "stockist_id": true,
+      "identifier": true,
+      "is_active": true,
+      "url_key": true,
+      "lat": true,
+      "lng": true,
+      "description": true,
+      "street": true,
+      "city": true,
+      "postcode": true,
+      "region": true,
+      "country": true,
+      "phone": true,
+      "store_ids": true,
+      "hours": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "STOCKIST_URL_KEY": true,
+      "STOCKISTS_IDENTIFIER": true
+    }
+  }
+}
