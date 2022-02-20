@@ -226,6 +226,7 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param \Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes
+     * @return void
      */
     public function setExtensionAttributes(StockistExtensionInterface $extensionAttributes): void;
 }
