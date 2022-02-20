@@ -9,7 +9,7 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 
-class StockistGallery implements ResolverInterface
+class StockistDescription implements ResolverInterface
 {
     /**
      * @var FilterProvider
@@ -35,8 +35,8 @@ class StockistGallery implements ResolverInterface
 
         /** @var StockistInterface $stockist */
         $stockist = $value['model'];
-        $gallery = $stockist->getGallery() ?? '';
+        $description = $stockist->getDescription() ?? '';
 
-        return $this->filterProvider->getPageFilter()->filter($gallery);
+        return $this->filterProvider->getPageFilter()->filter($description);
     }
 }

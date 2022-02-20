@@ -97,22 +97,6 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     /**
      * @inheritDoc
      */
-    public function getGallery(): ?string
-    {
-        return $this->getData(StockistInterface::GALLERY);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setGallery(string $gallery): void
-    {
-        $this->setData(StockistInterface::GALLERY, $gallery);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getUrlKey(): ?string
     {
         return $this->getData(StockistInterface::URL_KEY);

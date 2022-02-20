@@ -10,7 +10,6 @@
         <column name="lng" xsi:type="decimal" scale="6" precision="9" nullable="true" comment="Longitude" />
         <column name="name" xsi:type="varchar" comment="Name" />
         <column name="description" xsi:type="text" comment="Description"/>
-        <column name="gallery" xsi:type="text" comment="Gallery"/>
         <column name="street" xsi:type="varchar" comment="Street" />
         <column name="city" xsi:type="varchar" comment="City" />
         <column name="postcode" xsi:type="varchar" comment="Postcode" />

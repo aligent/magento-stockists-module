@@ -16,7 +16,6 @@ interface StockistInterface extends ExtensibleDataInterface
     const IS_ACTIVE = 'is_active';
     const DESCRIPTION = 'description';
     const URL_KEY = 'url_key';
-    const GALLERY = 'gallery';
     const LAT = 'lat';
     const LNG = 'lng';
     const NAME = 'name';
@@ -75,17 +74,6 @@ interface StockistInterface extends ExtensibleDataInterface
      * @return void
      */
     public function setDescription(string $description): void;
-
-    /**
-     * @return string|null
-     */
-    public function getGallery(): ?string;
-
-    /**
-     * @param string $gallery
-     * @return void
-     */
-    public function setGallery(string $gallery): void;
 
     /**
      * @return string|null
