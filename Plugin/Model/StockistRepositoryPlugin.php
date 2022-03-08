@@ -2,6 +2,8 @@
 
 namespace Aligent\Stockists\Plugin\Model;
 
+use Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\StockistRepositoryInterface;
 use Aligent\Stockists\Service\GeocodeStockist;
 
 class StockistRepositoryPlugin
@@ -13,7 +15,7 @@ class StockistRepositoryPlugin
 
     /**
      * StockistRepositoryPlugin constructor.
-     * @param $geocodeStockistService
+     * @param GeocodeStockist $geocodeStockistService
      */
     public function __construct(
         GeocodeStockist $geocodeStockistService
@@ -21,7 +23,7 @@ class StockistRepositoryPlugin
         $this->geocodeStockistService = $geocodeStockistService;
     }
 
-    public function beforeSave(\Aligent\Stockists\Api\StockistRepositoryInterface $subject, \Aligent\Stockists\Api\Data\StockistInterface $stockist)
+    public function beforeSave(StockistRepositoryInterface $subject, StockistInterface $stockist): array
     {
         $this->geocodeStockistService->execute($stockist);
         return [$stockist];

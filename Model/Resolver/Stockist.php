@@ -6,11 +6,9 @@ use Aligent\Stockists\Api\StockistRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
-use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
-use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use \Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\Data\StockistInterface;
 
 class Stockist implements ResolverInterface
 {
@@ -19,6 +17,9 @@ class Stockist implements ResolverInterface
      */
     private $stockistRepository;
 
+    /**
+     * @param StockistRepositoryInterface $stockistRepository
+     */
     public function __construct(StockistRepositoryInterface $stockistRepository)
     {
         $this->stockistRepository = $stockistRepository;
@@ -48,7 +49,7 @@ class Stockist implements ResolverInterface
             $locationData['model'] = $result;
             return $locationData;
         } catch (NoSuchEntityException $ex) {
-            throw new GraphQlInputException(__('The provided identifier is invalid.'));
+            throw new GraphQlInputException(__('The provided identifier or url_key is invalid.'));
         }
     }
 }

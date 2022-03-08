@@ -5,38 +5,43 @@ namespace Aligent\Stockists\Model;
 use Aligent\Stockists\Api\AdapterInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
 use Aligent\Stockists\Api\GeocodeResultInterface;
+use Aligent\Stockists\Api\GeocodeResultInterfaceFactory;
+use Magento\Framework\HTTP\Client\CurlFactory;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Url\QueryParamsResolverInterface;
 
 class GoogleMapsAdapter implements AdapterInterface
 {
     const PATH= 'https://maps.googleapis.com/maps/api/geocode/';
 
     const OUTPUT_FORMAT = 'json';
+    const STATUS_CODE_200 = 200;
 
     /**
-     * @var \Magento\Framework\HTTP\Client\CurlFactory
+     * @var CurlFactory
      */
     protected $httpClientFactory;
 
     /**
-     * @var \Magento\Framework\Url\QueryParamsResolverInterface
+     * @var QueryParamsResolverInterface
      */
     protected $queryParamsResolver;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     protected $serialiser;
 
     /**
-     * @var \Aligent\Stockists\Api\GeocodeResultInterfaceFactory
+     * @var GeocodeResultInterfaceFactory
      */
     private $geocodeResultFactory;
 
     public function __construct(
-        \Magento\Framework\HTTP\Client\CurlFactory $httpClientFactory,
-        \Magento\Framework\Url\QueryParamsResolverInterface $queryParamsResolver,
-        \Magento\Framework\Serialize\Serializer\Json $serialiser,
-        \Aligent\Stockists\Api\GeocodeResultInterfaceFactory $geocodeResultFactory
+        CurlFactory $httpClientFactory,
+        QueryParamsResolverInterface $queryParamsResolver,
+        Json $serialiser,
+        GeocodeResultInterfaceFactory $geocodeResultFactory
     ) {
         $this->httpClientFactory = $httpClientFactory;
         $this->queryParamsResolver = $queryParamsResolver;
@@ -55,6 +60,9 @@ class GoogleMapsAdapter implements AdapterInterface
         return false;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function buildRequest(StockistInterface $stockist, string $key): ?string
     {
         $address = $this->buildAddress($stockist);
@@ -69,6 +77,10 @@ class GoogleMapsAdapter implements AdapterInterface
         return $this::PATH . $this::OUTPUT_FORMAT . '?' . $query;
     }
 
+    /**
+     * @param Stockist $stockist
+     * @return string
+     */
     protected function buildAddress(Stockist $stockist): string
     {
         $params = [
@@ -81,6 +93,9 @@ class GoogleMapsAdapter implements AdapterInterface
         return implode(',', $params);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function performGeocode(string $request): ?array
     {
         $httpClient = $this->httpClientFactory->create();
@@ -90,18 +105,21 @@ class GoogleMapsAdapter implements AdapterInterface
         $response = $this->serialiser->unserialize($httpClient->getBody());
 
         /**
-         * Google maps API return 200 and state any errors that occur as part
+         * Google Maps API return 200 and state any errors that occur as part
          * of the api response body...
          *
          * @see: https://developers.google.com/maps/documentation/geocoding/overview#StatusCodes
          */
-        if ($response['status'] !== \Zend\Http\Response::STATUS_CODE_200) {
+        if ($response['status'] !== self::STATUS_CODE_200) {
             return [];
         }
 
         return $response;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function handleResponse(array $response): GeocodeResultInterface
     {
         $result = $this->geocodeResultFactory->create();

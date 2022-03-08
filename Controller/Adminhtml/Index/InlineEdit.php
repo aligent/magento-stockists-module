@@ -6,16 +6,21 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
-/**
- * Class InlineEdit
- */
-class InlineEdit extends \Aligent\Stockists\Controller\Adminhtml\Index\Save implements \Magento\Framework\App\Action\HttpPostActionInterface
+use Aligent\Stockists\Api\Data\StockistInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Controller\Result\Json;
+use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\SecurityViolationException;
+use Magento\Framework\Validation\ValidationException;
+
+class InlineEdit extends Save implements HttpPostActionInterface
 {
 
     /**
      * @inheritdoc
      */
-    public function execute(): \Magento\Framework\Controller\ResultInterface
+    public function execute(): ResultInterface
     {
 
         $errorMessages = [];
@@ -23,7 +28,7 @@ class InlineEdit extends \Aligent\Stockists\Controller\Adminhtml\Index\Save impl
         $requestData = $request->getParam('items', []);
         try {
             foreach ($requestData as $stockistData) {
-                $stockistId = (int)$stockistData[\Aligent\Stockists\Api\Data\StockistInterface::STOCKIST_ID];
+                $stockistId = (int)$stockistData[StockistInterface::STOCKIST_ID];
                 $stockist = $this->stockistRepository->getById($stockistId);
                 $this->processSave($stockist, $stockistData);
             }
@@ -34,8 +39,8 @@ class InlineEdit extends \Aligent\Stockists\Controller\Adminhtml\Index\Save impl
             ]);
         }
 
-        /** @var \Magento\Framework\Controller\Result\Json $resultJson */
-        $resultJson = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON);
+        /** @var Json $resultJson */
+        $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
         $resultJson->setData([
             'messages' => $errorMessages,
             'error' => count($errorMessages),
@@ -46,19 +51,19 @@ class InlineEdit extends \Aligent\Stockists\Controller\Adminhtml\Index\Save impl
 
     /**
      * @return array
-     * @throws \Magento\Framework\Exception\SecurityViolationException
-     * @throws \Magento\Framework\Validation\ValidationException
+     * @throws SecurityViolationException
+     * @throws ValidationException
      */
     private function getRequestData(): array
     {
         $request = $this->getRequest();
         if (!$request->isPost() || !$request->isSecure()) {
-            throw new \Magento\Framework\Exception\SecurityViolationException(__('Must be a secured POST request'));
+            throw new SecurityViolationException(__('Must be a secured POST request'));
         }
 
         $requestData = $request->getPost()->toArray();
         if (empty($requestData['general'])) {
-            throw new \Magento\Framework\Validation\ValidationException(__('Invalid data'));
+            throw new ValidationException(__('Invalid data'));
         }
         return $requestData['general'];
     }

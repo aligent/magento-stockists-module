@@ -2,20 +2,21 @@
 
 namespace Aligent\Stockists\Model;
 
+use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
 
 class GeoSearchCriteriaBuilder extends SearchCriteriaBuilder
 {
     /**
-     * @return \Aligent\Stockists\Api\GeoSearchCriteriaInterface
+     * @return GeoSearchCriteriaInterface
      */
-    public function create()
+    public function create(): GeoSearchCriteriaInterface
     {
         // Hold on to these values since the parent create will clear the data array.
         $searchOrigin = $this->data['origin'] ?? [];
         $searchRadius = $this->data['radius'] ?? 0;
 
-        /** @var \Aligent\Stockists\Api\GeoSearchCriteriaInterface $searchCriteria */
+        /** @var GeoSearchCriteriaInterface $searchCriteria */
         $searchCriteria = parent::create();
 
         $searchCriteria->setSearchOrigin($searchOrigin);
@@ -24,15 +25,21 @@ class GeoSearchCriteriaBuilder extends SearchCriteriaBuilder
         return $searchCriteria;
     }
 
-    public function setSearchOrigin(array $origin)
+    /**
+     * @param array $origin
+     * @return void
+     */
+    public function setSearchOrigin(array $origin): void
     {
         $this->data['origin'] = $origin;
-        return $this;
     }
 
-    public function setSearchRadius(float $radius)
+    /**
+     * @param float $radius
+     * @return void
+     */
+    public function setSearchRadius(float $radius): void
     {
         $this->data['radius'] = $radius;
-        return $this;
     }
 }

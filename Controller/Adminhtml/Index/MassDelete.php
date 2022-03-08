@@ -5,49 +5,50 @@
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
-class MassDelete extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
+use Aligent\Stockists\Api\StockistRepositoryInterface;
+use Aligent\Stockists\Ui\Component\MassAction\Filter;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\LocalizedException;
+
+class MassDelete extends Action implements HttpPostActionInterface
 {
 
     const ADMIN_RESOURCE = 'Aligent_Stockists::manage';
 
     /**
-     * @var  \Magento\Framework\View\Result\PageFactory
-     */
-    private $resultPageFactory;
-
-    /**
-     * @var \Aligent\Stockists\Api\StockistRepositoryInterface
+     * @var StockistRepositoryInterface
      */
     private $stockistRepository;
 
     /**
-     * @var \Aligent\Stockists\Ui\Component\MassAction\Filter
+     * @var Filter
      */
     private $massActionFilter;
 
     /**
-     * MassDelete constructor.
-     * @param \Aligent\Stockists\Ui\Component\MassAction\Filter $massActionFilter
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Filter $massActionFilter
+     * @param Context $context
+     * @param StockistRepositoryInterface $stockistRepository
      */
     public function __construct(
-        \Aligent\Stockists\Ui\Component\MassAction\Filter $massActionFilter,
-        \Magento\Backend\App\Action\Context $context,
-        \Aligent\Stockists\Api\StockistRepositoryInterface $stockistRepository,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        Filter $massActionFilter,
+        Context $context,
+        StockistRepositoryInterface $stockistRepository
     ) {
         parent::__construct($context);
-        $this->resultPageFactory = $resultPageFactory;
         $this->stockistRepository = $stockistRepository;
         $this->massActionFilter = $massActionFilter;
     }
 
     /**
      * @inheritdoc
+     * @throws LocalizedException
      */
-    public function execute(): \Magento\Framework\Controller\ResultInterface
+    public function execute(): ResultInterface
     {
         if ($this->getRequest()->isPost() !== true) {
             $this->messageManager->addErrorMessage(__('Wrong request.'));

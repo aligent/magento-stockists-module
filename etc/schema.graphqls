@@ -1,9 +1,9 @@
 type Query {
     stockists (
-        location: LocationRequest @doc(description: "Search request")
+        location: LocationRequest! @doc(description: "Search request")
         pageSize: Int = 20 @doc(description: "Number per page")
         currentPage: Int = 1 @doc(description: "Current page")
-    ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retreive Stockists")
+    ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retrieve Stockists")
     stockist (
         identifier: String @doc(description: "Location Identifier")
         url_key: String @doc(description: "Location url_key")
@@ -16,10 +16,8 @@ type Stockist @doc(description: "A stockist location entity") {
     identifier: String
     location: Location @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistLocation")
     name: String
-    gallery: String @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistGallery")
     url_key: String
-    description: String
-    allow_store_delivery: Boolean
+    description: String @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistDescription")
     address: Address @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistAddress")
     trading_hours: Hours @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistHours")
     distance: Float
@@ -35,7 +33,6 @@ type Location @doc(description: "Geo-location coordinates") {
 type Address @doc(description: "Street address of location") {
     street: String
     city: String
-    suburb: String
     postcode: String
     region: String
     country_code: String
@@ -65,9 +62,8 @@ type Stockists @doc(description: "Result of a stockist search query") {
 }
 
 input LocationRequest @doc(description: "Request location (origin point and search radius)") {
-    lat: Float @doc(description: "Latitude")
-    lng: Float @doc(description: "Longitude")
-    postcode: String @doc(description: "Postcode")
+    lat: Float! @doc(description: "Latitude")
+    lng: Float! @doc(description: "Longitude")
     radius: Float @doc(description: "Search radius")
     unit: DistanceUnitsEnum @doc(description: "Units of search radius")
 }

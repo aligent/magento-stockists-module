@@ -24,6 +24,16 @@
             </argument>
         </arguments>
     </type>
+    <virtualType name="StockistSearchResultFactory" type="Magento\Ui\DataProvider\SearchResultFactory">
+        <arguments>
+            <argument name="hydrator" xsi:type="object">Aligent\Stockists\Model\Stockist\Hydrator</argument>
+        </arguments>
+    </virtualType>
+    <type name="Aligent\Stockists\Ui\DataProvider\Stockist">
+        <arguments>
+            <argument name="searchResultFactory" xsi:type="object">StockistSearchResultFactory</argument>
+        </arguments>
+    </type>
     <type name="Aligent\Stockists\Model\StockistRepository">
         <plugin sortOrder="1" name="aligentStockistsStockistRepository"
                 type="Aligent\Stockists\Plugin\Model\StockistRepositoryPlugin"/>
@@ -31,9 +41,7 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="aligent_stockists_geocode" xsi:type="object">
-                    Aligent\Stockists\Command\GeocodeStockists
-                </item>
+                <item name="aligent_stockists_geocode" xsi:type="object">Aligent\Stockists\Command\GeocodeStockists</item>
             </argument>
         </arguments>
     </type>

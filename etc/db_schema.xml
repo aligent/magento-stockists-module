@@ -10,17 +10,14 @@
         <column name="lng" xsi:type="decimal" scale="6" precision="9" nullable="true" comment="Longitude" />
         <column name="name" xsi:type="varchar" comment="Name" />
         <column name="description" xsi:type="text" comment="Description"/>
-        <column name="gallery" xsi:type="text" comment="Gallery"/>
         <column name="street" xsi:type="varchar" comment="Street" />
         <column name="city" xsi:type="varchar" comment="City" />
-        <column name="suburb" xsi:type="varchar" comment="Suburb"/>
         <column name="postcode" xsi:type="varchar" comment="Postcode" />
         <column name="region" xsi:type="varchar" comment="Region" />
         <column name="country" xsi:type="varchar" comment="Country Code" />
         <column name="phone" xsi:type="varchar" comment="Phone" />
         <column name="store_ids" xsi:type="varchar" comment="Associated store views" />
         <column name="hours" xsi:type="text" comment="Store Opening Hours" />
-        <column name="allow_store_delivery" xsi:type="boolean" comment="Allow Store for Delivery" default="false"/>
         <constraint xsi:type="unique" referenceId="STOCKIST_URL_KEY">
             <column name="url_key"/>
         </constraint>

@@ -6,37 +6,43 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Ui\Component\Control\Stockist;
 
-class SaveButton implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
+use Magento\Backend\Model\UrlInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+
+class SaveButton implements ButtonProviderInterface
 {
     /**
-     * @var \Magento\Backend\Model\UrlInterface
+     * @var UrlInterface
      */
     protected $urlBuilder;
 
     /**
-     * @var \Magento\Framework\App\RequestInterface
+     * @var RequestInterface
      */
     protected $request;
 
     /**
      * SaveButton constructor.
-     * @param \Magento\Backend\Model\UrlInterface $urlBuilder
-     * @param \Magento\Framework\App\RequestInterface $request
+     * @param UrlInterface $urlBuilder
+     * @param RequestInterface $request
      */
     public function __construct(
-        \Magento\Backend\Model\UrlInterface $urlBuilder,
-        \Magento\Framework\App\RequestInterface $request
+        UrlInterface $urlBuilder,
+        RequestInterface $request
     ) {
         $this->urlBuilder = $urlBuilder;
         $this->request = $request;
     }
 
-    public function getButtonData()
+    /**
+     * @inheritDoc
+     */
+    public function getButtonData(): array
     {
         return [
             'label'     => __('Save Stockist'),
-            'class'     =>  'save primary',
-
+            'class'     =>  'save primary'
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Aligent\Stockists\Api\Data;
 
 use Magento\Framework\Api\ExtensibleDataInterface;
+use Magento\Framework\Api\ExtensionAttributesInterface;
 
 interface StockistInterface extends ExtensibleDataInterface
 {
@@ -15,14 +16,11 @@ interface StockistInterface extends ExtensibleDataInterface
     const IS_ACTIVE = 'is_active';
     const DESCRIPTION = 'description';
     const URL_KEY = 'url_key';
-    const GALLERY = 'gallery';
-    const ALLOW_STORE_DELIVERY = 'allow_store_delivery';
     const LAT = 'lat';
     const LNG = 'lng';
     const NAME = 'name';
     const STREET = 'street';
     const CITY = 'city';
-    const SUBURB = 'suburb';
     const POSTCODE = 'postcode';
     const REGION = 'region';
     const REGION_ID = 'region_id';
@@ -33,7 +31,6 @@ interface StockistInterface extends ExtensibleDataInterface
     const STORE_IDS = 'store_ids';
     const EXTENSION_ATTRIBUTES = 'extension_attributes';
 
-
     /**
      * @return int
      */
@@ -41,20 +38,20 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param int $id
-     * @return $this
+     * @return void
      */
-    public function setStockistId(int $id): StockistInterface;
+    public function setStockistId(int $id): void;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIdentifier(): string;
+    public function getIdentifier(): ?string;
 
     /**
      * @param string $identifier
-     * @return $this
+     * @return void
      */
-    public function setIdentifier(string $identifier): StockistInterface;
+    public function setIdentifier(string $identifier): void;
 
     /**
      * @return bool
@@ -63,9 +60,9 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param bool $isActive
-     * @return $this
+     * @return void
      */
-    public function setIsActive(bool $isActive): StockistInterface;
+    public function setIsActive(bool $isActive): void;
 
     /**
      * @return string|null
@@ -74,152 +71,119 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param string $description
-     * @return StockistInterface
+     * @return void
      */
-    public function setDescription(string $description): StockistInterface;
+    public function setDescription(string $description): void;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGallery(): ?string;
-
-    /**
-     * @param string $gallery
-     * @return StockistInterface
-     */
-    public function setGallery(string $gallery): StockistInterface;
-
-    /**
-     * @return string
-     */
-    public function getUrlKey(): string;
+    public function getUrlKey(): ?string;
 
     /**
      * @param string $urlKey
-     * @return StockistInterface
+     * @return void
      */
-    public function setUrlKey(string $urlKey): StockistInterface;
+    public function setUrlKey(string $urlKey): void;
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getLat(): ?float;
 
     /**
      * @param float $lat
-     * @return $this
+     * @return void
      */
-    public function setLat(float $lat): StockistInterface;
+    public function setLat(float $lat): void;
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getLng(): ?float;
 
     /**
      * @param float $lng
-     * @return $this
+     * @return void
      */
-    public function setLng(float $lng): StockistInterface;
+    public function setLng(float $lng): void;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getName(): ?string;
 
     /**
      * @param string $name
-     * @return $this
+     * @return void
      */
-    public function setName(string $name): StockistInterface;
+    public function setName(string $name): void;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getStreet(): ?string;
 
     /**
      * @param string $street
-     * @return $this
+     * @return void
      */
-    public function setStreet(string $street): StockistInterface;
+    public function setStreet(string $street): void;
 
     /**
      * @return string|null
-     */
-    public function getSuburb(): ?string;
-
-    /**
-     * @param string $suburb
-     * @return StockistInterface
-     */
-    public function setSuburb(string $suburb): StockistInterface;
-
-    /**
-     * @return string
      */
     public function getCity(): ?string;
 
     /**
      * @param string $city
-     * @return $this
+     * @return void
      */
-    public function setCity(string $city): StockistInterface;
+    public function setCity(string $city): void;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPostcode(): ?string;
 
     /**
      * @param string $postcode
-     * @return $this
+     * @return void
      */
-    public function setPostcode(string $postcode): StockistInterface;
+    public function setPostcode(string $postcode): void;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRegion(): ?string;
 
     /**
      * @param string $region
-     * @return $this
+     * @return void
      */
-    public function setRegion(string $region): StockistInterface;
+    public function setRegion(string $region): void;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCountry(): ?string;
 
     /**
      * @param string $countryCode
-     * @return $this
+     * @return void
      */
-    public function setCountry(string $countryCode): StockistInterface;
+    public function setCountry(string $countryCode): void;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPhone(): ?string;
 
     /**
      * @param string $phone
-     * @return $this
+     * @return void
      */
-    public function setPhone(string $phone): StockistInterface;
-
-    /**
-     * @return bool|null
-     */
-    public function getAllowStoreDelivery(): ?bool;
-
-    /**
-     * @param string $allowStoreDelivery
-     * @return StockistInterface
-     */
-    public function setAllowStoreDelivery(string $allowStoreDelivery): StockistInterface;
+    public function setPhone(string $phone): void;
 
     /**
      * @return int[]
@@ -228,29 +192,29 @@ interface StockistInterface extends ExtensibleDataInterface
 
     /**
      * @param int[] $storeIds
-     * @return $this
+     * @return void
      */
-    public function setStoreIds(array $storeIds): StockistInterface;
+    public function setStoreIds(array $storeIds): void;
 
     /**
-     * @return \Aligent\Stockists\Api\Data\TradingHoursInterface
+     * @return \Aligent\Stockists\Api\Data\TradingHoursInterface|null
      */
-    public function getHours(): ?\Aligent\Stockists\Api\Data\TradingHoursInterface;
+    public function getHours(): ?TradingHoursInterface;
 
     /**
      * @param \Aligent\Stockists\Api\Data\TradingHoursInterface $hours
-     * @return $this
+     * @return void
      */
-    public function setHours(\Aligent\Stockists\Api\Data\TradingHoursInterface $hours): StockistInterface;
+    public function setHours(TradingHoursInterface $hours): void;
 
     /**
-     * @return \Aligent\Stockists\Api\Data\StockistExtensionInterface|null
+     * @return \Aligent\Stockists\Api\Data\StockistExtensionInterface
      */
-    public function getExtensionAttributes();
+    public function getExtensionAttributes(): StockistExtensionInterface;
 
     /**
      * @param \Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes
-     * @return $this
+     * @return void
      */
-    public function setExtensionAttributes(\Aligent\Stockists\Api\Data\StockistExtensionInterface $extensionAttributes);
+    public function setExtensionAttributes(StockistExtensionInterface $extensionAttributes): void;
 }

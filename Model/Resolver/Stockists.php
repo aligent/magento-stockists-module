@@ -3,12 +3,11 @@
 namespace Aligent\Stockists\Model\Resolver;
 
 use Aligent\Stockists\Api\Data\StockistInterface;
+use Aligent\Stockists\Api\GeoSearchCriteriaInterface;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\FilterGroupBuilder;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
-use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
-use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Aligent\Stockists\Api\StockistRepositoryInterface;
@@ -30,12 +29,12 @@ class Stockists implements ResolverInterface
     /**
      * @var FilterBuilder
      */
-    private FilterBuilder $filterBuilder;
+    private $filterBuilder;
 
     /**
      * @var FilterGroupBuilder
      */
-    private FilterGroupBuilder $filterGroupBuilder;
+    private $filterGroupBuilder;
 
     public function __construct(
         StockistRepositoryInterface $stockistRepository,
@@ -52,33 +51,32 @@ class Stockists implements ResolverInterface
     /**
      * @inheritDoc
      */
-    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
-    {
-        $this->validateSearchArguments($args);
+    public function resolve(
+        Field $field,
+        $context,
+        ResolveInfo $info,
+        array $value = null,
+        array $args = null
+    ): array {
+        $args = $this->defaultSearchArguments($args);
 
         $searchCriteria = $this->createSearchCriteria($args);
-
-        $activeFilter = $this->filterBuilder->setField(StockistInterface::IS_ACTIVE)
-            ->setValue((bool) true)
-            ->setConditionType('eq')
-            ->create();
-        $filterGroup = $this->filterGroupBuilder->addFilter($activeFilter)->create();
-        $searchCriteria->setFilterGroups([$filterGroup]);
         $results = $this->stockistRepository->getList($searchCriteria);
 
-        $locations = array_map(function ($location) use ($args) {
+        $locations = [];
+        foreach ($results->getItems() as $location) {
             /** @var \Aligent\Stockists\Model\Stockist $location */
             $locationData = $location->getData();
 
-            /** Attach the model to the value so nested resolvers can use it to populate complex sub-fields */
+            /** Attach the model to the value so nested resolvers can use it to populate complex subfields */
             $locationData['model'] = $location;
 
             // Convert distance back to miles if requested
-            if (isset($args['location']['unit']) && $args['location']['unit'] === StockistHelper::DISTANCE_UNITS_MILES) {
+            if ($args['location']['unit'] === StockistHelper::DISTANCE_UNITS_MILES) {
                 $locationData['distance'] = (float)$locationData['distance'] / StockistHelper::RATIO_MILES_TO_KM;
             }
-            return $locationData;
-        }, $results->getItems());
+            $locations[] = $locationData;
+        }
 
         return [
             'total_count' => $results->getTotalCount(),
@@ -87,39 +85,47 @@ class Stockists implements ResolverInterface
     }
 
     /**
-     * @param $args
-     * @return \Aligent\Stockists\Api\GeoSearchCriteriaInterface
+     * @param array $args
+     * @return GeoSearchCriteriaInterface
      */
-    public function createSearchCriteria($args)
+    private function createSearchCriteria(array $args): GeoSearchCriteriaInterface
     {
-        $radius = (float)$args['location']['radius'] ?? 50;
-        $units = $args['location']['unit'] ?? StockistHelper::DISTANCE_UNITS_KM;
+        $radius = $args['location']['radius'];
+        $units = $args['location']['unit'];
 
         // Normalize to KM to match the computed distance
         if ($units === StockistHelper::DISTANCE_UNITS_MILES) {
             $radius *= StockistHelper::RATIO_MILES_TO_KM;
         }
 
-        $searchCriteria = $this->searchCriteriaBuilder->setSearchRadius($radius)->setSearchOrigin([
-            'lat' => (float)$args['location']['lat'],
-            'lng' => (float)$args['location']['lng']
-        ])->create();
+        $this->searchCriteriaBuilder->setSearchRadius($radius);
+        $this->searchCriteriaBuilder->setSearchOrigin(
+            [
+                'lat' => $args['location']['lat'],
+                'lng' => $args['location']['lng']
+            ]
+        );
+
+        $searchCriteria = $this->searchCriteriaBuilder->create();
+        $activeFilter = $this->filterBuilder->setField(StockistInterface::IS_ACTIVE)
+            ->setValue(true)
+            ->setConditionType('eq')
+            ->create();
+        $filterGroup = $this->filterGroupBuilder->addFilter($activeFilter)->create();
+        $searchCriteria->setFilterGroups([$filterGroup]);
 
         return $searchCriteria;
     }
 
     /**
      * @param array $args
-     * @throws GraphQlInputException
+     * @return array
      */
-    private function validateSearchArguments(array $args)
+    private function defaultSearchArguments(array $args): array
     {
-        if (!isset($args['location'])) {
-            throw new GraphQlInputException(__('Location request is invalid.'));
-        }
-
-        if (!isset($args['location']['lat']) || !isset($args['location']['lng'])) {
-            throw new GraphQlInputException(__('Invalid search coordinates provided.'));
-        }
+        // default radius and units if not present
+        $args['location']['radius'] = $args['location']['radius'] ?? 50.0;
+        $args['location']['unit'] = $args['location']['unit'] ?? StockistHelper::DISTANCE_UNITS_KM;
+        return $args;
     }
 }

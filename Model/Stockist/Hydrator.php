@@ -11,16 +11,13 @@ use Aligent\Stockists\Api\Data\StockistInterface;
 use Magento\Directory\Model\RegionFactory;
 use Magento\Directory\Model\ResourceModel\Region;
 use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\EntityManager\HydratorInterface;
 use Magento\Framework\EntityManager\MapperPool;
 use Magento\Framework\EntityManager\TypeResolver;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Validation\ValidationException;
 
-/**
- * Class StockistHydrator
- * @api
- */
-class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
+class Hydrator implements HydratorInterface
 {
 
     /**
@@ -59,7 +56,6 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
     protected $regionResource;
 
     /**
-     * StockistHydrator constructor.
      * @param DataObjectProcessor $dataObjectProcessor
      * @param MapperPool $mapperPool
      * @param TypeResolver $typeResolver
@@ -91,7 +87,7 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
      * @return array
      * @throws \Exception
      */
-    public function extract($entity)
+    public function extract($entity): array
     {
         $entityType = $this->typeResolver->resolve($entity);
         $data = $this->dataObjectProcessor->buildOutputDataArray($entity, $entityType);
@@ -100,41 +96,27 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
     }
 
     /**
-     * @param StockistInterface $stockist
+     * @param StockistInterface $entity
      * @param array $data
      * @return StockistInterface
      * @throws ValidationException
      */
-    public function hydrate($stockist, array $data): StockistInterface
+    public function hydrate($entity, array $data): StockistInterface
     {
         if (empty($data[StockistInterface::STOCKIST_ID])) {
             unset($data[StockistInterface::STOCKIST_ID]);
         }
-        if (isset($data[StockistInterface::IS_ACTIVE]) && $data[StockistInterface::IS_ACTIVE] === 'true') {
-            $data[StockistInterface::IS_ACTIVE] = 1;
-        } else {
-            $data[StockistInterface::IS_ACTIVE] = 0;
-        }
-
-        if (isset($data[StockistInterface::ALLOW_STORE_DELIVERY]) && $data[StockistInterface::ALLOW_STORE_DELIVERY] === 'true') {
-            $data[StockistInterface::ALLOW_STORE_DELIVERY] = 1;
-        } else {
-            $data[StockistInterface::ALLOW_STORE_DELIVERY] = 0;
-        }
+        $data[StockistInterface::IS_ACTIVE] = (bool)$data[StockistInterface::IS_ACTIVE];
 
         if (isset($data[StockistInterface::COUNTRY_ID])) {
-            // possible todo: convert to full name?
             $data[StockistInterface::COUNTRY] = $data[StockistInterface::COUNTRY_ID];
         }
 
-        if (isset($data[StockistInterface::REGION_ID])) {
-            if (!$data[StockistInterface::REGION_ID]) {
-                $data[StockistInterface::REGION] = "";
-            } else {
-                $region = $this->regionFactory->create();
-                $this->regionResource->load($region, $data[StockistInterface::REGION_ID], 'region_id');
-                $data[StockistInterface::REGION] = $region->getName();
-            }
+        $data[StockistInterface::REGION] = "";
+        if (!empty($data[StockistInterface::REGION_ID])) {
+            $region = $this->regionFactory->create();
+            $this->regionResource->load($region, $data[StockistInterface::REGION_ID], 'region_id');
+            $data[StockistInterface::REGION] = $region->getName();
         }
 
         foreach ($this->dataProcessors as $dataProcessor) {
@@ -143,10 +125,10 @@ class Hydrator implements \Magento\Framework\EntityManager\HydratorInterface
             }
         }
         try {
-            $this->dataObjectHelper->populateWithArray($stockist, $data, StockistInterface::class);
+            $this->dataObjectHelper->populateWithArray($entity, $data, StockistInterface::class);
         } catch (\Exception $e) {
             throw new ValidationException(__($e->getMessage()));
         }
-        return $stockist;
+        return $entity;
     }
 }

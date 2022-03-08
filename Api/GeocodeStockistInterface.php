@@ -5,5 +5,8 @@ namespace Aligent\Stockists\Api;
 
 interface GeocodeStockistInterface
 {
-    public function execute(Data\StockistInterface $stockist);
+    /**
+     * @param Data\StockistInterface $stockist
+     */
+    public function execute(Data\StockistInterface $stockist): void;
 }
