@@ -18,7 +18,6 @@
                 </field>
                 <field id="key" translate="label comment" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API Key</label>
-                    <comment>Optional. Used for tracking and/or to increase usage limits.</comment>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
             </group>

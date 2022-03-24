@@ -7,6 +7,8 @@ use Aligent\Stockists\Api\GeocodeResultInterface;
 
 class GoogleMapsGeocodeResult implements GeocodeResultInterface
 {
+    const STATUS_CODE_OK = "OK";
+
     private $status;
     private $lat;
     private $lng;
@@ -26,7 +28,7 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
      */
     public function getStatus(): string
     {
-        return $this->status;
+        return (string)$this->status;
     }
 
     /**
@@ -34,7 +36,7 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
      */
     public function wasSuccessful() : bool
     {
-        return $this->getStatus() == "OK";
+        return $this->getStatus() === self::STATUS_CODE_OK;
     }
 
     /**
@@ -42,7 +44,7 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
      */
     public function getLat(): float
     {
-        return $this->lat;
+        return (float)$this->lat;
     }
 
     /**
@@ -50,6 +52,6 @@ class GoogleMapsGeocodeResult implements GeocodeResultInterface
      */
     public function getLng(): float
     {
-        return $this->lng;
+        return (float)$this->lng;
     }
 }
