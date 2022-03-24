@@ -1,4 +1,6 @@
 # RELEASE NOTES
+#1.2.10
+Fix validation of Google geocoding response
 
 ## v1.2.9
 Copy extension attributes onto the returned item within the DataProvider
@@ -8,10 +10,10 @@ Better handling of null/empty trading hours values.
 
 ## v1.2.7
 
-Fix minor bug in region update, and save full name of region to database
-Fix bug where country wouldn't save on change, only on initial creation
-Fix bug where trading hours json would double serialize public holiday data
-Code cleanup
+- Fix minor bug in region update, and save full name of region to database
+- Fix bug where country wouldn't save on change, only on initial creation
+- Fix bug where trading hours json would double serialize public holiday data
+- Code cleanup
 
 ## v1.2.6
 
