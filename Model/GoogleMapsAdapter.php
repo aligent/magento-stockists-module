@@ -104,7 +104,7 @@ class GoogleMapsAdapter implements AdapterInterface
         $response = $this->serialiser->unserialize($httpClient->getBody());
 
         /**
-         * Google Maps API return 200 and state any errors that occur as part
+         * Google Maps API returns status and state any errors that occur as part
          * of the api response body...
          *
          * @see: https://developers.google.com/maps/documentation/geocoding/overview#StatusCodes
