@@ -15,7 +15,6 @@ class GoogleMapsAdapter implements AdapterInterface
     const PATH= 'https://maps.googleapis.com/maps/api/geocode/';
 
     const OUTPUT_FORMAT = 'json';
-    const STATUS_CODE_200 = 200;
 
     /**
      * @var CurlFactory
@@ -110,7 +109,7 @@ class GoogleMapsAdapter implements AdapterInterface
          *
          * @see: https://developers.google.com/maps/documentation/geocoding/overview#StatusCodes
          */
-        if ($response['status'] !== self::STATUS_CODE_200) {
+        if ($response['status'] !== GoogleMapsGeocodeResult::STATUS_CODE_OK) {
             return [];
         }
 
