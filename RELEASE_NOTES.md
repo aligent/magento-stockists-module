@@ -1,5 +1,9 @@
 # RELEASE NOTES
-#1.2.10
+
+## v1.2.11
+Fix stockist form to work with pagebuilder properly
+
+## v1.2.10
 Fix validation of Google geocoding response
 
 ## v1.2.9
