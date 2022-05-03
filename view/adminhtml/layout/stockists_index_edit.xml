@@ -9,6 +9,7 @@
     <head>
         <link src="Aligent_Stockists::js/validate-json.js"/>
     </head>
+    <update handle="editor"/>
     <body>
         <referenceContainer name="content">
             <uiComponent name="stockist_form"/>
