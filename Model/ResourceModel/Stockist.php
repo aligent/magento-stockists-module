@@ -101,7 +101,10 @@ class Stockist extends AbstractDb
             $object->setData(StockistModel::HOURS, $tradingHours);
         }
 
-        $object->setData(StockistModel::STORE_IDS, explode(',', $object->getData(StockistModel::STORE_IDS)));
+        $storeIds = $object->getData(StockistModel::STORE_IDS);
+        if ($storeIds) {
+            $object->setData(StockistModel::STORE_IDS, explode(',', $storeIds));
+        }
         return parent::_afterLoad($object);
     }
 }
