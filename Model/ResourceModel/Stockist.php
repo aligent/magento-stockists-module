@@ -60,7 +60,7 @@ class Stockist extends AbstractDb
         $storeIds = $object->getData(StockistInterface::STORE_IDS) ?? [0];
         $object->setData(StockistInterface::STORE_IDS, implode(',', $storeIds));
 
-        $openingHours = $object->getData(StockistInterface::HOURS) ?? null;
+        $openingHours = $object->getData(StockistInterface::HOURS) ? $object->getData(StockistInterface::HOURS)->getData() : null;
         if (is_array($openingHours)) {
             $object->setData(StockistInterface::HOURS, $this->json->serialize($openingHours));
         }
