@@ -6,6 +6,7 @@
             <geocode>
                 <url>https://maps.googleapis.com/maps/api/geocode/</url>
                 <key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <enable_api_biaisng>0</enable_api_biaisng>
             </geocode>
         </stockists>
     </default>

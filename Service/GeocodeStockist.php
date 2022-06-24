@@ -20,6 +20,8 @@ class GeocodeStockist implements GeocodeStockistInterface
 {
     const XML_PATH_GEOCODE_KEY = 'stockists/geocode/key';
 
+    const XML_PATH_ENABLE_API_BIASING = 'stockists/geocode/enable_api_biaisng';
+
     /**
      * @var AdapterInterface
      */
@@ -55,6 +57,11 @@ class GeocodeStockist implements GeocodeStockistInterface
                 return;
             }
 
+            // Return if Geocoding API's Region Biasing is not enabled
+            if (!$this->isApiBiasingEnabled()) {
+                return;
+            }
+
             $request = $this->adapter->buildRequest($stockist, $key);
             $response = $this->adapter->performGeocode($request);
             $result = $this->adapter->handleResponse($response);
@@ -66,8 +73,21 @@ class GeocodeStockist implements GeocodeStockistInterface
         }
     }
 
+    /**
+     * @return mixed
+     */
     protected function getGeocodeKey()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_GEOCODE_KEY, ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Check config value of stockists/geocode/enable_api_biaisng
+     *
+     * @return bool
+     */
+    protected function isApiBiasingEnabled()
+    {
+        return (bool)$this->scopeConfig->getValue(self::XML_PATH_ENABLE_API_BIASING, ScopeInterface::SCOPE_STORE);
     }
 }
