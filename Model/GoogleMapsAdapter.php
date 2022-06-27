@@ -98,7 +98,7 @@ class GoogleMapsAdapter implements AdapterInterface
 
         $queryParams = [
             'address' => $address,
-            'key' => $key,
+            'key' => $key
         ];
 
         // Restrict the address results to a specific area if Geocoding API's Region Biasing is enabled
