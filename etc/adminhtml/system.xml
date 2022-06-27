@@ -23,6 +23,7 @@
                 <field id="enable_api_biaisng" translate="label comment" type="select" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Geocoding API's Region Biasing</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[The Geocoding API returns address results biased to the given country and postcode. <a href=https://developers.google.com/maps/documentation/geocoding/requests-geocoding#RegionCodes">Click here</a> for more details.]]></comment>
                 </field>
             </group>
         </section>
