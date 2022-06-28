@@ -72,6 +72,12 @@ class Save extends Action implements HttpPostActionInterface
         try {
             $requestData = $this->getRequestData();
             $stockist = $this->stockistFactory->create();
+
+            $stockistId = $requestData[StockistInterface::STOCKIST_ID];
+            if (!empty($stockistId)) {
+                $stockist = $this->stockistRepository->getById((int)$stockistId);
+            }
+
             $this->processSave($stockist, $requestData);
             $this->messageManager->addSuccessMessage('Stockist has been saved');
             if ($this->getRequest()->getParam('redirect_to_new')) {

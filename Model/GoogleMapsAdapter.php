@@ -6,7 +6,7 @@ use Aligent\Stockists\Api\AdapterInterface;
 use Aligent\Stockists\Api\Data\StockistInterface;
 use Aligent\Stockists\Api\GeocodeResultInterface;
 use Aligent\Stockists\Api\GeocodeResultInterfaceFactory;
-use Aligent\Stockists\Api\StockistRepositoryInterface;
+use Aligent\Stockists\Model\OptionSource\GeocodingResquestSource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\HTTP\Client\CurlFactory;
 use Magento\Framework\Serialize\Serializer\Json;
@@ -17,7 +17,7 @@ class GoogleMapsAdapter implements AdapterInterface
 {
     const PATH= 'https://maps.googleapis.com/maps/api/geocode/';
 
-    const XML_PATH_ENABLE_API_BIASING = 'stockists/geocode/enable_api_biaisng';
+    const XML_PATH_GEOCODING_REQUEST_OPTION = 'stockists/geocode/request_option';
 
     const OUTPUT_FORMAT = 'json';
 
@@ -29,7 +29,7 @@ class GoogleMapsAdapter implements AdapterInterface
     /**
      * @var QueryParamsResolverInterface
      */
-    protected $queryParamsResolver;
+    protected QueryParamsResolverInterface $queryParamsResolver;
 
     /**
      * @var Json
@@ -47,47 +47,40 @@ class GoogleMapsAdapter implements AdapterInterface
     private $scopeConfig;
 
     /**
-     * @var StockistRepositoryInterface
+     * @param CurlFactory $httpClientFactory
+     * @param QueryParamsResolverInterface $queryParamsResolver
+     * @param Json $serialiser
+     * @param GeocodeResultInterfaceFactory $geocodeResultFactory
+     * @param ScopeConfigInterface $scopeConfig
      */
-    private $stockistRepository;
-
     public function __construct(
         CurlFactory $httpClientFactory,
         QueryParamsResolverInterface $queryParamsResolver,
         Json $serialiser,
         GeocodeResultInterfaceFactory $geocodeResultFactory,
-        ScopeConfigInterface $scopeConfig,
-        StockistRepositoryInterface $stockistRepository
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->httpClientFactory = $httpClientFactory;
         $this->queryParamsResolver = $queryParamsResolver;
         $this->serialiser = $serialiser;
         $this->geocodeResultFactory = $geocodeResultFactory;
         $this->scopeConfig = $scopeConfig;
-        $this->stockistRepository = $stockistRepository;
     }
 
+    /**
+     * @param $stockist
+     * @return bool
+     */
     public function addressHasChangedFor($stockist): bool
     {
-        if (!$stockist->getStockistId()) {
-            return true;
-        }
-
-        $stockistOrig = $this->stockistRepository->getById($stockist->getStockistId());
-
         foreach (['street', 'city', 'region', 'country'] as $field) {
-            $newData = $stockist->getData($field);
-            $previousData = $stockistOrig->getData($field);
-
-            if ($newData != $previousData) {
+            if ($stockist->dataHasChangedFor($field)) {
                 return true;
             }
         }
 
         return false;
     }
-
-
 
     /**
      * @inheritDoc
@@ -101,15 +94,7 @@ class GoogleMapsAdapter implements AdapterInterface
             'key' => $key
         ];
 
-        // Restrict the address results to a specific area if Geocoding API's Region Biasing is enabled
-        if ($this->isApiBiasingEnabled()) {
-            $queryParams['region'] = $stockist->getCountry();
-
-            $components = $this->buildComponents($stockist);
-            $queryParams['components'] = $components;
-
-        }
-
+        $queryParams = $this->addAdditionalRequestParams($stockist, $queryParams);
         $query = $this->queryParamsResolver->addQueryParams($queryParams)->getQuery();
 
         return $this::PATH . $this::OUTPUT_FORMAT . '?' . $query;
@@ -137,10 +122,15 @@ class GoogleMapsAdapter implements AdapterInterface
      */
     protected function buildComponents(Stockist $stockist): string
     {
-        $params = [
-            'country:' . $stockist->getCountry(),
-            'postal_code:' . $stockist->getPostcode(),
-        ];
+        $params = [];
+
+        if ($stockist->getCountry()) {
+            $params[] = 'country:' . $stockist->getCountry();
+        }
+
+        if ($stockist->getPostcode()) {
+            $params[] = 'postal_code:' . $stockist->getPostcode();
+        }
 
         return implode('|', $params);
     }
@@ -185,12 +175,41 @@ class GoogleMapsAdapter implements AdapterInterface
     }
 
     /**
-     * Check config value of stockists/geocode/enable_api_biaisng
+     * Check config value of stockists/geocode/request_option
      *
-     * @return bool
+     * @return ?string
      */
-    protected function isApiBiasingEnabled()
+    protected function getGeocodingRequestOption(): ?string
     {
-        return $this->scopeConfig->isSetFlag(self::XML_PATH_ENABLE_API_BIASING, ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_GEOCODING_REQUEST_OPTION, ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Google Maps API now supports Region Biasing and Component Filtering in a Geocoding request
+     * @see: https://developers.google.com/maps/documentation/geocoding/requests-geocoding#RegionCodes
+     *
+     * @param StockistInterface $stockist
+     * @param array $queryParams
+     * @return array
+     */
+    private function addAdditionalRequestParams(StockistInterface $stockist, array $queryParams): array
+    {
+        $requestOption = $this->getGeocodingRequestOption();
+
+        switch ($requestOption) {
+            case GeocodingResquestSource::REGION_BIASING:
+                if ($stockist->getCountry()) {
+                    $queryParams['region'] = $stockist->getCountry();
+                }
+                return $queryParams;
+            case GeocodingResquestSource::COMPONENT_FILTERING:
+                $components = $this->buildComponents($stockist);
+                if (!empty($components)) {
+                    $queryParams['components'] = $components;
+                }
+                return $queryParams;
+        }
+
+        return $queryParams;
     }
 }

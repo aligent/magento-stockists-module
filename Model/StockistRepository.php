@@ -137,6 +137,7 @@ class StockistRepository implements StockistRepositoryInterface
      * @return StockistInterface
      * @throws AlreadyExistsException
      * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
      */
     public function save(StockistInterface $stockist): StockistInterface
     {
@@ -151,11 +152,9 @@ class StockistRepository implements StockistRepositoryInterface
                 __('Invalid stockist data: %1', implode(',', $validationErrors))
             );
         } else {
-            try {
+            if ($stockist->getStockistId()) {
                 $existingStockist = $this->get($stockist->getIdentifier());
                 $stockist->setStockistId($existingStockist->getId());
-            } catch (NoSuchEntityException $e) {
-                throw new CouldNotSaveException(__('Stockist with ID %1 does not exist', $stockist->getIdentifier()));
             }
             $this->stockistResource->save($stockist);
         }
