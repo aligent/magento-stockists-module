@@ -152,7 +152,7 @@ class StockistRepository implements StockistRepositoryInterface
                 __('Invalid stockist data: %1', implode(',', $validationErrors))
             );
         } else {
-            if ($stockist->getStockistId()) {
+            if ($stockist->getIdentifier() && $stockist->getStockistId()) {
                 $existingStockist = $this->get($stockist->getIdentifier());
                 $stockist->setStockistId($existingStockist->getId());
             }
