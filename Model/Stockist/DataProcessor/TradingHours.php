@@ -46,7 +46,7 @@ class TradingHours implements StockistDataProcessorInterface
         if (isset($data[StockistInterface::HOURS])) {
             $tradingHours = $this->tradingHoursFactory->create();
             $tradingHoursData = $data[StockistInterface::HOURS] ?
-            $this->json->unserialize($data[StockistInterface::HOURS]) : "{}";
+                $this->json->unserialize($data[StockistInterface::HOURS]) : "{}";
             $tradingHours->setData($tradingHoursData);
             $data[StockistInterface::HOURS] = $tradingHours;
         }
