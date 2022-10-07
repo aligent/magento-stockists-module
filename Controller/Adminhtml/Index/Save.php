@@ -99,7 +99,7 @@ class Save extends Action implements HttpPostActionInterface
 
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-            $resultRedirect->setPath('*/*/new');
+            $resultRedirect->setPath('*/*');
         }
 
         return $resultRedirect;
