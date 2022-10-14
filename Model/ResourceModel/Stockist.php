@@ -102,7 +102,7 @@ class Stockist extends AbstractDb
         }
 
         $storeIds = $object->getData(StockistModel::STORE_IDS);
-        if ($storeIds) {
+        if (!empty($storeIds) || $storeIds === '0') {
             $object->setData(StockistModel::STORE_IDS, explode(',', $storeIds));
         }
         return parent::_afterLoad($object);
