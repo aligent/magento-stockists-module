@@ -118,7 +118,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getUrlKey(): string
     {
-        return $this->getData(StockistInterface::URL_KEY);
+        return $this->getData(StockistInterface::URL_KEY) ?? '';
     }
 
     /**
