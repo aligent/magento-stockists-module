@@ -97,10 +97,15 @@ class Stockist extends DataProvider
             $item[StockistInterface::HOURS] = $this->json->serialize($item[StockistInterface::HOURS]);
             $item[StockistInterface::STORE_IDS] = implode(',', $item[StockistInterface::STORE_IDS]);
             $item[StockistInterface::COUNTRY_ID] = $item[StockistInterface::COUNTRY];
-            $item[StockistInterface::REGION_ID] = $this->regionFactory->create()->loadByName(
-                $item[StockistInterface::REGION],
-                $item[StockistInterface::COUNTRY_ID],
-            )->getRegionId();
+
+            // Some countries have no regions (e.g. NZ)
+            if (!empty($item[StockistInterface::REGION])) {
+                $item[StockistInterface::REGION_ID] = $this->regionFactory->create()->loadByName(
+                    $item[StockistInterface::REGION],
+                    $item[StockistInterface::COUNTRY_ID],
+                )->getRegionId();
+            }
+
             $item[StockistInterface::IS_ACTIVE] = (bool)$item[StockistInterface::IS_ACTIVE];
 
             // Make sure extension attributes are copied onto the item itself, then we can

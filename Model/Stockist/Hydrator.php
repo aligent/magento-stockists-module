@@ -106,13 +106,15 @@ class Hydrator implements HydratorInterface
         if (empty($data[StockistInterface::STOCKIST_ID])) {
             unset($data[StockistInterface::STOCKIST_ID]);
         }
-        $data[StockistInterface::IS_ACTIVE] = (bool)$data[StockistInterface::IS_ACTIVE];
+
+        if (isset($data[StockistInterface::IS_ACTIVE])) {
+            $data[StockistInterface::IS_ACTIVE] = (bool)$data[StockistInterface::IS_ACTIVE];
+        }
 
         if (isset($data[StockistInterface::COUNTRY_ID])) {
             $data[StockistInterface::COUNTRY] = $data[StockistInterface::COUNTRY_ID];
         }
 
-        $data[StockistInterface::REGION] = "";
         if (!empty($data[StockistInterface::REGION_ID])) {
             $region = $this->regionFactory->create();
             $this->regionResource->load($region, $data[StockistInterface::REGION_ID], 'region_id');

@@ -17,11 +17,16 @@ class Coordinate implements StockistDataProcessorInterface
      */
     public function execute(array $data): array
     {
+        if (!isset($data[StockistInterface::LNG]) || !isset($data[StockistInterface::LAT])) {
+            return $data;
+        }
+
         if (empty($data[StockistInterface::LNG]) || empty($data[StockistInterface::LAT])) {
             // fetch by address
             $data[StockistInterface::LNG] = 0.0;
             $data[StockistInterface::LAT] = 0.0;
         }
+
         return $data;
     }
 }

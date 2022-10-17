@@ -61,8 +61,9 @@ class Stockist extends AbstractDb
         $object->setData(StockistInterface::STORE_IDS, implode(',', $storeIds));
 
         $openingHours = $object->getData(StockistInterface::HOURS) ?? null;
-        if (is_array($openingHours)) {
-            $object->setData(StockistInterface::HOURS, $this->json->serialize($openingHours));
+        if ($openingHours && is_array($openingHours->getData())) {
+            $hoursData = $openingHours->getData();
+            $object->setData(StockistInterface::HOURS, $this->json->serialize($hoursData));
         }
         return parent::_beforeSave($object);
     }
