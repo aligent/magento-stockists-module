@@ -71,23 +71,27 @@ class Stockist extends AbstractDb
     /**
      * Once the JSON-encoded hours data has been persisted by save(), re-hydrate the model with the
      * array structure
+     * Also convert csv string to array for store_ids
      * @param AbstractModel $object
      * @return AbstractDb
      */
     protected function _afterSave(AbstractModel $object): AbstractDb
     {
         $this->handleTradingHours($object);
+        $this->handleStoreIds($object);
         return parent::_afterSave($object);
     }
 
     /**
      * When loading a stockist model, unserialize the JSON-encoded opening hours into it's array form
+     * Also convert csv string to array for store_ids
      * @param AbstractModel $object
      * @return AbstractDb
      */
     protected function _afterLoad(AbstractModel $object): AbstractDb
     {
         $this->handleTradingHours($object);
+        $this->handleStoreIds($object);
         return parent::_afterLoad($object);
     }
 
@@ -105,10 +109,19 @@ class Stockist extends AbstractDb
             $tradingHours->setData($unserializedHours);
             $object->setData(StockistInterface::HOURS, $tradingHours);
         }
+    }
 
-        $storeIds = $object->getData(StockistInterface::STORE_IDS);
-        if ($storeIds) {
+    /**
+     * @param AbstractModel $object
+     * @return void
+     */
+    private function handleStoreIds(AbstractModel $object): void
+    {
+        $storeIds = (string)$object->getData(StockistInterface::STORE_IDS);
+        if ($storeIds !== '') {
             $object->setData(StockistInterface::STORE_IDS, explode(',', $storeIds));
+        } else {
+            $object->setData(StockistInterface::STORE_IDS, []);
         }
     }
 }
