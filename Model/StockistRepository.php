@@ -141,10 +141,6 @@ class StockistRepository implements StockistRepositoryInterface
      */
     public function save(StockistInterface $stockist): StockistInterface
     {
-        // New non-nullable field which might not be considered in older API
-        if ($stockist->getIsActive() === null) {
-            $stockist->setIsActive(true);
-        }
         $validationErrors = $this->stockistValidation->validate($stockist);
 
         if (!empty($validationErrors)) {
@@ -152,9 +148,23 @@ class StockistRepository implements StockistRepositoryInterface
                 __('Invalid stockist data: %1', implode(',', $validationErrors))
             );
         } else {
-            if ($stockist->getIdentifier() && $stockist->getStockistId()) {
-                $existingStockist = $this->get($stockist->getIdentifier());
-                $stockist->setStockistId($existingStockist->getId());
+            try {
+                if ($stockist->getStockistId()) {
+                    $existingStockist = $this->getById($stockist->getStockistId());
+                    $stockist->setStockistId($existingStockist->getId());
+                } elseif ($stockist->getIdentifier()) {
+                    $existingStockist = $this->get($stockist->getIdentifier());
+                    $stockist->setStockistId($existingStockist->getId());
+                } else {
+                    // New non-nullable field which might not be considered in older API
+                    // Only set this if it's a new stockist and not found above
+                    if ($stockist->getIsActive() === null) {
+                        $stockist->setIsActive(true);
+                    }
+                }
+            } catch (NoSuchEntityException $e) {
+                // Want to check whether the stockist exists in an attempt to update an existing one before
+                // saving a new one. If it doesn't exist there is no need to do anything here.
             }
             $this->stockistResource->save($stockist);
         }
