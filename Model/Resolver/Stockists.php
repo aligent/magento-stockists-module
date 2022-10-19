@@ -88,7 +88,7 @@ class Stockists implements ResolverInterface
      * @param array $args
      * @return GeoSearchCriteriaInterface
      */
-    private function createSearchCriteria(array $args): GeoSearchCriteriaInterface
+    public function createSearchCriteria(array $args): GeoSearchCriteriaInterface
     {
         $radius = $args['location']['radius'];
         $units = $args['location']['unit'];
