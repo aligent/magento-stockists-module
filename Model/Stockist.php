@@ -27,7 +27,7 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
      */
     public function getIdentities(): array
     {
-        return [self::CACHE_TAG . '_' . $this->getId()];
+        return [self::CACHE_TAG . '_' . $this->getId() ?? ''];
     }
 
     /**
