@@ -78,8 +78,28 @@ class Stockists implements ResolverInterface
             $locations[] = $locationData;
         }
 
+        $totalStockists = $results->getTotalCount();
+        $totalPages = 0;
+        $pageSize = $args['pageSize'];
+        $currentPage = $args['currentPage'];
+        if ($pageSize && $currentPage) {
+            $locations = array_chunk($locations, $pageSize, true);
+            $totalPages = count($locations);
+
+            if ($currentPage <= $totalPages) {
+                $locations = $locations[$currentPage - 1];
+            } else {
+                $locations = [];
+            }
+        }
+
         return [
             'total_count' => $results->getTotalCount(),
+            'page_info' => [
+                'page_size' => $pageSize,
+                'current_page' => $currentPage,
+                'total_pages'=> $totalPages
+            ],
             'locations' => $locations
         ];
     }
@@ -126,6 +146,8 @@ class Stockists implements ResolverInterface
         // default radius and units if not present
         $args['location']['radius'] = $args['location']['radius'] ?? 50.0;
         $args['location']['unit'] = $args['location']['unit'] ?? StockistHelper::DISTANCE_UNITS_KM;
+        $args['pageSize'] = $args['pageSize'] ?? 0;
+        $args['currentPage'] = $args['currentPage'] ?? 0;
         return $args;
     }
 }
