@@ -59,6 +59,8 @@ class Stockists implements ResolverInterface
         array $args = null
     ): array {
         $args = $this->defaultSearchArguments($args);
+        $pageSize = $args['pageSize'] ?? 0;
+        $currentPage = $args['currentPage'] ?? 0;
 
         $searchCriteria = $this->createSearchCriteria($args);
         $results = $this->stockistRepository->getList($searchCriteria);
@@ -78,8 +80,26 @@ class Stockists implements ResolverInterface
             $locations[] = $locationData;
         }
 
+        $totalStockists = $results->getTotalCount();
+        $totalPages = 0;
+        if ($pageSize && $currentPage) {
+            $locations = array_chunk($locations, $pageSize, true);
+            $totalPages = count($locations);
+
+            if ($currentPage <= $totalPages) {
+                $locations = $locations[$currentPage - 1];
+            } else {
+                $locations = [];
+            }
+        }
+
         return [
             'total_count' => $results->getTotalCount(),
+            'page_info' => [
+                'page_size' => $pageSize,
+                'current_page' => $currentPage,
+                'total_pages'=> $totalPages
+            ],
             'locations' => $locations
         ];
     }
