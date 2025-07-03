@@ -108,7 +108,7 @@ class Hydrator implements HydratorInterface
         }
 
         if (isset($data[StockistInterface::IS_ACTIVE])) {
-            $data[StockistInterface::IS_ACTIVE] = (bool)$data[StockistInterface::IS_ACTIVE];
+            $data[StockistInterface::IS_ACTIVE] = $data[StockistInterface::IS_ACTIVE] === 'true';
         }
 
         if (isset($data[StockistInterface::COUNTRY_ID])) {
