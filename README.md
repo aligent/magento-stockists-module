@@ -37,12 +37,15 @@ Additional information such as telephone number, street address, and trading hou
 
 ## GraphQL
 
-Two GraphQL queries are provided:
+Three GraphQL queries are provided:
 
-   - stockists
-      
+   - stockists      
       - Returns a list of stockists within a given radius, ordered by distance
       - Must provide customer's latitude and longitude as input
    - stockist
-
       - Returns the information for a single stockist given an identifier or URL key
+   - searchStockistsByAddress
+      - Search stockists by address fields 
+
+## CSV Import 
+Allow import Stockists via CSV import. `System -> Import` then select the `Stockists` as entity type.

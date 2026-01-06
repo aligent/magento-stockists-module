@@ -27,8 +27,14 @@ interface StockistInterface extends ExtensibleDataInterface
     const COUNTRY = 'country';
     const COUNTRY_ID = 'country_id';
     const PHONE = 'phone';
+    const EMAIL = 'email';
+    const FAX = 'fax';
     const HOURS = 'hours';
     const STORE_IDS = 'store_ids';
+    const META_TITLE = 'meta_title';
+    const META_KEYWORDS = 'meta_keywords';
+    const META_DESCRIPTION = 'meta_description';
+    const UPDATED_AT = 'updated_at';
     const EXTENSION_ATTRIBUTES = 'extension_attributes';
 
     /**
@@ -206,6 +212,83 @@ interface StockistInterface extends ExtensibleDataInterface
      * @return void
      */
     public function setHours(TradingHoursInterface $hours): void;
+
+    /**
+     * @return int|null
+     */
+    public function getRegionId(): ?int;
+
+    /**
+     * @param int|null $regionId
+     * @return void
+     */
+    public function setRegionId(?int $regionId): void;
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string;
+
+    /**
+     * @param string|null $email
+     * @return void
+     */
+    public function setEmail(?string $email): void;
+
+    /**
+     * @return string|null
+     */
+    public function getFax(): ?string;
+
+    /**
+     * @param string|null $fax
+     * @return void
+     */
+    public function setFax(?string $fax): void;
+
+    /**
+     * @return string|null
+     */
+    public function getMetaTitle(): ?string;
+
+    /**
+     * @param string|null $metaTitle
+     * @return void
+     */
+    public function setMetaTitle(?string $metaTitle): void;
+
+    /**
+     * @return string|null
+     */
+    public function getMetaKeywords(): ?string;
+
+    /**
+     * @param string|null $metaKeywords
+     * @return void
+     */
+    public function setMetaKeywords(?string $metaKeywords): void;
+
+    /**
+     * @return string|null
+     */
+    public function getMetaDescription(): ?string;
+
+    /**
+     * @param string|null $metaDescription
+     * @return void
+     */
+    public function setMetaDescription(?string $metaDescription): void;
+
+    /**
+     * @return string|null
+     */
+    public function getUpdatedAt(): ?string;
+
+    /**
+     * @param string|null $updatedAt
+     * @return void
+     */
+    public function setUpdatedAt(?string $updatedAt): void;
 
     /**
      * @return \Aligent\Stockists\Api\Data\StockistExtensionInterface

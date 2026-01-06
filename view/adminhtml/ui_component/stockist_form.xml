@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
- * Copyright © Aligent Consulting. All rights reserved.
+ * Copyright (c) Aligent. (https://www.aligent.com.au)
  */
 -->
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
@@ -212,10 +212,25 @@
                 </validation>
             </settings>
         </field>
-        <field name="phone" formElement="input" sortOrder="30">
+        <field name="phone" formElement="input" sortOrder="55">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Phone</label>
+            </settings>
+        </field>
+        <field name="email" formElement="input" sortOrder="56">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Email</label>
+                <validation>
+                    <rule name="validate-email" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="fax" formElement="input" sortOrder="57">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Fax</label>
             </settings>
         </field>
         <field name="lat" formElement="input" sortOrder="60">
@@ -269,6 +284,32 @@
                         }
                     </description>
                 </tooltip>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="search_engine_optimization" sortOrder="40">
+        <settings>
+            <label translate="true">Search Engine Optimization</label>
+            <collapsible>true</collapsible>
+            <opened>false</opened>
+            <dataScope>general</dataScope>
+        </settings>
+        <field name="meta_title" formElement="input" sortOrder="10">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Meta Title</label>
+            </settings>
+        </field>
+        <field name="meta_keywords" formElement="textarea" sortOrder="20">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Meta Keywords</label>
+            </settings>
+        </field>
+        <field name="meta_description" formElement="textarea" sortOrder="30">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Meta Description</label>
             </settings>
         </field>
     </fieldset>

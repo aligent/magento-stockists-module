@@ -1,6 +1,6 @@
 type Query {
     stockists (
-        location: LocationRequest! @doc(description: "Search request")
+        location: LocationRequest @doc(description: "Search request")
         pageSize: Int = 20 @doc(description: "Number per page")
         currentPage: Int = 1 @doc(description: "Current page")
     ): Stockists @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockists") @doc(description: "Retrieve Stockists")
@@ -8,6 +8,12 @@ type Query {
         identifier: String @doc(description: "Location Identifier")
         url_key: String @doc(description: "Location url_key")
     ): Stockist @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\Stockist") @doc(description: "Retrieve individual stockist location")
+    searchStockistsByAddress (
+        country_id: String! @doc(description: "Country code (e.g., AU, US)")
+        query_string: String! @doc(description: "Search term to match against street, city, postcode, or region")
+        pageSize: Int = 20 @doc(description: "Number per page")
+        currentPage: Int = 1 @doc(description: "Current page")
+    ): StockistSearchResult @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\SearchStockistsByAddress") @doc(description: "Search stockists by address fields")
 }
 
 type Stockist @doc(description: "A stockist location entity") {
@@ -22,6 +28,11 @@ type Stockist @doc(description: "A stockist location entity") {
     trading_hours: Hours @resolver(class: "Aligent\\Stockists\\Model\\Resolver\\StockistHours")
     distance: Float
     units: DistanceUnitsEnum
+    email: String
+    fax: String
+    meta_title: String
+    meta_keywords: String
+    meta_description: String
 }
 
 type Location @doc(description: "Geo-location coordinates") {
@@ -35,8 +46,12 @@ type Address @doc(description: "Street address of location") {
     city: String
     postcode: String
     region: String
+    region_code: String
+    region_id: Int
     country_code: String
     phone: String
+    email: String
+    fax: String
 }
 
 type Hours @doc(description: "Opening hours") {
@@ -66,4 +81,35 @@ input LocationRequest @doc(description: "Request location (origin point and sear
     lng: Float! @doc(description: "Longitude")
     radius: Float @doc(description: "Search radius")
     unit: DistanceUnitsEnum @doc(description: "Units of search radius")
+}
+
+type StockistSearchResult @doc(description: "Result of a stockist address search query") {
+    items: [StockistSearchItem] @doc(description: "List of matching stockists")
+    page_info: SearchResultPageInfo @doc(description: "Page information")
+    total_count: Int @doc(description: "Total matching locations")
+}
+
+type StockistSearchItem @doc(description: "A stockist item in search results") {
+    identifier: String
+    name: String
+    full_address: String
+    url_key: String
+    is_active: Boolean
+    description: String
+    street: String
+    city: String
+    postcode: String
+    region: String
+    region_id: Int
+    region_code: String
+    country: String
+    phone: String
+    email: String
+    fax: String
+    lat: Float
+    lng: Float
+    store_ids: String
+    meta_title: String
+    meta_keywords: String
+    meta_description: String
 }

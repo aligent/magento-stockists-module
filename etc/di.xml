@@ -50,4 +50,35 @@
             <argument name="json" xsi:type="object">Magento\Framework\Serialize\Serializer\Json</argument>
         </arguments>
     </type>
+    <!-- Import Configuration -->
+    <preference for="Aligent\Stockists\Model\Import\Validator\ValidatorInterface"
+                type="Aligent\Stockists\Model\Import\Validator\ValidatorChain"/>
+    <type name="Aligent\Stockists\Model\Import\Validator\ValidatorChain">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="identifier" xsi:type="object">Aligent\Stockists\Model\Import\Validator\IdentifierValidator</item>
+                <item name="required_fields" xsi:type="object">Aligent\Stockists\Model\Import\Validator\RequiredFieldsValidator</item>
+                <item name="country" xsi:type="object">Aligent\Stockists\Model\Import\Validator\CountryValidator</item>
+                <item name="region" xsi:type="object">Aligent\Stockists\Model\Import\Validator\RegionValidator</item>
+                <item name="coordinates" xsi:type="object">Aligent\Stockists\Model\Import\Validator\CoordinatesValidator</item>
+                <item name="email" xsi:type="object">Aligent\Stockists\Model\Import\Validator\EmailValidator</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aligent\Stockists\Model\Import\Stockists">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="append" xsi:type="object">Aligent\Stockists\Model\Import\Command\Append</item>
+                <item name="replace" xsi:type="object">Aligent\Stockists\Model\Import\Command\Replace</item>
+                <item name="delete" xsi:type="object">Aligent\Stockists\Model\Import\Command\Delete</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
+        <arguments>
+            <argument name="samples" xsi:type="array">
+                <item name="stockists" xsi:type="string">Aligent_Stockists</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

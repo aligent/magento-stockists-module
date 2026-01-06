@@ -13,11 +13,19 @@
         <column name="street" xsi:type="varchar" comment="Street" />
         <column name="city" xsi:type="varchar" comment="City" />
         <column name="postcode" xsi:type="varchar" comment="Postcode" />
+        <column name="region_id" xsi:type="int" comment="Region Id" unsigned="true" nullable="true" identity="false"/>
         <column name="region" xsi:type="varchar" comment="Region" />
         <column name="country" xsi:type="varchar" comment="Country Code" />
         <column name="phone" xsi:type="varchar" comment="Phone" />
+        <column name="email" xsi:type="varchar" comment="Email" nullable="true" length="255"/>
+        <column name="fax" xsi:type="varchar" comment="Fax" nullable="true" length="255"/>
         <column name="store_ids" xsi:type="varchar" comment="Associated store views" />
         <column name="hours" xsi:type="text" comment="Store Opening Hours" />
+        <column name="meta_title" xsi:type="varchar" nullable="true" length="255" comment="Meta Title"/>
+        <column name="meta_keywords" xsi:type="varchar" nullable="true" length="255" comment="Meta Keywords"/>
+        <column name="meta_description" xsi:type="varchar" nullable="true" length="255" comment="Meta Description"/>
+        <column name="updated_at" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
         <constraint xsi:type="unique" referenceId="STOCKIST_URL_KEY">
             <column name="url_key"/>
         </constraint>

@@ -1,10 +1,13 @@
 <?php
+/**
+ * Copyright (c) Aligent. (https://www.aligent.com.au)
+ */
+declare(strict_types=1);
 
 namespace Aligent\Stockists\Model;
 
 use Aligent\Stockists\Api\Data\StockistExtensionInterface;
 use Aligent\Stockists\Api\Data\TradingHoursInterface;
-use Magento\Framework\Api\ExtensionAttributesInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\DataObject\IdentityInterface;
 use Aligent\Stockists\Model\ResourceModel\Stockist as StockistResource;
@@ -287,6 +290,119 @@ class Stockist extends AbstractExtensibleModel implements StockistInterface, Ide
     public function setHours(TradingHoursInterface $hours): void
     {
         $this->setData(StockistInterface::HOURS, $hours);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRegionId(): ?int
+    {
+        $regionId = $this->getData(StockistInterface::REGION_ID);
+        return $regionId !== null ? (int)$regionId : null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setRegionId(?int $regionId): void
+    {
+        $this->setData(StockistInterface::REGION_ID, $regionId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getEmail(): ?string
+    {
+        return $this->getData(StockistInterface::EMAIL);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->setData(StockistInterface::EMAIL, $email);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFax(): ?string
+    {
+        return $this->getData(StockistInterface::FAX);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setFax(?string $fax): void
+    {
+        $this->setData(StockistInterface::FAX, $fax);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetaTitle(): ?string
+    {
+        return $this->getData(StockistInterface::META_TITLE);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMetaTitle(?string $metaTitle): void
+    {
+        $this->setData(StockistInterface::META_TITLE, $metaTitle);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetaKeywords(): ?string
+    {
+        return $this->getData(StockistInterface::META_KEYWORDS);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMetaKeywords(?string $metaKeywords): void
+    {
+        $this->setData(StockistInterface::META_KEYWORDS, $metaKeywords);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetaDescription(): ?string
+    {
+        return $this->getData(StockistInterface::META_DESCRIPTION);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMetaDescription(?string $metaDescription): void
+    {
+        $this->setData(StockistInterface::META_DESCRIPTION, $metaDescription);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUpdatedAt(): ?string
+    {
+        return $this->getData(StockistInterface::UPDATED_AT);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setUpdatedAt(?string $updatedAt): void
+    {
+        $this->setData(StockistInterface::UPDATED_AT, $updatedAt);
     }
 
     /**

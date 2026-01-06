@@ -1,7 +1,8 @@
 <?php
 /**
- * Copyright © Aligent Consulting. All rights reserved.
+ * Copyright (c) Aligent. (https://www.aligent.com.au)
  */
+declare(strict_types=1);
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
