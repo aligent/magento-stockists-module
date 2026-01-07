@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © Aligent Consulting. All rights reserved.
+ * Copyright (c) Aligent. (https://www.aligent.com.au)
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Aligent_Stockists::stockists" title="Stockists" translate="title" module="Aligent_Stockists" sortOrder="105" resource="Aligent_Stockists::manage"/>
-        <add id="Aligent_Stockists::stockists_manage" title="All Stockists" translate="title" module="Aligent_Stockists" sortOrder="10" parent="Aligent_Stockists::stockists" action="stockists/index/" resource="Aligent_Stockists::manage"/>
-        <add id="Aligent_Stockists::stockists_add" title="Add Stockist" translate="title" module="Aligent_Stockists" sortOrder="20" parent="Aligent_Stockists::stockists" action="stockists/index/new" resource="Aligent_Stockists::manage"/>
+        <add id="Aligent_Stockists::Stockists" title="Stockists" translate="title" module="Aligent_Stockists" sortOrder="105" resource="Aligent_Stockists::manage"/>
+        <add id="Aligent_Stockists::stockists_manage" title="All Stockists" translate="title" module="Aligent_Stockists" sortOrder="10" parent="Aligent_Stockists::Stockists" action="stockists/index/" resource="Aligent_Stockists::manage"/>
+        <add id="Aligent_Stockists::stockists_add" title="Add Stockist" translate="title" module="Aligent_Stockists" sortOrder="20" parent="Aligent_Stockists::Stockists" action="stockists/index/new" resource="Aligent_Stockists::manage"/>
     </menu>
 </config>

@@ -50,8 +50,8 @@ interface StockistRepositoryInterface
     public function deleteByIdentifier(string $identifier): bool;
 
     /**
-     * @param string $stockistId
+     * @param int $stockistId
      * @return bool
      */
-    public function deleteById(string $stockistId): bool;
+    public function deleteById(int $stockistId): bool;
 }

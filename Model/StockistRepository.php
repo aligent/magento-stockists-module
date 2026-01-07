@@ -232,7 +232,7 @@ class StockistRepository implements StockistRepositoryInterface
      * @throws NoSuchEntityException
      * @throws \Exception
      */
-    public function deleteById(string $stockistId): bool
+    public function deleteById(int $stockistId): bool
     {
         $stockist = $this->getById($stockistId);
         $this->stockistResource->delete($stockist);

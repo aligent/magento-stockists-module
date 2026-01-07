@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © Aligent Consulting. All rights reserved.
+ * Copyright (c) Aligent. (https://www.aligent.com.au)
  */
 -->
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
@@ -164,6 +164,19 @@
                 </editor>
                 <label translate="true">Phone</label>
                 <visible>false</visible>
+            </settings>
+        </column>
+        <column name="email" sortOrder="145">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <editorType>text</editorType>
+                    <validation>
+                        <rule name="validate-email" xsi:type="boolean">true</rule>
+                    </validation>
+                </editor>
+                <label translate="true">Email</label>
+                <visible>true</visible>
             </settings>
         </column>
         <actionsColumn name="actions" class="Magento\Backend\Ui\Component\Listing\Column\EditAction" sortOrder="1000">

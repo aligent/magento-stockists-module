@@ -1,7 +1,8 @@
 <?php
 /**
- * Copyright © Aligent Consulting. All rights reserved.
+ * Copyright (c) Aligent. (https://www.aligent.com.au)
  */
+declare(strict_types=1);
 
 namespace Aligent\Stockists\Controller\Adminhtml\Index;
 
@@ -52,7 +53,7 @@ class Edit extends Action implements HttpGetActionInterface
     {
         $stockistId = $this->getRequest()->getParam(StockistInterface::STOCKIST_ID);
         try {
-            $stockist = $this->stockistRepository->getById($stockistId);
+            $stockist = $this->stockistRepository->getById((int)$stockistId);
             /* @var Page $result */
             $result = $this->resultPageFactory->create();
             $result->setActiveMenu("Aligent_Stockists::stockists_manage");
