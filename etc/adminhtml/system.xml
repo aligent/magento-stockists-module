@@ -26,6 +26,11 @@
                     <comment><![CDATA[The Geocoding API supports <a href=https://developers.google.com/maps/documentation/geocoding/requests-geocoding#RegionCodes">Region Biasing</a>, which returns address results that are biased towards the given country. It
                    also has the ability to restrict the address results based on the given country and postcode using <a href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding#component-filtering">Component filtering</a>.]]></comment>
                 </field>
+                <field id="address_lookup_enabled" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Google Address Lookup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When enabled, the searchStockistsByAddress GraphQL query will return address suggestions from Google Places API.</comment>
+                </field>
             </group>
         </section>
     </system>

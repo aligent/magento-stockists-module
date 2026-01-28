@@ -95,6 +95,18 @@
                 <sorting>asc</sorting>
             </settings>
         </column>
+        <column name="identifier" sortOrder="27">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Identifier</label>
+                <editor>
+                    <editorType>text</editorType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                </editor>
+            </settings>
+        </column>
         <column name="name" sortOrder="30">
             <settings>
                 <filter>text</filter>

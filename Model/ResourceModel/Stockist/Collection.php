@@ -10,6 +10,9 @@ use Aligent\Stockists\Helper\Data as StockistHelper;
 
 class Collection extends AbstractCollection
 {
+    /**
+     * @var string
+     */
     protected $_idFieldName = 'stockist_id';
 
     /**
@@ -22,20 +25,25 @@ class Collection extends AbstractCollection
 
     /**
      * Replaces getSize to also consider any geo-filtering that was applied to the search
+     *
      * @param GeoSearchCriteriaInterface $searchCriteria
      * @return int
      */
     public function getSizeFromGeoSearch(GeoSearchCriteriaInterface $searchCriteria) : int
     {
         if ($this->_totalRecords === null) {
-
-            $countSelect = $this->getSelectCountSql();
-
-            $radius = $searchCriteria->getSearchRadius();
             $searchOrigin = $searchCriteria->getSearchOrigin();
             $lat = $searchOrigin['lat'] ?? null;
             $lng = $searchOrigin['lng'] ?? null;
+            $radius = $searchCriteria->getSearchRadius();
 
+            // If no geo search criteria is set, use standard getSize()
+            if ($lat === null || $lng === null || $radius === null) {
+                $this->_totalRecords = $this->getSize();
+                return (int)$this->_totalRecords;
+            }
+
+            $countSelect = $this->getSelectCountSql();
             $countSelect->reset('having');
             $countSelect->where(new \Zend_Db_Expr(
                 '(' . StockistHelper::EARTH_MEAN_RADIUS_KM . ' * ACOS('

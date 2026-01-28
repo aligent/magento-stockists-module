@@ -84,32 +84,20 @@ input LocationRequest @doc(description: "Request location (origin point and sear
 }
 
 type StockistSearchResult @doc(description: "Result of a stockist address search query") {
-    items: [StockistSearchItem] @doc(description: "List of matching stockists")
+    items: [StockistSearchItem] @doc(description: "List of matching stockists or address suggestions")
     page_info: SearchResultPageInfo @doc(description: "Page information")
     total_count: Int @doc(description: "Total matching locations")
 }
 
 type StockistSearchItem @doc(description: "A stockist item in search results") {
-    identifier: String
     name: String
     full_address: String
-    url_key: String
-    is_active: Boolean
-    description: String
     street: String
     city: String
     postcode: String
     region: String
-    region_id: Int
     region_code: String
     country: String
-    phone: String
-    email: String
-    fax: String
     lat: Float
     lng: Float
-    store_ids: String
-    meta_title: String
-    meta_keywords: String
-    meta_description: String
 }

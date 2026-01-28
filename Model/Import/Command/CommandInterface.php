@@ -12,7 +12,7 @@ interface CommandInterface
      * Execute import command
      *
      * @param array $bunch Array of row data
-     * @return void
+     * @return array{created: int, updated: int, deleted: int}
      */
-    public function execute(array $bunch): void;
+    public function execute(array $bunch): array;
 }
