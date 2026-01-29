@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Aligent\Stockists\Model\Resolver;
 
 use Aligent\Stockists\Model\ResourceModel\Stockist\CollectionFactory;
+use Aligent\Stockists\Service\GoogleAddressLookup;
 use Magento\Directory\Model\ResourceModel\Region\CollectionFactory as RegionCollectionFactory;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
@@ -23,10 +24,12 @@ class SearchStockistsByAddress implements ResolverInterface
     /**
      * @param CollectionFactory $stockistCollectionFactory
      * @param RegionCollectionFactory $regionCollectionFactory
+     * @param GoogleAddressLookup $googleAddressLookup
      */
     public function __construct(
         private readonly CollectionFactory $stockistCollectionFactory,
-        private readonly RegionCollectionFactory $regionCollectionFactory
+        private readonly RegionCollectionFactory $regionCollectionFactory,
+        private readonly GoogleAddressLookup $googleAddressLookup
     ) {
     }
 
@@ -47,10 +50,71 @@ class SearchStockistsByAddress implements ResolverInterface
         $pageSize = (int)($args['pageSize'] ?? 20);
         $currentPage = (int)($args['currentPage'] ?? 1);
 
-        $collection = $this->stockistCollectionFactory->create();
-
         // Get current store ID from context
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+
+        // Check if Google Address Lookup is enabled
+        if ($this->googleAddressLookup->isEnabled($storeId)) {
+            return $this->resolveWithGoogleApi($queryString, $countryId, $storeId, $pageSize, $currentPage);
+        }
+
+        return $this->resolveWithDatabase($countryId, $queryString, $storeId, $pageSize, $currentPage);
+    }
+
+    /**
+     * Resolve using Google Address Lookup API
+     *
+     * @param string $queryString
+     * @param string $countryId
+     * @param int $storeId
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return array
+     */
+    private function resolveWithGoogleApi(
+        string $queryString,
+        string $countryId,
+        int $storeId,
+        int $pageSize,
+        int $currentPage
+    ): array {
+        $items = $this->googleAddressLookup->getAddressSuggestions($queryString, $countryId, $storeId);
+        $totalCount = count($items);
+
+        // Apply pagination to results
+        $offset = ($currentPage - 1) * $pageSize;
+        $paginatedItems = array_slice($items, $offset, $pageSize);
+        $totalPages = $pageSize > 0 ? (int)ceil($totalCount / $pageSize) : 0;
+
+        return [
+            'items' => $paginatedItems,
+            'total_count' => $totalCount,
+            'page_info' => [
+                'page_size' => $pageSize,
+                'current_page' => $currentPage,
+                'total_pages' => $totalPages
+            ]
+        ];
+    }
+
+    /**
+     * Resolve using database search (existing functionality)
+     *
+     * @param string $countryId
+     * @param string $queryString
+     * @param int $storeId
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return array
+     */
+    private function resolveWithDatabase(
+        string $countryId,
+        string $queryString,
+        int $storeId,
+        int $pageSize,
+        int $currentPage
+    ): array {
+        $collection = $this->stockistCollectionFactory->create();
 
         // Filter by country
         $collection->addFieldToFilter('country', $countryId);
@@ -67,7 +131,8 @@ class SearchStockistsByAddress implements ResolverInterface
         // Search by concatenated address fields using LIKE
         $searchTerm = '%' . $queryString . '%';
         $collection->getSelect()->where(
-            "CONCAT(COALESCE(street, ''), ' ', COALESCE(city, ''), ' ', COALESCE(postcode, ''), ' ', COALESCE(region, '')) LIKE ?",
+            "CONCAT(COALESCE(street, ''), ' ', COALESCE(city, ''),".
+            " ' ', COALESCE(postcode, ''), ' ', COALESCE(region, '')) LIKE ?",
             $searchTerm
         );
 
@@ -89,7 +154,8 @@ class SearchStockistsByAddress implements ResolverInterface
             $items[] = [
                 'identifier' => $stockist->getIdentifier(),
                 'name' => $stockist->getName(),
-                'full_address' => (string)($stockist->getStreet() . ', ' . $stockist->getCity() . ', ' . $stockist->getPostcode() . ', '. $regionCode),
+                'full_address' => (string)($stockist->getStreet() . ', ' . $stockist->getCity()
+                    . ', ' . $stockist->getPostcode() . ', '. $regionCode),
                 'url_key' => $stockist->getUrlKey(),
                 'is_active' => (bool)$stockist->getIsActive(),
                 'description' => $stockist->getDescription(),

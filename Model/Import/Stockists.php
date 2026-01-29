@@ -145,6 +145,10 @@ class Stockists extends AbstractEntity
             return false;
         }
 
+        $this->countItemsCreated = 0;
+        $this->countItemsUpdated = 0;
+        $this->countItemsDeleted = 0;
+
         while ($bunch = $this->_dataSourceModel->getNextBunch()) {
             $validRows = [];
 
@@ -155,7 +159,10 @@ class Stockists extends AbstractEntity
             }
 
             if (!empty($validRows)) {
-                $command->execute($validRows);
+                $result = $command->execute($validRows);
+                $this->countItemsCreated += $result['created'] ?? 0;
+                $this->countItemsUpdated += $result['updated'] ?? 0;
+                $this->countItemsDeleted += $result['deleted'] ?? 0;
             }
         }
 

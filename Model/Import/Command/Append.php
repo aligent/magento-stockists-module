@@ -35,8 +35,11 @@ class Append implements CommandInterface
     /**
      * @inheritdoc
      */
-    public function execute(array $bunch): void
+    public function execute(array $bunch): array
     {
+        $created = 0;
+        $updated = 0;
+
         foreach ($bunch as $rowData) {
             try {
                 $stockistData = $this->stockistConvert->convert($rowData);
@@ -47,19 +50,28 @@ class Append implements CommandInterface
                 }
 
                 $stockist = $this->getExistingStockist($identifier);
+                $isNew = ($stockist === null);
 
-                if ($stockist === null) {
+                if ($isNew) {
                     $stockist = $this->stockistFactory->create();
                 }
 
                 $stockist = $this->hydrator->hydrate($stockist, $stockistData);
                 $this->stockistRepository->save($stockist);
+
+                if ($isNew) {
+                    $created++;
+                } else {
+                    $updated++;
+                }
             } catch (\Exception $e) {
                 $this->logger->error('Stockist import error: ' . $e->getMessage(), [
                     'row_data' => $rowData
                 ]);
             }
         }
+
+        return ['created' => $created, 'updated' => $updated, 'deleted' => 0];
     }
 
     /**

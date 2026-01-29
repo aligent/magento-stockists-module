@@ -35,8 +35,12 @@ class Replace implements CommandInterface
     /**
      * @inheritdoc
      */
-    public function execute(array $bunch): void
+    public function execute(array $bunch): array
     {
+        $created = 0;
+        $updated = 0;
+        $deleted = 0;
+
         foreach ($bunch as $rowData) {
             try {
                 $stockistData = $this->stockistConvert->convert($rowData);
@@ -50,6 +54,10 @@ class Replace implements CommandInterface
                 $existingStockist = $this->getExistingStockist($identifier);
                 if ($existingStockist !== null) {
                     $this->stockistRepository->delete($existingStockist);
+                    $deleted++;
+                    $updated++; // Replacement counts as update
+                } else {
+                    $created++;
                 }
 
                 // Create new stockist
@@ -62,6 +70,8 @@ class Replace implements CommandInterface
                 ]);
             }
         }
+
+        return ['created' => $created, 'updated' => $updated, 'deleted' => $deleted];
     }
 
     /**

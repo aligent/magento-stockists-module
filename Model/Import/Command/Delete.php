@@ -27,8 +27,10 @@ class Delete implements CommandInterface
     /**
      * @inheritdoc
      */
-    public function execute(array $bunch): void
+    public function execute(array $bunch): array
     {
+        $deleted = 0;
+
         foreach ($bunch as $rowData) {
             try {
                 $identifier = $rowData[Stockists::COL_IDENTIFIER] ?? null;
@@ -41,6 +43,7 @@ class Delete implements CommandInterface
 
                 if ($stockist !== null) {
                     $this->stockistRepository->delete($stockist);
+                    $deleted++;
                 }
             } catch (\Exception $e) {
                 $this->logger->error('Stockist delete error: ' . $e->getMessage(), [
@@ -48,6 +51,8 @@ class Delete implements CommandInterface
                 ]);
             }
         }
+
+        return ['created' => 0, 'updated' => 0, 'deleted' => $deleted];
     }
 
     /**
