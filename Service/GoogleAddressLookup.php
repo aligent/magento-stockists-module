@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Aligent\Stockists\Service;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\HTTP\Client\CurlFactory;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\ScopeInterface;
@@ -19,6 +20,7 @@ class GoogleAddressLookup
 
     private const XML_PATH_ADDRESS_LOOKUP_ENABLED = 'stockists/geocode/address_lookup_enabled';
     private const XML_PATH_GEOCODE_API_KEY = 'stockists/geocode/key';
+    private const GOOGLE_API_LOOKUP_FAILED = 'Google API Lookup Failed';
 
     /**
      * @param ScopeConfigInterface $scopeConfig
@@ -298,8 +300,12 @@ class GoogleAddressLookup
         if (empty($responseBody)) {
             return [];
         }
-
-        return $this->json->unserialize($responseBody);
+        $response = $this->json->unserialize($responseBody);
+        if (isset($response['error'])) {
+            $this->logger->error(self::GOOGLE_API_LOOKUP_FAILED, $response['error']);
+            throw new LocalizedException(__(self::GOOGLE_API_LOOKUP_FAILED));
+        }
+        return $response;
     }
 
     /**
@@ -322,7 +328,11 @@ class GoogleAddressLookup
         if (empty($responseBody)) {
             return [];
         }
-
-        return $this->json->unserialize($responseBody);
+        $response = $this->json->unserialize($responseBody);
+        if (isset($response['error'])) {
+            $this->logger->error(self::GOOGLE_API_LOOKUP_FAILED, $response['error']);
+            throw new LocalizedException(__(self::GOOGLE_API_LOOKUP_FAILED));
+        }
+        return $response;
     }
 }
