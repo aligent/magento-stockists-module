@@ -17,7 +17,7 @@ interface AdapterInterface
      * @param string $key
      * @return string|null
      */
-    public function buildRequest(StockistInterface $stockist, string $key) : ?string; //ffdsjfkjdfk fggjgkjdfkgj gfjdkgjdfkgjdfk gldfjgkdfjgkdfjgkdfjkbg
+    public function buildRequest(StockistInterface $stockist, string $key) : ?string;
 
     /**
      * @param string $request
