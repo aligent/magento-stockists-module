@@ -22,5 +22,25 @@
       "STOCKIST_URL_KEY": true,
       "STOCKISTS_IDENTIFIER": true
     }
+  },
+  "auspost_postcode": {
+    "column": {
+      "entity_id": true,
+      "pcode": true,
+      "locality": true,
+      "state": true,
+      "comments": true,
+      "category": true,
+      "longitude": true,
+      "latitude": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "AUSPOST_POSTCODE_PCODE_LOCALITY_STATE": true
+    },
+    "index": {
+      "AUSPOST_POSTCODE_PCODE": true,
+      "AUSPOST_POSTCODE_LOCALITY": true
+    }
   }
 }

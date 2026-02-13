@@ -36,4 +36,28 @@
             <column name="identifier"/>
         </constraint>
     </table>
+    <table name="auspost_postcode" resource="default" comment="AusPost Postcode Data">
+        <column name="entity_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column name="pcode" xsi:type="varchar" length="10" nullable="false" comment="Postcode"/>
+        <column name="locality" xsi:type="varchar" length="255" nullable="false" comment="Locality Name"/>
+        <column name="state" xsi:type="varchar" length="10" nullable="false" comment="State Code"/>
+        <column name="comments" xsi:type="varchar" length="255" nullable="true" comment="Comments"/>
+        <column name="category" xsi:type="varchar" length="100" nullable="true" comment="Category"/>
+        <column name="longitude" xsi:type="decimal" scale="7" precision="10" nullable="true" comment="Longitude"/>
+        <column name="latitude" xsi:type="decimal" scale="7" precision="10" nullable="true" comment="Latitude"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="AUSPOST_POSTCODE_PCODE_LOCALITY_STATE">
+            <column name="pcode"/>
+            <column name="locality"/>
+            <column name="state"/>
+        </constraint>
+        <index referenceId="AUSPOST_POSTCODE_PCODE" indexType="btree">
+            <column name="pcode"/>
+        </index>
+        <index referenceId="AUSPOST_POSTCODE_LOCALITY" indexType="btree">
+            <column name="locality"/>
+        </index>
+    </table>
 </schema>

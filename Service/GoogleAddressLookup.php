@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Service;
 
+use Aligent\Stockists\Model\OptionSource\AddressLookupSource;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\HTTP\Client\CurlFactory;
@@ -18,7 +19,7 @@ class GoogleAddressLookup
     private const PLACES_AUTOCOMPLETE_URL = 'https://places.googleapis.com/v1/places:autocomplete';
     private const PLACES_DETAILS_URL = 'https://places.googleapis.com/v1/places/';
 
-    private const XML_PATH_ADDRESS_LOOKUP_ENABLED = 'stockists/geocode/address_lookup_enabled';
+    private const XML_PATH_ADDRESS_LOOKUP_SOURCE = 'stockists/geocode/address_lookup_source';
     private const XML_PATH_GEOCODE_API_KEY = 'stockists/geocode/key';
     private const GOOGLE_API_LOOKUP_FAILED = 'Google API Lookup Failed';
 
@@ -44,11 +45,11 @@ class GoogleAddressLookup
      */
     public function isEnabled(?int $storeId = null): bool
     {
-        return $this->scopeConfig->isSetFlag(
-            self::XML_PATH_ADDRESS_LOOKUP_ENABLED,
+        return $this->scopeConfig->getValue(
+            self::XML_PATH_ADDRESS_LOOKUP_SOURCE,
             ScopeInterface::SCOPE_STORE,
             $storeId
-        );
+        ) === AddressLookupSource::GOOGLE_API;
     }
 
     /**
