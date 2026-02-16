@@ -74,10 +74,20 @@
             </argument>
         </arguments>
     </type>
+    <type name="Aligent\Stockists\Model\Import\AuspostPostcodes">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="append" xsi:type="object">Aligent\Stockists\Model\Import\Command\AuspostAppend</item>
+                <item name="replace" xsi:type="object">Aligent\Stockists\Model\Import\Command\AuspostReplace</item>
+                <item name="delete" xsi:type="object">Aligent\Stockists\Model\Import\Command\AuspostDelete</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
         <arguments>
             <argument name="samples" xsi:type="array">
                 <item name="stockists" xsi:type="string">Aligent_Stockists</item>
+                <item name="auspost_postcodes" xsi:type="string">Aligent_Stockists</item>
             </argument>
         </arguments>
     </type>

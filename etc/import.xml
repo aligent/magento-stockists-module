@@ -10,4 +10,8 @@
             label="Stockists"
             model="Aligent\Stockists\Model\Import\Stockists"
             behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic"/>
+    <entity name="auspost_postcodes"
+            label="AusPost Postcodes"
+            model="Aligent\Stockists\Model\Import\AuspostPostcodes"
+            behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic"/>
 </config>

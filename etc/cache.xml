@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
+    <type name="stockists_address_lookup"
+          translate="label,description"
+          instance="Aligent\Stockists\Model\Cache\AddressLookupCache">
+        <label>Stockists Address Lookup</label>
+        <description>Cache for address lookup results</description>
+    </type>
+</config>
