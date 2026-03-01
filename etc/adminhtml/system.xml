@@ -31,11 +31,6 @@
                     <source_model>Aligent\Stockists\Model\OptionSource\AddressLookupSource</source_model>
                     <comment>Select the data source for the address lookup. "None" falls back to search in existing stockists.</comment>
                 </field>
-                <field id="address_lookup_cache_lifetime" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Address Lookup Cache Lifetime</label>
-                    <comment>Cache lifetime in seconds. Value should be 3600-2592000 range.</comment>
-                    <validate>required-entry validate-digits validate-not-negative-number validate-digits-range digits-range-3600-2592000</validate>
-                </field>
             </group>
         </section>
     </system>
