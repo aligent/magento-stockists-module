@@ -6,24 +6,18 @@ declare(strict_types=1);
 
 namespace Aligent\Stockists\Model\Resolver;
 
-use Aligent\Stockists\Model\Cache\AddressLookupCache;
 use Aligent\Stockists\Model\OptionSource\AddressLookupSource;
 use Aligent\Stockists\Model\ResourceModel\Stockist\CollectionFactory;
 use Aligent\Stockists\Service\AuspostAddressLookup;
 use Aligent\Stockists\Service\GoogleAddressLookup;
 use Magento\Directory\Model\ResourceModel\Region\CollectionFactory as RegionCollectionFactory;
-use Magento\Framework\App\Cache\StateInterface as CacheState;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\Serialize\SerializerInterface;
 
 class SearchStockistsByAddress implements ResolverInterface
 {
-    private const CACHE_LIFETIME_PATH = 'stockists/geocode/address_lookup_cache_lifetime';
-
     /**
      * @var array|null
      */
@@ -34,20 +28,12 @@ class SearchStockistsByAddress implements ResolverInterface
      * @param RegionCollectionFactory $regionCollectionFactory
      * @param GoogleAddressLookup $googleAddressLookup
      * @param AuspostAddressLookup $auspostAddressLookup
-     * @param AddressLookupCache $cache
-     * @param SerializerInterface $serializer
-     * @param ScopeConfigInterface $scopeConfig
-     * @param CacheState $cacheState
      */
     public function __construct(
         private readonly CollectionFactory $stockistCollectionFactory,
         private readonly RegionCollectionFactory $regionCollectionFactory,
         private readonly GoogleAddressLookup $googleAddressLookup,
-        private readonly AuspostAddressLookup $auspostAddressLookup,
-        private readonly AddressLookupCache $cache,
-        private readonly SerializerInterface $serializer,
-        private readonly ScopeConfigInterface $scopeConfig,
-        private readonly CacheState $cacheState
+        private readonly AuspostAddressLookup $auspostAddressLookup
     ) {
     }
 
@@ -74,35 +60,12 @@ class SearchStockistsByAddress implements ResolverInterface
         // Determine resolution type
         $typeId = $this->getResolutionTypeId($storeId);
 
-        // Check cache
-        $cacheEnabled = $this->cacheState->isEnabled(AddressLookupCache::TYPE_IDENTIFIER);
-        $cacheKey = $this->buildCacheKey($countryId, $queryString, $typeId);
-
-        if ($cacheEnabled) {
-            $cachedData = $this->cache->load($cacheKey);
-            if ($cachedData !== false) {
-                return $this->serializer->unserialize($cachedData);
-            }
-        }
-
         // Priority: AusPost (cheapest, local DB) → Google API → Database LIKE search
-        $result = match ($typeId) {
+        return match ($typeId) {
             AddressLookupSource::AUSPOST => $this->resolveWithAuspostData($queryString, $pageSize, $currentPage),
             AddressLookupSource::GOOGLE_API => $this->resolveWithGoogleApi($queryString, $countryId, $storeId, $pageSize, $currentPage),
             default => $this->resolveWithDatabase($countryId, $queryString, $storeId, $pageSize, $currentPage),
         };
-
-        if ($cacheEnabled) {
-            $lifetime = (int)$this->scopeConfig->getValue(self::CACHE_LIFETIME_PATH);
-            $this->cache->save(
-                $this->serializer->serialize($result),
-                $cacheKey,
-                [AddressLookupCache::CACHE_TAG],
-                $lifetime
-            );
-        }
-
-        return $result;
     }
 
     /**
@@ -122,19 +85,6 @@ class SearchStockistsByAddress implements ResolverInterface
         }
 
         return AddressLookupSource::NONE;
-    }
-
-    /**
-     * Build cache key from query parameters
-     *
-     * @param string $countryId
-     * @param string $queryString
-     * @param string $typeId
-     * @return string
-     */
-    private function buildCacheKey(string $countryId, string $queryString, string $typeId): string
-    {
-        return AddressLookupCache::CACHE_TAG . '_' . hash('sha256', $countryId . '|' . $queryString . '|' . $typeId);
     }
 
     /**

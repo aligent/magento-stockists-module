@@ -8,7 +8,6 @@
                 <key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
                 <request_option>default</request_option>
                 <address_lookup_source>none</address_lookup_source>
-                <address_lookup_cache_lifetime>2592000</address_lookup_cache_lifetime>
             </geocode>
         </stockists>
     </default>
